@@ -1,8 +1,19 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client';
+import axios from 'axios';
 
-function App() {
+
+// const base = io('/');
+
+
+export default function App() {
+  const socket = io('http://localhost:8080');
+  let message;
+  socket.on('message', (msg=>{
+    message = msg;
+  }));
   return (
     <div className="App">
       <header className="App-header">
@@ -10,17 +21,18 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+        onClick = {()=>{
+          socket.emit("message", "look here bitch");
+          console.log(message + " and " + socket.id);
+        }}
         >
-          Learn React
-        </a>
+          TEST
+        </button>
+        <p>
+        {message}
+        </p>
       </header>
     </div>
   );
 }
-
-export default App;
