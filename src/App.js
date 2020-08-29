@@ -3,10 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
 import axios from 'axios';
-
+import Answer from "./components/Answer";
+import Question from "./components/Question";
 
 // const base = io('/');
 
+const fQuestions = "what is 1+1?";
+const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
 
 export default function App() {
   const socket = io('http://localhost:8080');
@@ -17,7 +20,6 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -29,10 +31,12 @@ export default function App() {
         >
           TEST
         </button>
-        <p>
-        {message}
-        </p>
+        {/* <Question
+          key={1}
+          question={fQuestions}
+          answers={fanswers}
+        /> */}
       </header>
     </div>
-  );
+  )
 }
