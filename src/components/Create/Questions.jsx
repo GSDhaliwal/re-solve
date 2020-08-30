@@ -33,7 +33,7 @@ export default function Questions(props) {
     <div className="questions">
       <h3>Q{props.id + 1}</h3>
         Question:
-          <input type="text" name="Question1" />
+          <input type="text" name="Question" id={props.id + 1}/>
         <br/>
         <br/>
         <button type="button">Add Image</button>
