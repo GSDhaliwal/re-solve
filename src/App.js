@@ -12,21 +12,28 @@ import Gameroom from "./components/Gameroom/Gameroom";
 const fQuestions = {
   1:{
   question:"what is 1+1?", 
-  time_per_question:5,
-  points_per_question:100},
+  time_per_question:2,
+  points_per_question:100,
+  answers: [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}]
+
+},
   2:{
   id:2,
   question:"what is 2+2?", 
-  time_per_question:10,
-  points_per_question:250},
+  time_per_question:3,
+  points_per_question:250,
+  answers: [{content: "4", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}]
+},
   3:{
   id:3,
   question:"what is 3+3?", 
-  time_per_question:15,
-  points_per_question:500}
+  time_per_question:4,
+  points_per_question:500,
+  answers: [{content: "6", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}]
+} 
 };
 
-const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
+// const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
 const players = [
   {id:3, gamertag: "Henry", active_game_id: 3, score: 5000, user_id: 1, is_host: true},
   {id:1, gamertag: "lisa", active_game_id: 3, score: 500, user_id: 2,is_host: false},
@@ -80,7 +87,6 @@ export default function App() {
         players={players}
         users={users}
         questions ={fQuestions}
-        answers={fanswers}
         />
       </header>
     </div>
