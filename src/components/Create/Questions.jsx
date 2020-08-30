@@ -16,6 +16,12 @@ export default function Questions(props) {
      setAnswers([...answers, 1])
    }
   };
+
+  const deleteAnswer = function() {
+    if(answers.length > 2) {
+      setAnswers([...answers.slice(0, -1)])
+    }
+   };
   
   let display = answers.map((answer, index) => {
     if (index < 5) {
@@ -56,6 +62,9 @@ export default function Questions(props) {
           {display}
         <br/>
         <button type="button" onClick={addAnswer}>Add Answer</button>
+        <button type="button" onClick={deleteAnswer}>Delete Answer</button>
+        <br/>
+        
     </div>
   
   )

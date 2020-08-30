@@ -25,6 +25,7 @@ export default function Create(props){
         key={index}
         id={index}
       />
+
   })
  
   return (
