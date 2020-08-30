@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -66,7 +65,7 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          home page testing
         </p>
         <button
         onClick = {()=>{
