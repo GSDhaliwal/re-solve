@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Answers from './Answers';
 
-export default function Questions() {
+export default function Questions(props) {
+
+  const [answers, setAnswers] = useState([1, 1]);
   
 
   
-  let answers = [1, 1];
-  console.log(answers)
- 
-  const addAnswer = function() {
-    answers.push(1);
+  useEffect(() => {
     console.log(answers)
-  };
+  })
 
+  const addAnswer = function() {
+   if(answers.length < 5) {
+     setAnswers([...answers, 1])
+   }
+  };
+  
   let display = answers.map((answer, index) => {
     if (index < 5) {
       return <Answers 
@@ -27,12 +31,12 @@ export default function Questions() {
   
   return (
     <div className="questions">
-      <h3>Q1</h3>
+      <h3>Q{props.id + 1}</h3>
         Question:
           <input type="text" name="Question1" />
         <br/>
         <br/>
-        <button>Add Image</button>
+        <button type="button">Add Image</button>
         <br/>
         <br/>
         Points Awarded:
@@ -51,7 +55,7 @@ export default function Questions() {
         Answers:
           {display}
         <br/>
-        <button onClick={() => addAnswer()}>Add Answer</button>
+        <button type="button" onClick={addAnswer}>Add Answer</button>
     </div>
   
   )
