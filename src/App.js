@@ -3,14 +3,52 @@ import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
 import axios from 'axios';
-import Answer from "./components/Answer";
-import Question from "./components/Question";
+import Answer from "./components/Gameroom/Answer";
+import Question from "./components/Gameroom/Question";
+import Gameroom from "./components/Gameroom/Gameroom";
 
 // const base = io('/');
 
-const fQuestions = "what is 1+1?";
-const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
+const fQuestions = {
+  1:{
+  question:"what is 1+1?", 
+  time_per_question:5,
+  points_per_question:100},
+  2:{
+  id:2,
+  question:"what is 2+2?", 
+  time_per_question:10,
+  points_per_question:250},
+  3:{
+  id:3,
+  question:"what is 3+3?", 
+  time_per_question:15,
+  points_per_question:500}
+};
 
+const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
+const players = [
+  {id:3, gamertag: "Henry", active_game_id: 3, score: 5000, user_id: 1, is_host: true},
+  {id:1, gamertag: "lisa", active_game_id: 3, score: 500, user_id: 2,is_host: false},
+  {id:2, gamertag: "rob", active_game_id: 3, score: 1500, user_id: 3, is_host: false}
+]
+const users = {
+  1:{id: 1, name: "HM", expertise_level:"god"},
+  2:{id: 2, name: "lis", expertise_level:"noob"},
+  3:{id: 3, name: "dum", expertise_level: "negative"}
+}
+
+// const created_quizzes = {1:{
+//   id:1,
+//   quiz_name,
+//   num_of_questions,
+//   difficulty,
+//   rating
+// }}
+
+const games = {1: {id:1, created_quiz_id:5, game_code:"ab", competition_mode_enabled:false}}
+const game_id = 3;
+let round = 1;
 export default function App() {
   const socket = io('http://localhost:8080');
   let message;
@@ -36,6 +74,14 @@ export default function App() {
           question={fQuestions}
           answers={fanswers}
         /> */}
+        <Gameroom
+        key={game_id}
+        round={round}
+        players={players}
+        users={users}
+        questions ={fQuestions}
+        answers={fanswers}
+        />
       </header>
     </div>
   )

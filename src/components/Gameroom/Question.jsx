@@ -13,7 +13,7 @@ export default function Question(props){
   return (
     <section>
       <h2>
-        {props.question}
+        {props.question.question}
       </h2>
       {answers}
     </section>
