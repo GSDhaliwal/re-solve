@@ -6,6 +6,7 @@ import axios from 'axios';
 import Answer from "./components/Answer";
 import Question from "./components/Question";
 import Create from "./components/Create/Create";
+import Join from "./components/Join/Join";
 
 // const base = io('/');
 
@@ -23,21 +24,24 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
+       {/*} <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button
+       <button
         onClick = {()=>{
           socket.emit("message", "look here bitch");
           console.log(message + " and " + socket.id);
         }}
         >
           TEST
-        </button>
-        <Create 
+      </button> */}
+        {/*<Join
+
+        />*/}
+        {<Create 
           key={categories.id}
           categories={categories}
-        />
+        /> }
         {/* <Question
           key={1}
           question={fQuestions}

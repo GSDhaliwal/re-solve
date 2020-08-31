@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Answers from './Answers';
 
 export default function Questions(props) {
+  const { id, index, question } = props;
 
   const [answers, setAnswers] = useState([1, 1]);
   
 
-  
-  useEffect(() => {
-    console.log(answers)
-  })
-
   const addAnswer = function() {
-   if(answers.length < 5) {
-     setAnswers([...answers, 1])
-   }
+    if(answers.length < 5) {
+      setAnswers([...answers, 1])
+    }
   };
 
   const deleteAnswer = function() {
@@ -31,15 +27,25 @@ export default function Questions(props) {
       />
     }
   })
+
+  const updatePartialQuestion = function(partName, event) {
+    const newSelf = {
+      ...question,
+      [partName]: event.target.value,     // Jeremy is not 100% sure this is 100%
+    }
+    console.log("new question:", newSelf)
+    props.onChange(newSelf)
+  }
   
- 
+
+
 
   
   return (
     <div className="questions">
-      <h3>Q{props.id + 1}</h3>
+      <h3>Q{index + 1}</h3>
         Question:
-          <input type="text" name="Question" id={props.id + 1}/>
+          <input type="text" name="Question" id={id} value={question.q_text} onChange={event => updatePartialQuestion('q_text', event)}/>
         <br/>
         <br/>
         <button type="button">Add Image</button>
@@ -63,6 +69,8 @@ export default function Questions(props) {
         <br/>
         <button type="button" onClick={addAnswer}>Add Answer</button>
         <button type="button" onClick={deleteAnswer}>Delete Answer</button>
+        <br/>
+        <button type="button" onClick={ props.onDelete }>Delete Question</button>
         <br/>
         
     </div>
