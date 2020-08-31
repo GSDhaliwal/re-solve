@@ -3,20 +3,26 @@ import React from 'react';
 export default function PlayerLobbyList(props) {
 
   const hostPlayer = (props) => {
-    if (props.host) {
+  //   if (props.host) {
+  //     return  <div>
+  //               <h1><em>{props.gamertag}</em></h1>
+  //               <h4>{props.level}</h4>
+  //               <button onClick={(()=>{
+  //                 console.log("clicked: START GAME");
+  //                 })}>START</button>
+  //             </div>
+  //   } else {
+  //     return  <div>
+  //             <h5>{props.gamertag}</h5>
+  //             <h4>{props.level}</h4>
+  //             </div>
+  //   }
+  // };
+
       return  <div>
-                <h2><strong>{props.gamertag}</strong></h2>
-                <h3>{props.level}</h3>
-                <button onClick={(()=>{
-                  console.log("clicked: START GAME");
-                  })}>START</button>
+                <h1>{props.gamertag}</h1>
+                <h4>{props.level}</h4>
               </div>
-    } else {
-      return  <div>
-              <h5>{props.gamertag}</h5>
-              <h3>{props.level}</h3>
-              </div>
-    }
   };
 
   return <div>
