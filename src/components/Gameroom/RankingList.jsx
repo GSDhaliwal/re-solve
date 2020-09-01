@@ -1,21 +1,27 @@
-import React from "react";
+ import { useContext} from "react";
+import * as React from 'react';
 import RankingListItem from "./RankingListItem"
+import UserContext from "./UserContext"
+
 export default function RankingList(props){
+
+  const context = useContext(UserContext);
+
   let sorted = props.players.sort((a, b)=>{
     return b.score - a.score;
   })
   
   let items = sorted.map((player, index)=>{
-    return <ul>
-      <RankingListItem 
+    return <RankingListItem 
     key={player.id}
-    rank={index+1}
     gamertag={player.gamertag}
-    level={props.users[player.user_id].expertise_level}
+    level={player.expertise_level}
     />
-    </ul>
   })
   return(
-    items
+    <ol>
+      {items}
+    </ol>
+    
   )
 }

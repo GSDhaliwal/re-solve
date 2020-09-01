@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import axios from 'axios';
-import Answer from "./components/Gameroom/Answer";
-import Question from "./components/Gameroom/Question";
+import UserContext from "./components/Gameroom/UserContext";
 import Gameroom from "./components/Gameroom/Gameroom";
-
 // const base = io('/');
 
 const fQuestions = {
@@ -18,7 +15,7 @@ const fQuestions = {
 },
   2:{
   id:2,
-  question:"what is 2+2?", 
+  question:"what is 2+2?",
   time_per_question:3,
   points_per_question:250,
   answers: [{content: "4", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}]
@@ -32,7 +29,6 @@ const fQuestions = {
 } 
 };
 
-// const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
 const players = [
   {id:3, gamertag: "Henry", active_game_id: 3, score: 5000, user_id: 1, is_host: true},
   {id:1, gamertag: "lisa", active_game_id: 3, score: 500, user_id: 2,is_host: false},
@@ -57,10 +53,41 @@ const game_id = 3;
 let round = 1;
 export default function App() {
   const socket = io('http://localhost:8080');
-  let message;
-  socket.on('message', (msg=>{
-    message = msg;
+  const [user, setUser] = useState();
+  const [start, setStart] = useState(0);
+  const [players, setPlayers] = useState();
+  const [questions, setQuestions] = useState();
+  const [gameDis, setGameDis] = useState();
+
+
+  socket.on('GameroomQ', (qa)=>{
+    console.log(qa);
+    setQuestions(qa);
+  });
+
+  useEffect(()=>{
+    setUser({id: 1, name: "HM", expertise_level:"god"});
+  },[]);
+
+  socket.on('playersCurrentRanking', (ranking=>{
+    setPlayers(ranking);
+    console.log(ranking);
+    
   }));
+  
+  useEffect(()=>{
+    setGameDis(<Gameroom
+      key={game_id}
+      players={players}
+      questions ={questions}
+      />);
+  },[players, questions]);
+
+  const sendAns=(ans)=>{
+    socket.emit("message", JSON.stringify(ans));
+    // console.log(message + " and " + socket.id);
+  }
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -69,8 +96,7 @@ export default function App() {
         </p>
         <button
         onClick = {()=>{
-          socket.emit("message", "look here bitch");
-          console.log(message + " and " + socket.id);
+          socket.emit('gameID', "1");
         }}
         >
           TEST
@@ -80,13 +106,16 @@ export default function App() {
           question={fQuestions}
           answers={fanswers}
         /> */}
-        <Gameroom
-        key={game_id}
-        round={round}
-        players={players}
-        users={users}
-        questions ={fQuestions}
-        />
+        <button
+          onClick={()=>{
+            setStart(1);
+          }}
+        >
+          Start Game
+        </button>
+        <UserContext.Provider value = {{user, setUser, sendAns}}>
+        {start===1 && gameDis}
+        </UserContext.Provider>
       </header>
     </div>
   )

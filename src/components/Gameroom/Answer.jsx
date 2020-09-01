@@ -5,7 +5,7 @@ export default function Answer(props){
     console.log("clicked", props.correct);
   })}>
       {props.prefix}
-      {". "}
+      {/* {". "} */}
       {props.content}
     </button>;
 }
