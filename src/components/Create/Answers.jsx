@@ -1,13 +1,37 @@
 import React from 'react';
 
 export default function Answers(props){
+  const { id, question } = props;
 
+  const updatePartialAnswer = function(id, event) {
+    const answers = question.answers;
+    answers[id].text = event.target.value;
+    const newSelf = {
+      ...question,
+      answers: answers,
+    }
+    props.onChange(newSelf)
+  }
+
+   const updatePartialAnswerBoolean = function(id, event) {
+    const answers = question.answers;
+    answers[id].correct = Boolean(event.target.checked);
+    const newSelf = {
+      ...question,
+      answers: answers,
+    }
+    props.onChange(newSelf)
+  }
+
+  
+  
   return (
+
     <div className="answers">
       <br/>
-      {props.id + 1}:
-      <input type="text" name="Answers" id={props.id + 1}/>
-      <input type="checkbox" id={props.id + 1} name={props.id + 1} />
+      {id + 1}:
+      <input type="text" name="Answers" id={id} value={question.answers[id].text} onChange={event => updatePartialAnswer(id, event)} />
+      <input type="checkbox" name="Answers" id={"checkbox"+id} value={question.answers[id].correct} onChange={event => updatePartialAnswerBoolean(id, event)} />
       <br/>
     </div>
   )
