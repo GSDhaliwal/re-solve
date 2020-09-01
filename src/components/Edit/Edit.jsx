@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Questions from './Questions';
+import Question from './Question';
 
 function randomId() {
   return Math.random().toString().slice(2, 10);
@@ -7,22 +7,9 @@ function randomId() {
 
 
 
-export default function Create(props){
-  const [questions, setQuestions] = useState([{
-    id: randomId(),
-    q_text: '',
-    img_url: '',
-    points: 125,
-    solve_time: 20,
-    answers: [
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
-    ],
-  }]);
-  
+export default function Edit(props){
+
+  const [questions, setQuestions] = useState([]);
   
   useEffect(() => {
     console.log(questions)
@@ -62,7 +49,7 @@ export default function Create(props){
   };
   
   let display = questions.map((question, index) => {
-      return <Questions 
+      return <Question 
         key={question.id}
         id={question.id}
         question={question}
@@ -104,4 +91,3 @@ export default function Create(props){
    </form>
   )
 }
-

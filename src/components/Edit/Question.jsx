@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import Answers from './Answers';
+import React, { useState } from 'react';
+import Answer from './Answer';
 
-export default function Questions(props) {
+const mergeDefaultAnswers = function (answers) {
+  const defaultAnswer = [
+    { text: '', correct: false},
+    { text: '', correct: false},
+    { text: '', correct: false},
+    { text: '', correct: false},
+    { text: '', correct: false},
+  ]
+  answers.forEach((answer, index) => {
+    defaultAnswer[index] = {...answer}
+  })
+  return defaultAnswer;
+}
+
+export default function Question(props) {
   const { id, index, question } = props;
-
-  const [answers, setAnswers] = useState([1, 1, 1, 1, 1]);
+  const existingAnswers = mergeDefaultAnswers(question.answers)
+  const [answers, setAnswers] = useState(existingAnswers);
   
-/*
-  const addAnswer = function() {
-    if(answers.length < 5) {
-      setAnswers([...answers, 1])
-    }
-  };
-
-  const deleteAnswer = function() {
-    if(answers.length > 2) {
-      setAnswers([...answers.slice(0, -1)])
-    }
-   };
-   */
-  
+  question.answers = answers;
   let display = answers.map((answer, index) => {
     if (index < 5) {
-      return <Answers 
+      return <Answer
         key={index}
         id={index}
-        question={props.question}
+        question={question}
         onChange={props.onChange}
       />
     }
@@ -35,10 +36,20 @@ export default function Questions(props) {
   const updatePartialQuestion = function(partName, event) {
     const newSelf = {
       ...question,
-      [partName]: event.target.value,
+      [partName]: event.target.value
     }
     props.onChange(newSelf)
   }
+
+  const updatePartialQuestionImage = function(partName, event) {
+    const newSelf = {
+      ...question,
+      [partName]: event.target.files[0]
+    }
+    props.onChange(newSelf)
+  }
+
+
 
 
 
@@ -51,7 +62,7 @@ export default function Questions(props) {
         <br/>
         <br/>
         Image:
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.img_url} onChange={event => updatePartialQuestion('img_url', event)} />
+        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.img_url} onChange={event => updatePartialQuestionImage('img_url', event)} />
         <br/>
         <br/>
         Points Awarded:
