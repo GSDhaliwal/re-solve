@@ -21,7 +21,7 @@ export default function PlayerLobbyList(props) {
 
       return  <div>
                 <h1>{props.gamertag}</h1>
-                <h4>{props.level}</h4>
+                {/* <h4>{props.level}</h4> */}
               </div>
   };
 
