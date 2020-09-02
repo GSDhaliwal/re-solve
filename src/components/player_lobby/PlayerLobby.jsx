@@ -19,9 +19,8 @@ export default function Lobby(props) {
     const playersData = props.players.map((player, index) => {
       return <PlayerLobbyList
                 key={player.user_id}
-                gamertag = {player.player_gamertag}
+                gamertag = {player.gamertag}
                 host = {player.is_host}
-                level = {props.users[player.user_id].user_expertise_level}
               />
     })
 
