@@ -54,8 +54,8 @@ export default function Gameroom(props){
           }, delay);
         }
       }
-      console.log(count);
-      console.log(view);
+      // console.log(count);
+      // console.log(view);
     },[count]);
     // <RankingList
     // key={props.round}

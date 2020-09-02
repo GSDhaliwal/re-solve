@@ -25,10 +25,12 @@ export default function App() {
 
   socket.on('playersCurrentRanking', (ranking=>{
     setPlayers(ranking);
-    console.log(ranking);
+    console.log("ranking?:",ranking);
   }));
   
   useEffect(()=>{
+    console.log("update ranking?");
+    
     setGameDis(<Gameroom
       key={game_id}
       players={players}
@@ -45,7 +47,7 @@ export default function App() {
     socket.once("loggedUser", (logged)=>{
       if(logged){
         setUser(logged);
-        console.log(logged);
+        // console.log(logged);
       }else{
         alert("you fucked up");
       }
