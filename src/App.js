@@ -16,7 +16,7 @@ const created_quizzes = [
   {id: 1, category_id: 1, user_id: 1, quiz_name: "Middle Earth", num_of_questions: 5, difficulty: 9.8, rating: 7, num_of_times_hosted: 10, total_players_played: 200},
 ];
 
-const categories = [{id:1, categories_name: 'Math'}, {id:2, categories_name: 'History'}, {id:3, categories_name: 'Code'}]
+const categories = [{id:1, categories_name: 'Math'}, {id:2, categories_name: 'Science'}, {id:3, categories_name: 'Code'}]
 
 const questions = [{id:1, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 1 + 1?', points: 125, time_per_question: 5}, {id:2, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 2 + 2?', points: 125, time_per_question: 5}, {id:3, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 4 + 4?', points: 125, time_per_question: 5}]
 
@@ -32,8 +32,8 @@ export default function App() {
     message = msg;
   }));
 
-  const foo = (GT, categories, questions)=>{
-    socket.emit('createdTest', {GT, categories, questions});
+  const createQuiz = (GameTitle, category, questions, numOfQuestions, difficulty)=>{
+    socket.emit('createdQuiz', {GameTitle, category, questions, numOfQuestions, difficulty});
   }
 
   return (
@@ -54,9 +54,9 @@ export default function App() {
           questions={state.questions}
           answers={state.amswers}
         />*/}
-        <createdContext.Provider value = {{foo}}>
+        <createdContext.Provider value = {{createQuiz}}>
         {<Create 
-          key={categories.id}
+          key={created_quizzes.id}
           categories={state.categories}
         />}
         </createdContext.Provider>

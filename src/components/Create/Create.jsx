@@ -2,17 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
 import createdContext from './createdContext';
 
-function randomId() {
-  return Math.random().toString().slice(2, 10);
-}
-
-
 
 export default function Create(props){
+
   const context = useContext(createdContext);
-  const [GT, setGT] = useState();
+  const [stateCategory, setStateCategory] = useState({value: 'Math'});
+  const [difficulty, setDifficulty] = useState({value: '1'});
+  const [GameTitle, setGameTitle] = useState();
+  const [count,setCount] = useState(1);
   const [questions, setQuestions] = useState([{
-    id: randomId(),
+    id: 0,
     q_text: '',
     img_url: '',
     points: 125,
@@ -31,8 +30,9 @@ export default function Create(props){
     console.log(questions)
   })
 
-  const addQuestion = function() {
-    let id = randomId();
+  const addQuestion = function(id) {
+    console.log("inside add",id);
+    setCount(count+1);
     setQuestions([...questions, {
       id,
       q_text: '',
@@ -46,15 +46,20 @@ export default function Create(props){
         { text: '', correct: false},
         { text: '', correct: false},
       ],
-    }])  
+    }]) 
+
   };
 
  
   const deleteQuestion = function(index) {
     console.log("time to delete a question, how about index = ", index);
-    const spliceQuestionsArray = [...questions] 
-    spliceQuestionsArray.splice(index, 1)
-    setQuestions(spliceQuestionsArray)
+    let temp=[];
+    questions.map((question)=>{
+      if(question.id !== index){
+        temp.push(question);
+      }
+    })
+    setQuestions(temp);
   };
 
 
@@ -78,37 +83,59 @@ export default function Create(props){
         }}
       />
   })
-  const updateGT = (event)=>{
-    setGT(event.target.value);
+
+  const handleChangeCategory = (event) => {
+    setStateCategory({value: event.target.value});
+  }
+
+  const handleChangeDifficulty = (event) => {
+    setDifficulty({value: event.target.value});
+  }
+
+  const updateGameTitle = (event)=>{
+    setGameTitle(event.target.value);
   }
  
+
   return (
     <form>
       <label>
         Game Title:
-        <input type="text" onChange={updateGT} />
+        <input type="text" onChange={updateGameTitle} />
         <br/>
         <br/>
         Category:
-        <select>
+        <select value={stateCategory.value} onChange={handleChangeCategory}>
           { props.categories.map(category => {
-            return <option 
-              value={category.categories_name}
-              key={category.categories_name}
-            >
+            return ( 
+              <option value={category.categories_name} key={category.categories_name}>
               {category.categories_name}
-            </option>})
-          }
+              </option>
+            )
+          }) }
+        </select>
+        Difficulty:
+        <select value={difficulty.value} onChange={handleChangeDifficulty}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
       </label>
       {display}
       <br/>
-      <button type="button" onClick={addQuestion}>Add Question</button>
+      <button type="button" onClick={()=>{
+        addQuestion(count)
+        console.log("count on buttonclick",count);
+        }}>Add Question</button>
+      <br/>
       <br/>
       <button
         type="button"  
-        onClick={()=>{context.foo(GT, props.categories, questions)}}>        
-        </button>
+        onClick={()=>{context.createQuiz(GameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value))}}>
+          Save/Post Quiz       
+      </button>
    </form>
   )
 }

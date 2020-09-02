@@ -6,19 +6,6 @@ export default function Questions(props) {
 
   const [answers, setAnswers] = useState([1, 1, 1, 1, 1]);
   
-/*
-  const addAnswer = function() {
-    if(answers.length < 5) {
-      setAnswers([...answers, 1])
-    }
-  };
-
-  const deleteAnswer = function() {
-    if(answers.length > 2) {
-      setAnswers([...answers.slice(0, -1)])
-    }
-   };
-   */
   
   let display = answers.map((answer, index) => {
     if (index < 5) {
@@ -59,7 +46,6 @@ export default function Questions(props) {
             <option value="125">125</option>
             <option value="250">250</option>
             <option value="500">500</option>
-            <option value="1000">1000</option>
           </select>
         <br/>
         <br/>
