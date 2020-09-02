@@ -7,6 +7,7 @@ import Answer from "./components/Answer";
 import Question from "./components/Question";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
+import createdContext from "./components/Create/createdContext";
 
 
 // const base = io('/');
@@ -30,34 +31,35 @@ export default function App() {
   socket.on('message', (msg=>{
     message = msg;
   }));
+
+  const foo = (GT, categories, questions)=>{
+    socket.emit('createdTest', {GT, categories, questions});
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-       {/*} <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+       {/*
        <button
         onClick = {()=>{
-          socket.emit("message", "look here bitch");
+          socket.emit("message", "look here");
           console.log(message + " and " + socket.id);
         }}
         >
           TEST
       </button> */}
-        {/*<JoinGameList
-          quizzes={state.quizzes}
-          categories={state.categories}
-        />*/}
-        {<Edit 
+        {/*<Edit 
           created_quizzes={state.created_quizzes}  
           categories={state.categories}
           questions={state.questions}
           answers={state.amswers}
-        />}
-        {/*<Create 
+        />*/}
+        <createdContext.Provider value = {{foo}}>
+        {<Create 
           key={categories.id}
           categories={state.categories}
-        />*/}
+        />}
+        </createdContext.Provider>
         {/* <Question
           key={1}
           question={fQuestions}

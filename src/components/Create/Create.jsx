@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
+import createdContext from './createdContext';
 
 function randomId() {
   return Math.random().toString().slice(2, 10);
@@ -8,6 +9,8 @@ function randomId() {
 
 
 export default function Create(props){
+  const context = useContext(createdContext);
+  const [GT, setGT] = useState();
   const [questions, setQuestions] = useState([{
     id: randomId(),
     q_text: '',
@@ -75,13 +78,15 @@ export default function Create(props){
         }}
       />
   })
-
+  const updateGT = (event)=>{
+    setGT(event.target.value);
+  }
  
   return (
     <form>
       <label>
         Game Title:
-        <input type="text" name="Game Title" />
+        <input type="text" onChange={updateGT} />
         <br/>
         <br/>
         Category:
@@ -100,7 +105,10 @@ export default function Create(props){
       <br/>
       <button type="button" onClick={addQuestion}>Add Question</button>
       <br/>
-      <input type="submit" value="Save/Post" />
+      <button
+        type="button"  
+        onClick={()=>{context.foo(GT, props.categories, questions)}}>        
+        </button>
    </form>
   )
 }
