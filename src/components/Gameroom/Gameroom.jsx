@@ -2,49 +2,54 @@ import React,{useState, useEffect, useContext} from "react";
 import RankingList from "./RankingList";
 import Questions from "./Question"
 import UserContext from "./UserContext"
+import Reveal from "./Reveal";
 
 
 export default function Gameroom(props){
   const [view, setView] = useState();
   const [count, setcount] = useState(0);
   const context = useContext(UserContext);
-//   let max = 10;
-  // while(view < max){
-  // setInterval(()=>{
-  //   console.log(view);
-  //   setView((cv)=>{
-  //     return cv+1;
-  //   })
-  // }, 3000); 
-  // }
+
+  
   
   useEffect(()=>{
     console.log(context.user);
   },[context.user]);
     useEffect(()=>{
       let delay = 0;
-      if(count < Object.keys(props.questions).length*2){
-        if(count%2){
-          delay = props.questions[ Math.floor(count/2)].time_per_question*1000;
+      if(count < Object.keys(props.questions).length*3){
+        if(count%3 === 2){
+          delay = 1500;
+          //delay = props.questions[ Math.floor(count/3)].time_per_question*1000;
           setTimeout(() => {
             setView(<RankingList
-              key={props.questions[Math.floor(count/2)].id}
+              key={props.questions[Math.floor(count/3)].id}
               players={props.players}
               user={context.user}
             />)
-            console.log("r");
             setcount(count+1);
           }, delay);
-        }else{
+        }
+        if(count%3 === 0){
           delay = 1500;
           setTimeout(() => {
             setView(<Questions
-              key={props.questions[Math.floor(count/2)].id}
-              question={props.questions[ Math.floor(count/2)]}
-              answers={props.questions[ Math.floor(count/2)].answers}
+              key={props.questions[Math.floor(count/3)].id}
+              question={props.questions[ Math.floor(count/3)]}
+              answers={props.questions[ Math.floor(count/3)].answers}
               user={context.user}
+              score={props.questions[Math.floor(count/3)].points_per_question}
               />);
-              console.log("q");
+              setcount(count+1);
+          }, delay);
+        }
+        if(count % 3 === 1){
+          
+          delay = props.questions[ Math.floor(count/3)].time_per_question*1000;
+          setTimeout(() => {
+            setView(<Reveal
+              answers={props.questions[Math.floor(count/3)].answers}
+            />);
               setcount(count+1);
           }, delay);
         }

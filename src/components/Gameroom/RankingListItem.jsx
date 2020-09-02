@@ -6,6 +6,7 @@ export default function RankingListItem(props){
       {/* {props.rank}
       {". "} */}
       {props.gamertag}
+      {props.score}
       {" "}
       {props.level && `(${props.level})`}
     </li>

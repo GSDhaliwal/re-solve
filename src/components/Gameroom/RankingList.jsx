@@ -1,5 +1,4 @@
- import { useContext} from "react";
-import * as React from 'react';
+import React, {useContext} from "react";
 import RankingListItem from "./RankingListItem"
 import UserContext from "./UserContext"
 
@@ -15,6 +14,7 @@ export default function RankingList(props){
     return <RankingListItem 
     key={player.id}
     gamertag={player.gamertag}
+    score={player.score}
     level={player.expertise_level}
     />
   })
