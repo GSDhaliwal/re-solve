@@ -7,31 +7,6 @@ import Answer from "./components/Answer";
 import Question from "./components/Question";
 import PlayerLobby from "./components/player_lobby/PlayerLobby";
 
-// import ValueContext from "./components/player_lobby/ValueContext";
-
-// const base = io('/');
-
-const fQuestions = "what is 1+1?";
-const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
-
-// const playerData = [
-//   {user_id: 1, player_gamertag: "Hero", score: 12, is_host: false},
-//   {user_id: 2, player_gamertag: "Paws", score: 23, is_host: false},
-//   {user_id: 3, player_gamertag: "Kylo", score: 69, is_host: true},
-//   {user_id: 4, player_gamertag: "Loko", score: 33, is_host: false},
-//   {user_id: 5, player_gamertag: "Shadow", score: 42, is_host: false}
-// ];
-
-// const users = {
-//   1:{id: 1, name: "Henry", email: "henry@xp.com", password: "###", user_expertise_level: "S Rank"},
-//   2:{id: 2, name: "Felipe", email: "felipe@xp.com", password: "###", user_expertise_level: "B Rank"},
-//   3:{id: 3, name: "Gurcharan", email: "chanchan@xp.com", password: "###", user_expertise_level: "A Rank"},
-//   4:{id: 4, name: "Link", email: "elite@xp.com", password: "###", user_expertise_level: "C Rank"},
-//   5:{id: 5, name: "Soma", email: "soma@xp.com", password: "###", user_expertise_level: "S Rank"},
-//   6:{id: 6, name: "Valen", email: "soma@xp.com", password: "###", user_expertise_level: "F Rank"}
-// };
-
-// export const ValueContext = React.createContext();
 
 export default function App() {
 
@@ -46,17 +21,9 @@ export default function App() {
   // }));
 
   // useEffect(() => {
-    const socket = io('http://localhost:8080');
-    // setSocket(socket);
-    console.log("connecting to socket");
-    // let message;
-    // socket.on('message', (msg=>{
-    //   let message = JSON.parse(msg);
-    //   setState((prevState) => ({...prevState, playerData: [...prevState.playerData, message]}))
-      // setValue(playerData);
-      // console.log("1:", playerData);
-      // }));
-  // },[]);
+  const socket = io('http://localhost:8080');
+  console.log("connecting to socket");
+
 
   socket.on('playerslist', (data =>{
     setPlayers(data);
