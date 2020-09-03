@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
+
+
 import './App.css';
 import io from 'socket.io-client';
 import UserContext from "./components/Gameroom/UserContext";
 import Gameroom from "./components/Gameroom/Gameroom";
 import Login from "./components/Login"
 import Signup from "./components/Login/Signup"
+import GamesList from "./components/host_games_list/GamesList";
+import createContext from "./components/createContext";
 const game_id = 1;
+
 export default function App() {
   const socket = io('http://localhost:8080');
   const [user, setUser] = useState();
@@ -19,8 +24,10 @@ export default function App() {
   const [answered, setAnswered] = useState(false);
   const [whichAns, setWhichAns] = useState();
   const [sign, setSign] = useState(false);
-
-
+  const [quiz, setQuiz] = useState({});
+  const [category, setCategory] = useState({});
+  const [initilizedQuiz, setInitializedQuiz] = useState(false);
+  const [initilizedCategory, setInitializedCategory] = useState(false);
 
 
   socket.on('playersCurrentRanking', (ranking=>{
@@ -77,6 +84,32 @@ export default function App() {
       setQuestions(qa);
     });
   },[])
+    
+    const createGame = (quizID)=>{
+    socket.emit('hostableGame', {quizID});
+  };
+
+  socket.on('gameslist', (data=>{
+    setQuiz(data);
+    setInitializedQuiz(true);
+  }));
+  
+  useEffect(() =>{
+    console.log("logging quiz: ", quiz);
+    // console.log("logging category: ", category);
+  },[quiz]);
+
+
+
+  useEffect (() => {
+    socket.emit('hostGames', '1');
+    console.log("log after socket emit - hostGames");
+  },[]);
+    
+  if (!initilizedQuiz && !initilizedCategory) {
+    return null;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -98,7 +131,13 @@ export default function App() {
         >
           Start Game
         </button>
-        
+            
+        <createContext.Provider value = {{createGame}}>
+          <GamesList
+            quizzes={quiz}
+          />
+        </createContext.Provider>
+            
       </header>
     </div>
   )
