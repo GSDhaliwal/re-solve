@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import UserContext from "./components/Gameroom/UserContext";
 import Gameroom from "./components/Gameroom/Gameroom";
 import Login from "./components/Login"
-
+import Signup from "./components/Login/Signup"
 const game_id = 1;
 export default function App() {
   const socket = io('http://localhost:8080');
@@ -18,7 +18,7 @@ export default function App() {
   const [password, setPassword] = useState();
   const [answered, setAnswered] = useState(false);
   const [whichAns, setWhichAns] = useState();
-
+  const [sign, setSign] = useState(false);
 
 
 
@@ -58,6 +58,18 @@ export default function App() {
       setUser(null);
     }
   }
+  const register = (u, p)=>{
+    socket.emit("register", {username: u, password: p});
+    socket.once("reggedUser", (logged)=>{
+        if(logged){
+          setUser(logged);
+          console.log("logged", logged);
+        } else{
+          alert("username already taken");
+        }
+        
+    })
+  }
   useEffect(()=>{
     socket.emit('gameID', game_id);
     socket.on('GameroomQ', (qa)=>{
@@ -70,8 +82,9 @@ export default function App() {
       <header className="App-header">
       <UserContext.Provider value = {{user, setUser, verifyLogin, 
           username, setUsername, password, setPassword, logout, 
-          gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers}}>
-          {<Login/>}
+          gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
+      <Login/>
+      <Signup sign={sign}/> 
           {start===1 && gameDis}
         </UserContext.Provider>
         <p>

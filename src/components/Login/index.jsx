@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from "../Gameroom/UserContext"
+import Signup from "./Signup";
 
 
 
 export default function Login (props){
 
-  const [display, setDisplay] = useState();
+
   const context = useContext(UserContext);
   const updateUsername = (event) =>{
     context.setUsername(event.target.value);
@@ -37,6 +38,7 @@ export default function Login (props){
       </button>
       </div>)
       }
+        
       
 
     </section>
