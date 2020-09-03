@@ -2,26 +2,27 @@ import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
 import createdContext from './createdContext';
 
+const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 
 export default function Create(props){
-
+  
   const context = useContext(createdContext);
   const [stateCategory, setStateCategory] = useState({value: 'Math'});
   const [difficulty, setDifficulty] = useState({value: '1'});
-  const [GameTitle, setGameTitle] = useState();
+  const [gameTitle, setGameTitle] = useState();
   const [count,setCount] = useState(1);
   const [questions, setQuestions] = useState([{
     id: 0,
-    q_text: '',
-    img_url: '',
-    points: 125,
-    solve_time: 20,
+    question: '',
+    image: '',
+    points_per_question: 125,
+    time_per_question: 20,
     answers: [
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
-      { text: '', correct: false},
+      { answer: '', correct_answer: false},
+      { answer: '', correct_answer: false},
+      { answer: '', correct_answer: false},
+      { answer: '', correct_answer: false},
+      { answer: '', correct_answer: false}
     ],
   }]);
   
@@ -31,20 +32,19 @@ export default function Create(props){
   })
 
   const addQuestion = function(id) {
-    console.log("inside add",id);
     setCount(count+1);
     setQuestions([...questions, {
       id,
-      q_text: '',
-      img_url: '',
-      points: 125,
-      solve_time: 20,
+      question: '',
+      image: '',
+      points_per_question: 125,
+      time_per_question: 20,
       answers: [
-        { text: '', correct: false},
-        { text: '', correct: false},
-        { text: '', correct: false},
-        { text: '', correct: false},
-        { text: '', correct: false},
+        { answer: '', correct_answer: false},
+        { answer: '', correct_answer: false},
+        { answer: '', correct_answer: false},
+        { answer: '', correct_answer: false},
+        { answer: '', correct_answer: false}
       ],
     }]) 
 
@@ -106,10 +106,10 @@ export default function Create(props){
         <br/>
         Category:
         <select value={stateCategory.value} onChange={handleChangeCategory}>
-          { props.categories.map(category => {
+          { categories.map(category => {
             return ( 
-              <option value={category.categories_name} key={category.categories_name}>
-              {category.categories_name}
+              <option value={category} key={category}>
+              {category}
               </option>
             )
           }) }
@@ -133,7 +133,7 @@ export default function Create(props){
       <br/>
       <button
         type="button"  
-        onClick={()=>{context.createQuiz(GameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value))}}>
+        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value))}}>
           Save/Post Quiz       
       </button>
    </form>

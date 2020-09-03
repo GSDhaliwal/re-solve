@@ -34,15 +34,15 @@ export default function Questions(props) {
     <div className="questions">
       <h3>Q{index + 1}</h3>
         Question:
-          <input type="text" name="Question" id={id} value={question.q_text} onChange={event => updatePartialQuestion('q_text', event)}/>
+          <input type="text" name="Question" id={id} value={question.question} onChange={event => updatePartialQuestion('question', event)}/>
         <br/>
         <br/>
         Image:
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.img_url} onChange={event => updatePartialQuestion('img_url', event)} />
+        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
         <br/>
         <br/>
         Points Awarded:
-          <select value={question.points} onChange={event => updatePartialQuestion('points', event)}>
+          <select value={question.points_per_question} onChange={event => updatePartialQuestion('points_per_question', event)}>
             <option value="125">125</option>
             <option value="250">250</option>
             <option value="500">500</option>
@@ -50,7 +50,7 @@ export default function Questions(props) {
         <br/>
         <br/>
         Seconds to solve:
-          <input type="text" name="seconds" value={question.solve_time} onChange={event => updatePartialQuestion('solve_time', event)}/>
+          <input type="text" name="seconds" value={question.time_per_question} onChange={event => updatePartialQuestion('time_per_question', event)}/>
         <br/>
         <br/>
         Answers:

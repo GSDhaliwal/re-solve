@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client';
@@ -8,33 +8,98 @@ import Question from "./components/Question";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import createdContext from "./components/Create/createdContext";
+import editedContext from "./components/Create/createdContext";
 
 
 // const base = io('/');
 
-const created_quizzes = [
-  {id: 1, category_id: 1, user_id: 1, quiz_name: "Middle Earth", num_of_questions: 5, difficulty: 9.8, rating: 7, num_of_times_hosted: 10, total_players_played: 200},
-];
-
-const categories = [{id:1, categories_name: 'Math'}, {id:2, categories_name: 'Science'}, {id:3, categories_name: 'Code'}]
-
-const questions = [{id:1, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 1 + 1?', points: 125, time_per_question: 5}, {id:2, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 2 + 2?', points: 125, time_per_question: 5}, {id:3, created_quiz_id: 1, quiz_key: 'A6D38D', question: 'what is 4 + 4?', points: 125, time_per_question: 5}]
-
-const answers = [{id: 1, question_id: 1, correct_answer: false, answer: 1}, {id: 2, question_id: 1, correct_answer: true, answer: 2}, {id: 3, question_id: 1, correct_answer: false, answer: 4}, {id: 4, question_id: 2, correct_answer: true, answer: 4}, {id: 5, question_id: 2, correct_answer: false, answer: 6}, {id: 5, question_id: 3, correct_answer: false, answer: 4}, {id: 6, question_id: 3, correct_answer: false, answer: 3}, {id: 7, question_id: 3, correct_answer: false, answer: 24}, {id: 8, question_id: 3, correct_answer: false, answer: 40}, {id: 9, question_id: 3, correct_answer: true, answer: 8},]
 
 export default function App() {
-
-  const [state, setState] = useState({categories, created_quizzes, questions, answers});
-
+  const context = useContext(createdContext);
+  
+  const [quiz, setQuiz] = useState();
+  const [title, setTitle] = useState();
+  const [clicked, setClicked] = useState(false);
   const socket = io('http://localhost:8080');
   let message;
-  socket.on('message', (msg=>{
-    message = msg;
-  }));
 
-  const createQuiz = (GameTitle, category, questions, numOfQuestions, difficulty)=>{
-    socket.emit('createdQuiz', {GameTitle, category, questions, numOfQuestions, difficulty});
+  useEffect(() => {
+    socket.on('message', (msg=>{
+      message = msg;
+    }));
+    
+  }, [])
+
+  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty)=>{
+    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty});
   }
+
+  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId)=>{
+    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId});
+  }
+  
+  
+  const bar = () => {
+    socket.emit('quizToEdit', '24');
+    socket.once('editThisQuiz', (questions => {
+      const questionsArray = questions.map((question, index) => {
+        const container = {};
+        container.id = index;
+        container.question = question.question;
+        container.image = question.image;
+        container.points_per_question = question.points_per_question;
+        container.time_per_question = question.time_per_question;
+        container.answers = question.answers;
+        container.created_quiz_id = question.created_quiz_id;
+        return container;
+      })
+      setQuiz(questionsArray);
+      setClicked(true);
+    }))
+    socket.once('editThisQuizTitle', (res => {
+      setTitle(res);
+    }))
+  }
+
+  const clickfunc = () => {
+    
+    bar();
+  }
+
+
+  //original <---
+  // const bar = (setQuiz, setTitle)=>{
+  //   socket.emit('quizToEdit', '12');
+  //   socket.once('editThisQuiz', (res => {
+  //     console.log("Q", res)
+  //     setQuiz(res);
+  //   }))
+  //   socket.once('editThisQuizTitle', (res => {
+  //     console.log("T", res)
+  //     setTitle(res);
+  //   }))
+  // }
+
+  // const clickfunc =()=>{
+  //   setClicked(true);
+  //   bar();
+  // }
+
+  
+    // socket.emit('quizToEdit', '12');
+
+    // useEffect(() => {
+    //   socket.once('editThisQuiz', (res => {
+    //     console.log("Q", res)
+    //     setQuiz(res);
+    //     setInitialized(true);
+    //   }))
+    //   socket.once('editThisQuizTitle', (res => {
+    //     console.log("T", res)
+    //     setTitle(res);
+    //   }))
+    // }, []);
+
 
   return (
     <div className="App">
@@ -48,18 +113,22 @@ export default function App() {
         >
           TEST
       </button> */}
-        {/*<Edit 
-          created_quizzes={state.created_quizzes}  
-          categories={state.categories}
-          questions={state.questions}
-          answers={state.amswers}
-        />*/}
+        {
+          <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
+          setTitle, clickfunc, bar}}>
+          { clicked ? <Edit />
+          : <button onClick ={()=>{
+            bar();
+          }}>
+            EDIT
+            </button>
+          }  
+          </createdContext.Provider>}
+        { /*
         <createdContext.Provider value = {{createQuiz}}>
-        {<Create 
-          key={created_quizzes.id}
-          categories={state.categories}
-        />}
-        </createdContext.Provider>
+        <Create 
+        />
+        </createdContext.Provider> */}
         {/* <Question
           key={1}
           question={fQuestions}

@@ -6,7 +6,7 @@ export default function Answer(props){
   
   const updatePartialAnswer = function(id, event) {
     const answers = question.answers;
-    answers[id].text = event.target.value;
+    answers[id].answer = event.target.value;
     const newSelf = {
       ...question,
       answers: answers,
@@ -16,7 +16,7 @@ export default function Answer(props){
 
    const updatePartialAnswerBoolean = function(id, event) {
     const answers = question.answers;
-    answers[id].correct = Boolean(event.target.checked);
+    answers[id].correct_answer = Boolean(event.target.checked);
     const newSelf = {
       ...question,
       answers: answers,
@@ -33,8 +33,8 @@ export default function Answer(props){
 
     <div className="answers">
       <br/>
-      <input type="text" name="Answers" id={id} value={question.answers[id].text} onChange={event => updatePartialAnswer(id, event)} />
-      <input type="checkbox" name="Answers" id={"checkbox"+id} checked={question.answers[id].correct} onChange={event => updatePartialAnswerBoolean(id, event)} />
+      <input type="text" name="Answers" id={id} value={question.answers[id].answer} onChange={event => updatePartialAnswer(id, event)} />
+      <input type="checkbox" name="Answers" id={"checkbox"+id} checked={question.answers[id].correct_answer} onChange={event => updatePartialAnswerBoolean(id, event)} />
       <br/>
     </div>
   )
