@@ -19,7 +19,9 @@ export default function Login (props){
   return(
     <section>
 
-    { !context.user ? (<form>
+    { !context.user ? (
+    <div>
+    <form>
       <input 
         type="text" name="username" placeholder="username" onChange={updateUsername}
       />
@@ -29,7 +31,10 @@ export default function Login (props){
       <button type="button" onClick={()=>{context.verifyLogin(context.username, context.password)}}>
         Login
       </button>
-      </form>) : 
+      </form>
+      <Signup/> 
+      </div>)
+      : 
       // context.user.username
        (<div>
       {context.user.username}

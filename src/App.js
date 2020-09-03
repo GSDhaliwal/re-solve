@@ -84,7 +84,7 @@ export default function App() {
           username, setUsername, password, setPassword, logout, 
           gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
       <Login/>
-      <Signup sign={sign}/> 
+      
           {start===1 && gameDis}
         </UserContext.Provider>
         <p>
