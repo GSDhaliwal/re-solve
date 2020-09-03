@@ -9,6 +9,7 @@ export default function GamesList(props) {
   const quizData = quizzes.map((quiz, index) => {
       return <Game
                 key={quiz.id}
+                id={quiz.id}
                 user={quiz.user_id}
                 gamertag = {quiz.player_gamertag}
                 name={quiz.quiz_name}
