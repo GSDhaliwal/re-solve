@@ -70,7 +70,6 @@ export default function Question(props) {
             <option value="125">125</option>
             <option value="250">250</option>
             <option value="500">500</option>
-            <option value="1000">1000</option>
           </select>
         <br/>
         <br/>
