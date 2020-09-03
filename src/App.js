@@ -1,23 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import io from 'socket.io-client';
-import axios from 'axios';
-import Answer from "./components/Answer";
-import Question from "./components/Question";
-
-
-
-import React, { useState, useEffect } from 'react';
-
-
 import './App.css';
 import io from 'socket.io-client';
 import UserContext from "./components/Gameroom/UserContext";
 import Gameroom from "./components/Gameroom/Gameroom";
 import Login from "./components/Login"
-import Signup from "./components/Login/Signup"
 import GamesList from "./components/host_games_list/GamesList";
 import createContext from "./components/createContext";
 import PlayerLobby from "./components/player_lobby/PlayerLobby";
@@ -27,9 +14,8 @@ const game_id = 1;
 export default function App() {
 
   const [initilized, setInitialized] = useState(false);
-  // const [socket, setSocket] = useState(null);
-  const [gameCode, setGameCode] = useState(117);
-  const [players, setPlayers] = useState({});
+  const [gameCode, setGameCode] = useState("ab");
+  const [lplayers, setLplayers] = useState({});
   const socket = io('http://localhost:8080');
 
 
@@ -49,7 +35,7 @@ export default function App() {
   const [quiz, setQuiz] = useState({});
   const [category, setCategory] = useState({});
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
-  const [initilizedCategory, setInitializedCategory] = useState(false);
+ 
 
 
   socket.on('playersCurrentRanking', (ranking=>{
@@ -58,20 +44,23 @@ export default function App() {
   }));
   
   
+  //------- Felipe -------------->//
     useEffect (() => {
     // socket.emit('hostGames', '1');
     // console.log("log after socket emit - hostGames");
     socket.emit('listplayers', gameCode);
     socket.on('playerslist', (data =>{
-    setPlayers(data);
-    console.log("players data --> ", players);
+    setLplayers(data);
+    console.log("players data --> ", lplayers);
     setInitialized(true);
   }));
     console.log("listplayers loggoned on");
   },[]);
+  //------- Felipe -------------->//
+  
   
   useEffect(()=>{
-    console.log("update ranking?");
+    console.log("update ranking?", players);
     
     setGameDis(<Gameroom
       key={game_id}
@@ -115,19 +104,16 @@ export default function App() {
   useEffect(()=>{
     socket.emit('gameID', game_id);
     socket.on('GameroomQ', (qa)=>{
-      console.log(qa);
+      console.log("questions and answers:", qa);
       setQuestions(qa);
     });
   },[])
     
-    const createGame = (quizID)=>{
+  const createGame = (quizID)=>{
     socket.emit('hostableGame', {quizID});
   };
 
-  socket.on('gameslist', (data=>{
-    setQuiz(data);
-    setInitializedQuiz(true);
-  }));
+
   
   useEffect(() =>{
     console.log("logging quiz: ", quiz);
@@ -139,9 +125,15 @@ export default function App() {
   useEffect (() => {
     socket.emit('hostGames', '1');
     console.log("log after socket emit - hostGames");
+    socket.on('gameslist', (data=>{
+      console.log("inside socket games list");
+      setQuiz(data);
+      setInitializedQuiz(true);
+    }));
   },[]);
+
     
-  if (!initilizedQuiz && !initilized) {
+  if (!initilizedQuiz || !initilized) {
     return null;
   }
 
@@ -155,17 +147,6 @@ export default function App() {
       
           {start===1 && gameDis}
         </UserContext.Provider>
-        <p>
-          home page testing
-        </p>
-   
-        <h3>Lobby</h3>
-        {/* <ValueContext.Provider value={{value}}> */}
-          <PlayerLobby
-            players={players}
-          />
-        {/* </ValueContext.Provider> */}
-
         <button
           onClick={()=>{
             setStart(1);
@@ -174,12 +155,23 @@ export default function App() {
           Start Game
         </button>
             
+        <p>
+          home page testing
+        </p>
+   
+        <h3>Lobby</h3>
+        {/* <ValueContext.Provider value={{value}}> */}
+          <PlayerLobby
+            players={lplayers}
+          />
+        {/* </ValueContext.Provider> */}
         <createContext.Provider value = {{createGame}}>
           <GamesList
             quizzes={quiz}
           />
         </createContext.Provider>
-            
+        
+        
 
       </header>
     </div>

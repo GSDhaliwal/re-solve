@@ -4,7 +4,7 @@ import Game from './Game';
 export default function GamesList(props) {
 
   let quizzes = props.quizzes;
-  console.log("quizzes --> ", quizzes);
+  console.log("quizzes --> ", props.quizzes);
 
   const quizData = quizzes.map((quiz, index) => {
       return <Game
