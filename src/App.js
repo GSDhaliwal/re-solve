@@ -1,3 +1,14 @@
+
+import React, { useEffect, useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import io from 'socket.io-client';
+import axios from 'axios';
+import Answer from "./components/Answer";
+import Question from "./components/Question";
+
+
+
 import React, { useState, useEffect } from 'react';
 
 
@@ -9,10 +20,21 @@ import Login from "./components/Login"
 import Signup from "./components/Login/Signup"
 import GamesList from "./components/host_games_list/GamesList";
 import createContext from "./components/createContext";
+import PlayerLobby from "./components/player_lobby/PlayerLobby";
 const game_id = 1;
 
+
 export default function App() {
+
+  const [initilized, setInitialized] = useState(false);
+  // const [socket, setSocket] = useState(null);
+  const [gameCode, setGameCode] = useState(117);
+  const [players, setPlayers] = useState({});
   const socket = io('http://localhost:8080');
+
+
+
+
   const [user, setUser] = useState();
   const [gamerTag, setGamerTag] = useState("bigdaddy");
   const [start, setStart] = useState(0);
@@ -34,6 +56,19 @@ export default function App() {
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
+  
+  
+    useEffect (() => {
+    // socket.emit('hostGames', '1');
+    // console.log("log after socket emit - hostGames");
+    socket.emit('listplayers', gameCode);
+    socket.on('playerslist', (data =>{
+    setPlayers(data);
+    console.log("players data --> ", players);
+    setInitialized(true);
+  }));
+    console.log("listplayers loggoned on");
+  },[]);
   
   useEffect(()=>{
     console.log("update ranking?");
@@ -106,7 +141,7 @@ export default function App() {
     console.log("log after socket emit - hostGames");
   },[]);
     
-  if (!initilizedQuiz && !initilizedCategory) {
+  if (!initilizedQuiz && !initilized) {
     return null;
   }
 
@@ -123,7 +158,14 @@ export default function App() {
         <p>
           home page testing
         </p>
-        
+   
+        <h3>Lobby</h3>
+        {/* <ValueContext.Provider value={{value}}> */}
+          <PlayerLobby
+            players={players}
+          />
+        {/* </ValueContext.Provider> */}
+
         <button
           onClick={()=>{
             setStart(1);
@@ -138,6 +180,7 @@ export default function App() {
           />
         </createContext.Provider>
             
+
       </header>
     </div>
   )
