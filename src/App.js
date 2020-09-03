@@ -1,41 +1,104 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import axios from 'axios';
-import Answer from "./components/Answer";
-import Question from "./components/Question";
-
-// const base = io('/');
-
-const fQuestions = "what is 1+1?";
-const fanswers = [{content: "2", correct: true}, {content: "3", correct: false}, {content:"4", correct: false}];
-
+import UserContext from "./components/Gameroom/UserContext";
+import Gameroom from "./components/Gameroom/Gameroom";
+import Login from "./components/Login"
+import Signup from "./components/Login/Signup"
+const game_id = 1;
 export default function App() {
   const socket = io('http://localhost:8080');
-  let message;
-  socket.on('message', (msg=>{
-    message = msg;
+  const [user, setUser] = useState();
+  const [gamerTag, setGamerTag] = useState("bigdaddy");
+  const [start, setStart] = useState(0);
+  const [players, setPlayers] = useState();
+  const [questions, setQuestions] = useState();
+  const [gameDis, setGameDis] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [answered, setAnswered] = useState(false);
+  const [whichAns, setWhichAns] = useState();
+  const [sign, setSign] = useState(false);
+
+
+
+
+  socket.on('playersCurrentRanking', (ranking=>{
+    setPlayers(ranking);
+    console.log("ranking?:",ranking);
   }));
+  
+  useEffect(()=>{
+    console.log("update ranking?");
+    
+    setGameDis(<Gameroom
+      key={game_id}
+      players={players}
+      questions ={questions}
+      />);
+  },[players, questions]);
+
+  const sendAns=(gamer, score)=>{
+    socket.emit("updateScore", {gamer, score, game_id});
+  }
+
+  const verifyLogin = (username, password)=>{
+    socket.emit('userL', {username, password});
+    socket.once("loggedUser", (logged)=>{
+      if(logged){
+        setUser(logged);
+        // console.log(logged);
+      }else{
+        alert("you fucked up");
+      }
+    })
+  }
+  const logout = ()=>{
+    if(user){
+      setUser(null);
+    }
+  }
+  const register = (u, p)=>{
+    socket.emit("register", {username: u, password: p});
+    socket.once("reggedUser", (logged)=>{
+        if(logged){
+          setUser(logged);
+          console.log("logged", logged);
+        } else{
+          alert("username already taken");
+        }
+        
+    })
+  }
+  useEffect(()=>{
+    socket.emit('gameID', game_id);
+    socket.on('GameroomQ', (qa)=>{
+      console.log(qa);
+      setQuestions(qa);
+    });
+  },[])
   return (
     <div className="App">
       <header className="App-header">
+      <UserContext.Provider value = {{user, setUser, verifyLogin, 
+          username, setUsername, password, setPassword, logout, 
+          gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
+      <Login/>
+      
+          {start===1 && gameDis}
+        </UserContext.Provider>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          home page testing
         </p>
+        
         <button
-        onClick = {()=>{
-          socket.emit("message", "look here bitch");
-          console.log(message + " and " + socket.id);
-        }}
+          onClick={()=>{
+            setStart(1);
+          }}
         >
-          TEST
+          Start Game
         </button>
-        {/* <Question
-          key={1}
-          question={fQuestions}
-          answers={fanswers}
-        /> */}
+        
       </header>
     </div>
   )
