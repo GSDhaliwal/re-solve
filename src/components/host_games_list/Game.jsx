@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import createContext from "../createContext";
 
 export default function Game(props) {
 
+  const context = useContext(createContext);
+
     return  <div>
-              <button href={"/"} >
+              <button
+                type="button"  
+                onClick={()=>{context.createGame(props.id)
+                console.log(props.id);}}>
                 <h2>{props.name}</h2>
                 <h3>Category: {props.category}</h3>
                 <h4>Number of Questions: {props.num_of_questions} /  Rating: {props.rating}</h4>
