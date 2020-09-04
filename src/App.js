@@ -1,35 +1,55 @@
-import React, { useState, useEffect, useContext } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import axios from 'axios';
-import Answer from "./components/Answer";
-import Question from "./components/Question";
+import UserContext from "./components/Gameroom/UserContext";
+import Gameroom from "./components/Gameroom/Gameroom";
+import Login from "./components/Login"
+import GamesList from "./components/host_games_list/GamesList";
+import createContext from "./components/createContext";
+import PlayerLobby from "./components/player_lobby/PlayerLobby";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import createdContext from "./components/Create/createdContext";
-import editedContext from "./components/Create/createdContext";
 
-
-// const base = io('/');
+const game_id = 1;
 
 
 export default function App() {
+
+  const [initilized, setInitialized] = useState(false);
+  const [gameCode, setGameCode] = useState("ab");
+  const [lplayers, setLplayers] = useState({});
+  const socket = io('http://localhost:8080');
+
+
+
+
+  const [user, setUser] = useState();
+  const [gamerTag, setGamerTag] = useState("bigdaddy");
+  const [start, setStart] = useState(0);
+  const [players, setPlayers] = useState();
+  const [questions, setQuestions] = useState();
+  const [gameDis, setGameDis] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [answered, setAnswered] = useState(false);
+  const [whichAns, setWhichAns] = useState();
+  const [sign, setSign] = useState(false);
+  const [quiz, setQuiz] = useState({});
+  const [category, setCategory] = useState({});
+  const [initilizedQuiz, setInitializedQuiz] = useState(false);
+ 
+
+  
+  
+  
+  //====gur===//
   const context = useContext(createdContext);
   
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
-  const socket = io('http://localhost:8080');
-  let message;
-
-  useEffect(() => {
-    socket.on('message', (msg=>{
-      message = msg;
-    }));
-    
-  }, [])
-
+  
   const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty)=>{
     socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty});
   }
@@ -62,57 +82,116 @@ export default function App() {
   }
 
   const clickfunc = () => {
-    
     bar();
   }
+  
+  //===/gur//
+  
 
+  socket.on('playersCurrentRanking', (ranking=>{
+    setPlayers(ranking);
+    console.log("ranking?:",ranking);
+  }));
+  
+  
+  //------- Felipe -------------->//
+    useEffect (() => {
+    // socket.emit('hostGames', '1');
+    // console.log("log after socket emit - hostGames");
+    socket.emit('listplayers', gameCode);
+    socket.on('playerslist', (data =>{
+    setLplayers(data);
+    console.log("players data --> ", lplayers);
+    setInitialized(true);
+  }));
+    console.log("listplayers loggoned on");
+  },[]);
+  //------- Felipe -------------->//
+  
+  
+  useEffect(()=>{
+    console.log("update ranking?", players);
+    
+    setGameDis(<Gameroom
+      key={game_id}
+      players={players}
+      questions ={questions}
+      />);
+  },[players, questions]);
 
-  //original <---
-  // const bar = (setQuiz, setTitle)=>{
-  //   socket.emit('quizToEdit', '12');
-  //   socket.once('editThisQuiz', (res => {
-  //     console.log("Q", res)
-  //     setQuiz(res);
-  //   }))
-  //   socket.once('editThisQuizTitle', (res => {
-  //     console.log("T", res)
-  //     setTitle(res);
-  //   }))
-  // }
+  const sendAns=(gamer, score)=>{
+    socket.emit("updateScore", {gamer, score, game_id});
+  }
 
-  // const clickfunc =()=>{
-  //   setClicked(true);
-  //   bar();
-  // }
+  const verifyLogin = (username, password)=>{
+    socket.emit('userL', {username, password});
+    socket.once("loggedUser", (logged)=>{
+      if(logged){
+        setUser(logged);
+        // console.log(logged);
+      }else{
+        alert("you fucked up");
+      }
+    })
+  }
+  const logout = ()=>{
+    if(user){
+      setUser(null);
+    }
+  }
+  const register = (u, p)=>{
+    socket.emit("register", {username: u, password: p});
+    socket.once("reggedUser", (logged)=>{
+        if(logged){
+          setUser(logged);
+          console.log("logged", logged);
+        } else{
+          alert("username already taken");
+        }
+        
+    })
+  }
+  useEffect(()=>{
+    socket.emit('gameID', game_id);
+    socket.on('GameroomQ', (qa)=>{
+      console.log("questions and answers:", qa);
+      setQuestions(qa);
+    });
+  },[])
+    
+  const createGame = (quizID)=>{
+    socket.emit('hostableGame', {quizID});
+  };
+
 
   
-    // socket.emit('quizToEdit', '12');
+  useEffect(() =>{
+    console.log("logging quiz: ", quiz);
+    // console.log("logging category: ", category);
+  },[quiz]);
 
-    // useEffect(() => {
-    //   socket.once('editThisQuiz', (res => {
-    //     console.log("Q", res)
-    //     setQuiz(res);
-    //     setInitialized(true);
-    //   }))
-    //   socket.once('editThisQuizTitle', (res => {
-    //     console.log("T", res)
-    //     setTitle(res);
-    //   }))
-    // }, []);
+
+
+  useEffect (() => {
+    socket.emit('hostGames', '1');
+    console.log("log after socket emit - hostGames");
+    socket.on('gameslist', (data=>{
+      console.log("inside socket games list");
+      setQuiz(data);
+      setInitializedQuiz(true);
+    }));
+  },[]);
+
+    
+  if (!initilizedQuiz || !initilized) {
+    return null;
+  }
 
 
   return (
     <div className="App">
       <header className="App-header">
-       {/*
-       <button
-        onClick = {()=>{
-          socket.emit("message", "look here");
-          console.log(message + " and " + socket.id);
-        }}
-        >
-          TEST
-      </button> */}
+
         {
           <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
@@ -129,11 +208,38 @@ export default function App() {
         <Create 
         />
         </createdContext.Provider> */}
-        {/* <Question
-          key={1}
-          question={fQuestions}
-          answers={fanswers}
-        /> */}
+
+      <UserContext.Provider value = {{user, setUser, verifyLogin, 
+          username, setUsername, password, setPassword, logout, 
+          gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
+      <Login/>
+      
+          {start===1 && gameDis}
+        </UserContext.Provider>
+        <button
+          onClick={()=>{
+            setStart(1);
+          }}
+        >
+          Start Game
+        </button>
+            
+        <p>
+          home page testing
+        </p>
+   
+        <h3>Lobby</h3>
+        {/* <ValueContext.Provider value={{value}}> */}
+          <PlayerLobby
+            players={lplayers}
+          />
+        {/* </ValueContext.Provider> */}
+        <createContext.Provider value = {{createGame}}>
+          <GamesList
+            quizzes={quiz}
+          />
+        </createContext.Provider>
+        
       </header>
     </div>
   )
