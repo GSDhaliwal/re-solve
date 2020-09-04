@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
-import UserContext from "./components/Gameroom/UserContext";
 import Gameroom from "./components/Gameroom/Gameroom";
 import Login from "./components/Login"
 import GamesList from "./components/host_games_list/GamesList";
-import createContext from "./components/createContext";
 import PlayerLobby from "./components/player_lobby/PlayerLobby";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
+import JoinLobby from './components/JoinLobby';
 import createdContext from "./components/Create/createdContext";
-
+import UserContext from "./components/Gameroom/UserContext";
+import createContext from "./components/createContext";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 const game_id = 1;
 
 
@@ -20,12 +26,8 @@ export default function App() {
   const [gameCode, setGameCode] = useState("ab");
   const [lplayers, setLplayers] = useState({});
   const socket = io('http://localhost:8080');
-
-
-
-
   const [user, setUser] = useState();
-  const [gamerTag, setGamerTag] = useState("bigdaddy");
+  const [gamerTag, setGamerTag] = useState("photographer");
   const [start, setStart] = useState(0);
   const [players, setPlayers] = useState();
   const [questions, setQuestions] = useState();
@@ -35,16 +37,20 @@ export default function App() {
   const [answered, setAnswered] = useState(false);
   const [whichAns, setWhichAns] = useState();
   const [sign, setSign] = useState(false);
-  const [quiz, setQuiz] = useState({});
+  const [quizlist, setQuizlist] = useState({});
   const [category, setCategory] = useState({});
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
+  const [currentgame, setCurrentgame] = useState();
+  const [joinView, setJoinView] = useState();
+  //make sure to SET FALSE TO JOIN PAGE
+  const [isHost, setIsHost] = useState(false);
  
 
   
   
   
   //====gur===//
-  const context = useContext(createdContext);
+  // const context = useContext(createdContext);
   
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
@@ -60,7 +66,7 @@ export default function App() {
   
   
   const bar = () => {
-    socket.emit('quizToEdit', '24');
+    socket.emit('quizToEdit', '9');
     socket.once('editThisQuiz', (questions => {
       const questionsArray = questions.map((question, index) => {
         const container = {};
@@ -84,6 +90,7 @@ export default function App() {
   const clickfunc = () => {
     bar();
   }
+  
   
   //===/gur//
   
@@ -130,7 +137,7 @@ export default function App() {
         setUser(logged);
         // console.log(logged);
       }else{
-        alert("you fucked up");
+        alert("Wrong username and password!");
       }
     })
   }
@@ -146,7 +153,7 @@ export default function App() {
           setUser(logged);
           console.log("logged", logged);
         } else{
-          alert("username already taken");
+          alert("The username already taken");
         }
         
     })
@@ -159,10 +166,31 @@ export default function App() {
     });
   },[])
     
-  const createGame = (quizID)=>{
-    socket.emit('hostableGame', {quizID});
-  };
+  const gamecodeGen = ()=>{
+    let result = '';
+    const alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for(let i = 0; i < 8; i++){
+      result += alph.charAt(Math.floor(Math.random() * alph.length));
+    }
+    return result;
+  }
 
+  const createGame = (quiz_id)=>{
+    let gamecode = gamecodeGen();
+    let is_active = true;
+    socket.emit('hostableGame', {quiz_id, gamecode, is_active});
+    socket.on('hostedGame', (current_game)=>{
+      console.log("current game info:", current_game);
+      setCurrentgame(current_game);
+      setJoinView(<JoinLobby/>);
+    })
+
+  };
+  const enterRoom = (displayName, gameid)=>{
+    socket.emit('playerJoin', {gamertag: displayName, game_id: gameid,
+    is_host: isHost});
+    
+  }
 
   
   useEffect(() =>{
@@ -177,7 +205,7 @@ export default function App() {
     console.log("log after socket emit - hostGames");
     socket.on('gameslist', (data=>{
       console.log("inside socket games list");
-      setQuiz(data);
+      setQuizlist(data);
       setInitializedQuiz(true);
     }));
   },[]);
@@ -190,8 +218,44 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-
+    <header className="App-header">
+    <Router>
+      <nav>
+        <div>
+        <UserContext.Provider value = {{user, setUser, verifyLogin, 
+            username, setUsername, password, setPassword, logout, 
+            gamerTag, answered, setAnswered, whichAns, setWhichAns, 
+            sendAns, setPlayers, register, currentgame, setCurrentgame}}>
+          <Login/>
+        </UserContext.Provider>
+        </div>
+      </nav>
+      <button>
+        <Link to="/">Home</Link>
+      </button> 
+      <button>
+        <Link to="/create">Create Quiz</Link>
+      </button>
+      <button>
+        <Link to="/host">Host</Link>
+      </button> 
+      <Switch>
+        <Route path="/create">
+          <createdContext.Provider value = {{createQuiz}}>
+            <Create/>
+          </createdContext.Provider>
+        </Route>
+        <Route path="/host">
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost}}>
+          <GamesList
+            quizzes={quizlist}
+          />
+          </createContext.Provider>
+        </Route>
+      </Switch>
+    </Router>
+   
+      
         {
           <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
@@ -203,19 +267,15 @@ export default function App() {
             </button>
           }  
           </createdContext.Provider>}
-        { /*
-        <createdContext.Provider value = {{createQuiz}}>
-        <Create 
-        />
-        </createdContext.Provider> */}
-
-      <UserContext.Provider value = {{user, setUser, verifyLogin, 
-          username, setUsername, password, setPassword, logout, 
-          gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
-      <Login/>
-      
+        
+          <UserContext.Provider value = {{user, setUser, verifyLogin, 
+            username, setUsername, password, setPassword, logout, 
+            gamerTag, answered, setAnswered, whichAns, setWhichAns, 
+            sendAns, setPlayers, register, currentgame, setCurrentgame, 
+            isHost, setIsHost,enterRoom}}>
+          {joinView}
           {start===1 && gameDis}
-        </UserContext.Provider>
+          </UserContext.Provider>
         <button
           onClick={()=>{
             setStart(1);
@@ -234,11 +294,7 @@ export default function App() {
             players={lplayers}
           />
         {/* </ValueContext.Provider> */}
-        <createContext.Provider value = {{createGame}}>
-          <GamesList
-            quizzes={quiz}
-          />
-        </createContext.Provider>
+        
         
       </header>
     </div>

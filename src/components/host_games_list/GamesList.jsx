@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext} from 'react';
 import Game from './Game';
+import createContext from '../createContext';
+
 
 export default function GamesList(props) {
-
+  const context = useContext(createContext);
+  useEffect(()=>{
+    context.setIsHost(true);
+  },[]);
   let quizzes = props.quizzes;
   console.log("quizzes --> ", props.quizzes);
 

@@ -32,6 +32,7 @@ export default function Login (props){
         Login
       </button>
       </form>
+      <br/>
       <Signup/> 
       </div>)
       : 
