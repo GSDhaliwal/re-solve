@@ -8,6 +8,7 @@ import PlayerLobby from "./components/player_lobby/PlayerLobby";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import JoinLobby from './components/JoinLobby';
+import Join from './components/join_games_list/Join'
 import createdContext from "./components/Create/createdContext";
 import UserContext from "./components/Gameroom/UserContext";
 import createContext from "./components/createContext";
@@ -23,7 +24,7 @@ const game_id = 1;
 export default function App() {
 
   const [initilized, setInitialized] = useState(false);
-  const [gameCode, setGameCode] = useState("ab");
+  const [gameCode, setGameCode] = useState();
   const [lplayers, setLplayers] = useState({});
   const socket = io('http://localhost:8080');
   const [user, setUser] = useState();
@@ -42,6 +43,7 @@ export default function App() {
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
   const [currentgame, setCurrentgame] = useState();
   const [joinView, setJoinView] = useState();
+  const [lobbyFlag, setLobbyFlag] = useState(false);
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
  
@@ -100,19 +102,28 @@ export default function App() {
     console.log("ranking?:",ranking);
   }));
   
+  socket.on('playersInLobby', (p)=>{
+    if(p.game === currentgame){
+      setLobbyFlag((x)=>{
+        setLplayers((p.players));
+        return true;
+      });
+    }
+    
+  });
   
   //------- Felipe -------------->//
-    useEffect (() => {
-    // socket.emit('hostGames', '1');
-    // console.log("log after socket emit - hostGames");
-    socket.emit('listplayers', gameCode);
-    socket.on('playerslist', (data =>{
-    setLplayers(data);
-    console.log("players data --> ", lplayers);
-    setInitialized(true);
-  }));
-    console.log("listplayers loggoned on");
-  },[]);
+  //   useEffect (() => {
+  //   // socket.emit('hostGames', '1');
+  //   // console.log("log after socket emit - hostGames");
+  //   socket.emit('listplayers', gameCode);
+  //   socket.on('playerslist', (data =>{
+  //   setLplayers(data);
+  //   console.log("players data --> ", lplayers);
+  //   setInitialized(true);
+  // }));
+  //   console.log("listplayers loggoned on");
+  // },[]);
   //------- Felipe -------------->//
   
   
@@ -182,7 +193,7 @@ export default function App() {
     socket.on('hostedGame', (current_game)=>{
       console.log("current game info:", current_game);
       setCurrentgame(current_game);
-      setJoinView(<JoinLobby/>);
+      setJoinView(true);
     })
 
   };
@@ -191,7 +202,19 @@ export default function App() {
     is_host: isHost});
     
   }
-
+  const cancelGame = (gameid)=>{
+    console.log("cancellled????");
+    socket.emit('cancelGame', gameid);
+    setJoinView(false);
+  }
+  const joinButton = (gameC)=>{
+    socket.emit("joinGame", gameC);
+    socket.on('joinedGame',(gamid)=>{
+      setCurrentgame(gamid);
+      console.log("joined id:", gamid);
+      setJoinView(true);
+    })
+  }
   
   useEffect(() =>{
     console.log("logging quiz: ", quiz);
@@ -199,7 +222,7 @@ export default function App() {
   },[quiz]);
 
 
-
+  // ----- Host Page for Games List -----//
   useEffect (() => {
     socket.emit('hostGames', '1');
     console.log("log after socket emit - hostGames");
@@ -209,12 +232,12 @@ export default function App() {
       setInitializedQuiz(true);
     }));
   },[]);
+  // ---------------//
 
     
-  if (!initilizedQuiz || !initilized) {
+  if (!initilizedQuiz) {
     return null;
   }
-
 
   return (
     <div className="App">
@@ -228,17 +251,21 @@ export default function App() {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider>
+        <button>
+          <Link to="/">Home</Link>
+        </button> 
         </div>
       </nav>
-      <button>
-        <Link to="/">Home</Link>
-      </button> 
+      
       <button>
         <Link to="/create">Create Quiz</Link>
       </button>
       <button>
         <Link to="/host">Host</Link>
       </button> 
+      <button>
+        <Link to="/join">Join</Link>
+      </button>
       <Switch>
         <Route path="/create">
           <createdContext.Provider value = {{createQuiz}}>
@@ -246,12 +273,20 @@ export default function App() {
           </createdContext.Provider>
         </Route>
         <Route path="/host">
-        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost}}>
-          <GamesList
-            quizzes={quizlist}
-          />
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
+        cancelGame, currentgame, gamerTag, setGamerTag
+        }}>
+          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList
+            quizzes={quizlist}/>)}
           </createContext.Provider>
         </Route>
+        <Route path="/join">
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
+        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode
+        }}>
+          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>)}
+        </createContext.Provider> 
+        </Route>  
       </Switch>
     </Router>
    
@@ -273,7 +308,6 @@ export default function App() {
             gamerTag, answered, setAnswered, whichAns, setWhichAns, 
             sendAns, setPlayers, register, currentgame, setCurrentgame, 
             isHost, setIsHost,enterRoom}}>
-          {joinView}
           {start===1 && gameDis}
           </UserContext.Provider>
         <button
@@ -290,9 +324,6 @@ export default function App() {
    
         <h3>Lobby</h3>
         {/* <ValueContext.Provider value={{value}}> */}
-          <PlayerLobby
-            players={lplayers}
-          />
         {/* </ValueContext.Provider> */}
         
         
