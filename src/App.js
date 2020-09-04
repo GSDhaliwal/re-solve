@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
@@ -8,6 +7,10 @@ import Login from "./components/Login"
 import GamesList from "./components/host_games_list/GamesList";
 import createContext from "./components/createContext";
 import PlayerLobby from "./components/player_lobby/PlayerLobby";
+import Create from "./components/Create/Create";
+import Edit from "./components/Edit/Edit";
+import createdContext from "./components/Create/createdContext";
+
 const game_id = 1;
 
 
@@ -37,6 +40,53 @@ export default function App() {
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
  
 
+  
+  
+  
+  //====gur===//
+  const context = useContext(createdContext);
+  
+  const [quiz, setQuiz] = useState();
+  const [title, setTitle] = useState();
+  const [clicked, setClicked] = useState(false);
+  
+  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty)=>{
+    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty});
+  }
+
+  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId)=>{
+    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId});
+  }
+  
+  
+  const bar = () => {
+    socket.emit('quizToEdit', '24');
+    socket.once('editThisQuiz', (questions => {
+      const questionsArray = questions.map((question, index) => {
+        const container = {};
+        container.id = index;
+        container.question = question.question;
+        container.image = question.image;
+        container.points_per_question = question.points_per_question;
+        container.time_per_question = question.time_per_question;
+        container.answers = question.answers;
+        container.created_quiz_id = question.created_quiz_id;
+        return container;
+      })
+      setQuiz(questionsArray);
+      setClicked(true);
+    }))
+    socket.once('editThisQuizTitle', (res => {
+      setTitle(res);
+    }))
+  }
+
+  const clickfunc = () => {
+    bar();
+  }
+  
+  //===/gur//
+  
 
   socket.on('playersCurrentRanking', (ranking=>{
     setPlayers(ranking);
@@ -137,9 +187,28 @@ export default function App() {
     return null;
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
+
+        {
+          <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
+          setTitle, clickfunc, bar}}>
+          { clicked ? <Edit />
+          : <button onClick ={()=>{
+            bar();
+          }}>
+            EDIT
+            </button>
+          }  
+          </createdContext.Provider>}
+        { /*
+        <createdContext.Provider value = {{createQuiz}}>
+        <Create 
+        />
+        </createdContext.Provider> */}
+
       <UserContext.Provider value = {{user, setUser, verifyLogin, 
           username, setUsername, password, setPassword, logout, 
           gamerTag, answered, setAnswered, whichAns, setWhichAns, sendAns, setPlayers, register}}>
@@ -171,8 +240,6 @@ export default function App() {
           />
         </createContext.Provider>
         
-        
-
       </header>
     </div>
   )
