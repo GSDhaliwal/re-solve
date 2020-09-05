@@ -8,7 +8,9 @@ import PlayerLobby from "./components/player_lobby/PlayerLobby";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import JoinLobby from './components/JoinLobby';
-import Join from './components/join_games_list/Join'
+import Join from './components/join_games_list/Join';
+import ManageAccount from './components/ManageAccount/ManageAccount';
+import ErrorLogIn from './components/Error/ErrorLogIn';
 import createdContext from "./components/Create/createdContext";
 import UserContext from "./components/Gameroom/UserContext";
 import createContext from "./components/createContext";
@@ -46,6 +48,7 @@ export default function App(props) {
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
+  const [loadManageAccount, setLoadManageAccount] = useState(false);
  
 
   
@@ -57,18 +60,32 @@ export default function App(props) {
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
+  const [userQuizzes, setUserQuizzes] = useState();
   
-  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty)=>{
-    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty});
+  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, username)=>{
+    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, username});
   }
+
+  useEffect (() => {
+    socket.emit('requestUserCreatedQuizzes', {username});
+    socket.on('receivedUserCreatedQuizzes', (data=>{
+      console.log("did we get it back?", data );
+      setUserQuizzes(data);
+      setLoadManageAccount(true);
+    }));
+  },[user]);
+
+
+
 
   const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId)=>{
     socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId});
   }
   
+
   
-  const bar = () => {
-    socket.emit('quizToEdit', '9');
+  const bar = (quizid) => {
+    socket.emit('quizToEdit', quizid);
     socket.once('editThisQuiz', (questions => {
       const questionsArray = questions.map((question, index) => {
         const container = {};
@@ -266,9 +283,11 @@ export default function App(props) {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider>
-        <button onClick={()=>{
-        }}>
+        <button>
           <Link to="/">Home</Link>
+        </button>
+        <button>
+          <Link to="/manageaccount">Manage Account</Link>
         </button> 
         </div>
       </nav>
@@ -283,8 +302,14 @@ export default function App(props) {
         <Link to="/join">Join</Link>
       </button>
       <Switch>
+      <Route path="/manageaccount">
+        <createContext.Provider value = {{userQuizzes, editQuiz, quiz, setQuiz, title, 
+          setTitle, clickfunc, bar}}>
+          {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
+        </createContext.Provider>
+      </Route>
         <Route path="/create">
-          <createdContext.Provider value = {{createQuiz}}>
+          <createdContext.Provider value = {{createQuiz, username}}>
             <Create/>
           </createdContext.Provider>
         </Route>
@@ -306,7 +331,7 @@ export default function App(props) {
         </Route>  
       </Switch>
     </Router>
-        {
+        {/*
           <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
           { clicked ? <Edit />
@@ -316,7 +341,8 @@ export default function App(props) {
             EDIT
             </button>
           }  
-          </createdContext.Provider>}
+          </createdContext.Provider>
+        */}
         
           <UserContext.Provider value = {{user, setUser, verifyLogin, 
             username, setUsername, password, setPassword, logout, 

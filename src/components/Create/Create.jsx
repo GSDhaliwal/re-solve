@@ -133,7 +133,7 @@ export default function Create(props){
       <br/>
       <button
         type="button"  
-        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value))}}>
+        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.username)}}>
           Save/Post Quiz       
       </button>
    </form>
