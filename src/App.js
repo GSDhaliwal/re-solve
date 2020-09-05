@@ -12,6 +12,7 @@ import Join from './components/join_games_list/Join'
 import createdContext from "./components/Create/createdContext";
 import UserContext from "./components/Gameroom/UserContext";
 import createContext from "./components/createContext";
+import LandingPage from './components/landing_page/LandingPage'; //<-- new
 import {
   BrowserRouter as Router,
   Switch,
@@ -41,11 +42,13 @@ export default function App(props) {
   const [category, setCategory] = useState({});
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
   const [currentgame, setCurrentgame] = useState();
-  const [joinView, setJoinView] = useState();
+  const [joinView, setJoinView] = useState(false);
   const [lobbyFlag, setLobbyFlag] = useState(false);
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
+  const [displayCode, setDisplayCode] = useState('');
+  
  
 
   
@@ -213,11 +216,17 @@ export default function App(props) {
     setGamerTag(displayName);
     fetchAndSetQuestions(gameid);
   }
+
+  //cancel selected game & delete game code from db
   const cancelGame = (gameid)=>{
     console.log("cancellled????");
     socket.emit('cancelGame', gameid);
     setJoinView(false);
+    socket.on('confirmMessage', (message) => {
+      console.log(message);
+    })
   }
+
   const joinButton = (gameC)=>{
     socket.emit("joinGame", gameC);
     socket.on('joinedGame',(gamid)=>{
@@ -226,6 +235,11 @@ export default function App(props) {
       setJoinView(true);
     })
   }
+
+  //goes back to join after you have entered code
+  const cancelCodeInput = () => {
+    setJoinView(false);
+  };
   
   const startGame = ()=>{
     socket.emit("startgame", currentgame);
@@ -249,6 +263,7 @@ export default function App(props) {
   },[]);
   // ---------------//
 
+
     
   if (!initilizedQuiz) {
     return null;
@@ -259,6 +274,10 @@ export default function App(props) {
     <header className="App-header">
     <Router>
       <nav>
+      <h4>-----Nav Bar--------</h4>
+        <button onClick={() => {} }>
+          <Link to="/">RE-SOLVE</Link>
+        </button> 
         <div>
         <UserContext.Provider value = {{user, setUser, verifyLogin, 
             username, setUsername, password, setPassword, logout, 
@@ -266,28 +285,21 @@ export default function App(props) {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider>
-        <button onClick={()=>{
-        }}>
-          <Link to="/">Home</Link>
-        </button> 
         </div>
+        <h4>-----Nav Bar--------</h4>
       </nav>
       
-      <button>
-        <Link to="/create">Create Quiz</Link>
-      </button>
-      <button>
-        <Link to="/host">Host</Link>
-      </button> 
-      <button>
-        <Link to="/join">Join</Link>
-      </button>
       <Switch>
+        <Route exact path="/">
+          <LandingPage/>
+        </Route>
+
         <Route path="/create">
           <createdContext.Provider value = {{createQuiz}}>
             <Create/>
           </createdContext.Provider>
         </Route>
+
         <Route path="/host">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
         cancelGame, currentgame, gamerTag, setGamerTag, startGame
@@ -296,14 +308,15 @@ export default function App(props) {
             quizzes={quizlist}/>)}
           </createContext.Provider>
         </Route>
+
         <Route path="/join">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
-        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame
+        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame, cancelCodeInput
         }}>
           {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>)}
-          
         </createContext.Provider> 
         </Route>  
+
       </Switch>
     </Router>
         {
@@ -334,10 +347,10 @@ export default function App(props) {
         </button> */}
             
         <p>
-          home page testing
+          {/* home page testing */}
         </p>
    
-        <h3>Lobby</h3>
+        {/* <h3>Lobby</h3> */}
         {/* <ValueContext.Provider value={{value}}> */}
         {/* </ValueContext.Provider> */}
         
