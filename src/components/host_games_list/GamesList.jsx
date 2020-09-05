@@ -1,6 +1,13 @@
 import React, { useEffect, useContext} from 'react';
 import Game from './Game';
 import createContext from '../createContext';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 
 export default function GamesList(props) {
@@ -10,6 +17,13 @@ export default function GamesList(props) {
   },[]);
   let quizzes = props.quizzes;
   console.log("quizzes --> ", props.quizzes);
+
+
+  //back button functionality
+  let history = useHistory();
+  function handleClick() {
+    history.push("/");
+  }
 
   const quizData = quizzes.map((quiz, index) => {
       return <Game
@@ -28,37 +42,14 @@ export default function GamesList(props) {
     })
 
   return (
-    <section>
+    // <section>
       <div>
         <h4>host page</h4>
+        <button type='button' onClick={handleClick}>
+          Back
+        </button>
         <h4>{quizData}</h4>
       </div>
-    </section>
+    // </section>
   );
 }
-
-
-
-//NOT USED
-  // const sortQuizByCategory = props.quizzes.sort(function(a, b) {
-  //   let categoryA = props.categories[a.category_id].category_name.toUpperCase();
-  //   let categoryB = props.categories[b.category_id].category_name.toUpperCase();
-  //   if (categoryA === categoryB) {
-  //     let nameA = a.quiz_name.toUpperCase();
-  //     let nameB = b.quiz_name.toUpperCase();
-  //     if (nameA < nameB) {
-  //       return -1;
-  //     }
-  //     if (nameA > nameB) {
-  //       return 1;
-  //     }
-  //     return 0;
-  //   }
-  //   if (categoryA < categoryB) {
-  //     return -1;
-  //   }
-  //   if (categoryA > categoryB) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
