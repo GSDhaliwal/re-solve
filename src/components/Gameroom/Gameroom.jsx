@@ -16,7 +16,7 @@ export default function Gameroom(props){
   
   useEffect(()=>{
     console.log(context.user);
-  },[context.user]);
+    },[context.user]);
     useEffect(()=>{
       let delay = 0;
       if(count < Object.keys(props.questions).length*3){
@@ -68,7 +68,7 @@ export default function Gameroom(props){
           }, delay);
         }
       }
-    },[count]);
+  },[count]);
 
 
   return(

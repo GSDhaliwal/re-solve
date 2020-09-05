@@ -1,11 +1,12 @@
-import React,{useContext, useEffect} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import createContext from "./createContext";
 
 export default function JoinLobby(props){
 
+  const [val, setVal] = useState();
   const context = useContext(createContext);
   const updateTag = (event)=>{
-    context.setGamerTag(event.target.value);
+    setVal(event.target.value);
   }
  
   return (
@@ -13,7 +14,7 @@ export default function JoinLobby(props){
   <form>
     <input type="text" placeholder="Enter your display name here..." onChange={updateTag}/>
     <button type = "button" onClick={()=>{
-      context.enterRoom(context.gamerTag, context.currentgame)
+      context.enterRoom(val, context.currentgame);
     }}>
       Enter
     </button>
@@ -24,4 +25,7 @@ export default function JoinLobby(props){
  </button>
  </div>
  )
+
+
+
 }

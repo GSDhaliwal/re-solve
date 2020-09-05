@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import io from 'socket.io-client';
+
 import Gameroom from "./components/Gameroom/Gameroom";
 import Login from "./components/Login"
 import GamesList from "./components/host_games_list/GamesList";
@@ -18,17 +18,16 @@ import {
   Route,
   Link
 } from "react-router-dom";
-const game_id = 1;
+// const game_id = 1;
 
 
-export default function App() {
-
+export default function App(props) {
+  const socket = props.socket;
   const [initilized, setInitialized] = useState(false);
   const [gameCode, setGameCode] = useState();
   const [lplayers, setLplayers] = useState({});
-  const socket = io('http://localhost:8080');
   const [user, setUser] = useState();
-  const [gamerTag, setGamerTag] = useState("photographer");
+  const [gamerTag, setGamerTag] = useState();
   const [start, setStart] = useState(0);
   const [players, setPlayers] = useState();
   const [questions, setQuestions] = useState();
@@ -46,6 +45,7 @@ export default function App() {
   const [lobbyFlag, setLobbyFlag] = useState(false);
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
+  const [loadGame, setLoadGame] = useState(false);
  
 
   
@@ -101,15 +101,24 @@ export default function App() {
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
+
+  socket.on('waitStart', (start)=>{
+    console.log("start:",start);
+    console.log("current gameid", currentgame);
+    if(start === currentgame){
+      setStart(1);
+    }
+  })
   
+
   socket.on('playersInLobby', (p)=>{
-    if(p.game === currentgame){
+    if(p.game === currentgame && gamerTag){
+      console.log(gamerTag);
       setLobbyFlag((x)=>{
-        setLplayers((p.players));
+        setLplayers(p.players);
         return true;
       });
     }
-    
   });
   
   //------- Felipe -------------->//
@@ -131,14 +140,14 @@ export default function App() {
     console.log("update ranking?", players);
     
     setGameDis(<Gameroom
-      key={game_id}
+      key={currentgame}
       players={players}
       questions ={questions}
       />);
   },[players, questions]);
 
   const sendAns=(gamer, score)=>{
-    socket.emit("updateScore", {gamer, score, game_id});
+    socket.emit("updateScore", {gamer, score, currentgame});
   }
 
   const verifyLogin = (username, password)=>{
@@ -160,22 +169,22 @@ export default function App() {
   const register = (u, p)=>{
     socket.emit("register", {username: u, password: p});
     socket.once("reggedUser", (logged)=>{
-        if(logged){
-          setUser(logged);
-          console.log("logged", logged);
-        } else{
-          alert("The username already taken");
-        }
-        
+      if(logged){
+        setUser(logged);
+        console.log("logged", logged);
+      } else{
+        alert("The username already taken");
+      }
     })
   }
-  useEffect(()=>{
-    socket.emit('gameID', game_id);
+  const fetchAndSetQuestions = (id)=>{
+    console.log("where am i");
+    socket.emit('gameID', id);
     socket.on('GameroomQ', (qa)=>{
       console.log("questions and answers:", qa);
       setQuestions(qa);
     });
-  },[])
+  }
     
   const gamecodeGen = ()=>{
     let result = '';
@@ -200,7 +209,9 @@ export default function App() {
   const enterRoom = (displayName, gameid)=>{
     socket.emit('playerJoin', {gamertag: displayName, game_id: gameid,
     is_host: isHost});
-    
+    // setLoadGame(true);
+    setGamerTag(displayName);
+    fetchAndSetQuestions(gameid);
   }
   const cancelGame = (gameid)=>{
     console.log("cancellled????");
@@ -216,6 +227,10 @@ export default function App() {
     })
   }
   
+  const startGame = ()=>{
+    socket.emit("startgame", currentgame);
+    console.log("starting game:", currentgame);
+  }
   useEffect(() =>{
     console.log("logging quiz: ", quiz);
     // console.log("logging category: ", category);
@@ -251,7 +266,8 @@ export default function App() {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider>
-        <button>
+        <button onClick={()=>{
+        }}>
           <Link to="/">Home</Link>
         </button> 
         </div>
@@ -274,7 +290,7 @@ export default function App() {
         </Route>
         <Route path="/host">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
-        cancelGame, currentgame, gamerTag, setGamerTag
+        cancelGame, currentgame, gamerTag, setGamerTag, startGame
         }}>
           {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList
             quizzes={quizlist}/>)}
@@ -282,15 +298,14 @@ export default function App() {
         </Route>
         <Route path="/join">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
-        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode
+        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame
         }}>
           {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>)}
+          
         </createContext.Provider> 
         </Route>  
       </Switch>
     </Router>
-   
-      
         {
           <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
@@ -310,13 +325,13 @@ export default function App() {
             isHost, setIsHost,enterRoom}}>
           {start===1 && gameDis}
           </UserContext.Provider>
-        <button
+        {/* <button
           onClick={()=>{
-            setStart(1);
+            
           }}
         >
           Start Game
-        </button>
+        </button> */}
             
         <p>
           home page testing

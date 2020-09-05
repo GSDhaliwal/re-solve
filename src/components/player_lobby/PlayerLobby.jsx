@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PlayerLobbyList from './PlayerLobbyList';
+import createContext from '../createContext';
 // import {ValueContext} from "../../App.js";
 
 export default function Lobby(props) {
@@ -15,10 +16,10 @@ export default function Lobby(props) {
   //   // createPlayerList();
   // }, [players, props.player]);
 
-
+    const context = useContext(createContext);
     const playersData = props.players.map((player, index) => {
       return <PlayerLobbyList
-                key={player.user_id}
+                key={player.id}
                 gamertag = {player.gamertag}
                 host = {player.is_host}
               />
@@ -29,6 +30,9 @@ export default function Lobby(props) {
       <div>
         <h4>{playersData}</h4>
       </div>
+      {context.isHost ? <button onClick={()=>{
+        context.startGame();
+      }}>Start???</button> : "Waiting for host to start game..."}
     </section>
   )
 }
