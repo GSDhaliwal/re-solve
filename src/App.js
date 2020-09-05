@@ -78,8 +78,8 @@ export default function App(props) {
 
 
 
-  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId)=>{
-    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId});
+  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username)=>{
+    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username});
   }
   
 
@@ -304,7 +304,7 @@ export default function App(props) {
       <Switch>
       <Route path="/manageaccount">
         <createContext.Provider value = {{userQuizzes, editQuiz, quiz, setQuiz, title, 
-          setTitle, clickfunc, bar}}>
+          setTitle, clickfunc, bar, username}}>
           {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
         </createContext.Provider>
       </Route>

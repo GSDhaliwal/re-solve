@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Question from './Question';
-import createdContext from '../Create/createdContext';
+import createdContext from '../createContext';
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Edit(props){
@@ -128,8 +128,7 @@ export default function Edit(props){
       <button type="button" onClick={addQuestion}>Add Question</button>
       <br/>
       <button
-        type="button"  
-        onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), questions[0].created_quiz_id)}}>
+        onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), questions[0].created_quiz_id, context.username)}}>
           Save/Post Quiz       
       </button>
    </form>
