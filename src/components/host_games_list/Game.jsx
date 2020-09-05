@@ -10,6 +10,7 @@ export default function Game(props) {
               <button
                 type="button"  
                 onClick={()=>{context.createGame(props.id)
+                  // context.setToggle(true);
                 console.log(props.id);}}>
                 <h2>{props.name}</h2>
                 <h3>Category: {props.category}</h3>
