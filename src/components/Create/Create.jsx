@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
-import createdContext from './createdContext';
+import createContext from '../createContext';
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 
 export default function Create(props){
   
-  const context = useContext(createdContext);
+  const context = useContext(createContext);
   const [stateCategory, setStateCategory] = useState({value: 'Math'});
   const [difficulty, setDifficulty] = useState({value: '1'});
   const [gameTitle, setGameTitle] = useState();
@@ -133,7 +133,7 @@ export default function Create(props){
       <br/>
       <button 
       type="button"
-        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.username)}}>
+        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.user.username)}}>
           Save/Post Quiz       
       </button>
    </form>

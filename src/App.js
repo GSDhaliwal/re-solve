@@ -68,14 +68,14 @@ export default function App(props) {
     socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, username});
   }
 
-  useEffect (() => {
-    socket.emit('requestUserCreatedQuizzes', {username});
+  const loadProfilePage = (user) => {
+    socket.emit('requestUserCreatedQuizzes', user);
     socket.on('receivedUserCreatedQuizzes', (data=>{
       console.log("did we get it back?", data );
       setUserQuizzes(data);
       setLoadManageAccount(true);
     }));
-  },[user]);
+  };
 
 
 
@@ -89,25 +89,9 @@ export default function App(props) {
   const bar = (quizid) => {
     socket.emit('quizToEdit', quizid);
     socket.once('editThisQuiz', (QAndAs => {
-      let correctArray = [];
-      let verify = [];
-      for (let i = 0; i < QAndAs.length; i++) {
-        if (!(verify.includes(QAndAs[i].question) )) {
-          verify.push(QAndAs[i].question)
-          correctArray.push({
-            id: correctArray.length + 1,
-            question: QAndAs[i].question,
-            image: QAndAs[i].image,
-            points_per_question: QAndAs[i].points_per_question,
-            time_per_question: QAndAs[i].time_per_question,
-            answers: [{answer: QAndAs[i].answer, correct_answer: QAndAs[i].correct_answer}]
-          }) 
-        } else {
-          let index = verify.indexOf(QAndAs[i].question)
-          correctArray[index].answers.push({answer: QAndAs[i].answer, correct_answer: QAndAs[i].correct_answer})
-        }
-      }
-      setQuiz(correctArray);
+      console.log("HERE", QAndAs)
+      
+      setQuiz(QAndAs);
       setClicked(true);
     }))
     socket.once('editThisQuizTitle', (res => {
@@ -294,7 +278,7 @@ export default function App(props) {
           <Link to="/">Home</Link>
         </button>
         <button>
-          <Link to="/manageaccount">Manage Account</Link>
+          <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
         </button> 
         </div>
       </nav>
@@ -310,15 +294,15 @@ export default function App(props) {
       </button>
       <Switch>
       {<Route path="/manageaccount">
-        <createContext.Provider value = {{userQuizzes, editQuiz, quiz, setQuiz, title, 
+        <createContext.Provider value = {{setUserQuizzes, userQuizzes, editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar, username}}>
           {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
         </createContext.Provider>
         </Route>}
         <Route path="/create">
-          <createdContext.Provider value = {{createQuiz, username}}>
+          <createContext.Provider value = {{createQuiz, user}}>
             <Create/>
-          </createdContext.Provider>
+          </createContext.Provider>
         </Route>
         <Route path="/host">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
