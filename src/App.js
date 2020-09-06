@@ -72,9 +72,9 @@ export default function App(props) {
   
   
   const bar = () => {
-    socket.emit('quizToEdit', '9');
+    socket.emit('quizToEdit', '12');
     socket.once('editThisQuiz', (questions => {
-      console.log(questions);
+      console.log("questions to be edited:",questions);
       const questionsArray = questions.map((question, index) => {
         const container = {};
         container.id = index;
@@ -102,7 +102,7 @@ export default function App(props) {
   //===/gur//
   
 
-  socket.on('playersCurrentRanking', (ranking=>{
+  socket.once('playersCurrentRanking', (ranking=>{
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
@@ -111,7 +111,7 @@ export default function App(props) {
     console.log("start:",start);
     console.log("current gameid", currentgame);
     if(start === currentgame){
-      setStart(1);
+        setStart(1);
     }
   })
   
