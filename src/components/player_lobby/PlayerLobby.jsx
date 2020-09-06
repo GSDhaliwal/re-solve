@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlayerLobbyList from './PlayerLobbyList';
 import createContext from '../createContext';
 // import {ValueContext} from "../../App.js";
@@ -25,8 +25,15 @@ export default function Lobby(props) {
               />
     })
 
+    useEffect(() => {
+      console.log("hi hi" , context.displayCode);
+    },[context.displayCode]);
+
   return (
     <section>
+      <div>
+        <h4>game code: {context.displayCode}</h4>
+      </div>
       <div>
         <h4>{playersData}</h4>
       </div>
