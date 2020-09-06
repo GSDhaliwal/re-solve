@@ -11,7 +11,10 @@ export default function Gameroom(props){
   const [timerInterval, setTimerInterval] = useState(null);
   const [timer, setTimer] = useState(0);
   const context = useContext(UserContext);
-
+  
+  useEffect(()=>{
+    console.log("inside gameroom questions:", props.questions);
+  }, []);
   
   
   useEffect(()=>{
@@ -68,7 +71,7 @@ export default function Gameroom(props){
           }, delay);
         }
       }
-  },[count]);
+  },[count, ]);
 
 
   return(

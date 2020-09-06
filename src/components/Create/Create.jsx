@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
+
 import createContext from '../createContext';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
+
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 
@@ -95,10 +105,21 @@ export default function Create(props){
   const updateGameTitle = (event)=>{
     setGameTitle(event.target.value);
   }
+
+  //back button functionality
+  let history = useHistory();
+  function handleClick() {
+    history.push("/");
+  }
  
 
   return (
     <form>
+      <div>
+        <button type='button' onClick={handleClick}>
+          Back
+        </button>
+      </div>
       <label>
         Game Title:
         <input type="text" onChange={updateGameTitle} />

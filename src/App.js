@@ -14,6 +14,8 @@ import ErrorLogIn from './components/Error/ErrorLogIn';
 import createdContext from "./components/Create/createdContext";
 import UserContext from "./components/Gameroom/UserContext";
 import createContext from "./components/createContext";
+import Profile from "./components/Profile/Profile";
+import LandingPage from './components/landing_page/LandingPage'; //<-- new
 import {
   BrowserRouter as Router,
   Switch,
@@ -43,12 +45,17 @@ export default function App(props) {
   const [category, setCategory] = useState({});
   const [initilizedQuiz, setInitializedQuiz] = useState(false);
   const [currentgame, setCurrentgame] = useState();
-  const [joinView, setJoinView] = useState();
+  const [joinView, setJoinView] = useState(false);
   const [lobbyFlag, setLobbyFlag] = useState(false);
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
+
   const [loadManageAccount, setLoadManageAccount] = useState(false);
+
+  const [displayCode, setDisplayCode] = useState('');
+  
+
  
 
   
@@ -86,11 +93,11 @@ export default function App(props) {
   
 
   
+
   const bar = (quizid) => {
     socket.emit('quizToEdit', quizid);
     socket.once('editThisQuiz', (QAndAs => {
       console.log("HERE", QAndAs)
-      
       setQuiz(QAndAs);
       setClicked(true);
     }))
@@ -108,7 +115,7 @@ export default function App(props) {
   //===/gur//
   
 
-  socket.on('playersCurrentRanking', (ranking=>{
+  socket.once('playersCurrentRanking', (ranking=>{
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
@@ -117,7 +124,7 @@ export default function App(props) {
     console.log("start:",start);
     console.log("current gameid", currentgame);
     if(start === currentgame){
-      setStart(1);
+        setStart(1);
     }
   })
   
@@ -166,6 +173,7 @@ export default function App(props) {
     socket.once("loggedUser", (logged)=>{
       if(logged){
         setUser(logged);
+        console.log("user state: ", user);
         // console.log(logged);
       }else{
         alert("Wrong username and password!");
@@ -206,16 +214,16 @@ export default function App(props) {
     return result;
   }
 
-  const createGame = (quiz_id)=>{
+  const createGame = async (quiz_id)=>{ // ---
     let gamecode = gamecodeGen();
     let is_active = true;
+    setDisplayCode(gamecode);
     socket.emit('hostableGame', {quiz_id, gamecode, is_active});
     socket.on('hostedGame', (current_game)=>{
       console.log("current game info:", current_game);
       setCurrentgame(current_game);
       setJoinView(true);
     })
-
   };
   const enterRoom = (displayName, gameid)=>{
     socket.emit('playerJoin', {gamertag: displayName, game_id: gameid,
@@ -224,12 +232,20 @@ export default function App(props) {
     setGamerTag(displayName);
     fetchAndSetQuestions(gameid);
   }
+
+  //cancel selected game & delete game code from db
   const cancelGame = (gameid)=>{
     console.log("cancellled????");
     socket.emit('cancelGame', gameid);
     setJoinView(false);
+    setCurrentgame(null);
+    socket.on('confirmMessage', (message) => {
+      console.log(message);
+    })
   }
+
   const joinButton = (gameC)=>{
+    setDisplayCode(gameC);
     socket.emit("joinGame", gameC);
     socket.on('joinedGame',(gamid)=>{
       setCurrentgame(gamid);
@@ -237,6 +253,12 @@ export default function App(props) {
       setJoinView(true);
     })
   }
+
+  //goes back to join after you have entered code
+  const cancelCodeInput = () => {
+    setGameCode(null);
+    setJoinView(false);
+  };
   
   const startGame = ()=>{
     socket.emit("startgame", currentgame);
@@ -257,6 +279,24 @@ export default function App(props) {
   },[]);
   // ---------------//
 
+
+  const displayUser = () => {
+    return (!user ? ( <div>
+      <button onClick={() => {} }>
+         <Link to="/profile">Log In/Sign Up</Link>
+      </button>
+    </div>) 
+    : 
+    // context.user.username
+    (<div>
+      {user.username}
+      <button onClick = {logout}>
+        Logout     
+      </button>
+    </div>)
+    )
+  }
+
     
   if (!initilizedQuiz) {
     return null;
@@ -267,31 +307,43 @@ export default function App(props) {
     <header className="App-header">
     <Router>
       <nav>
+      <h4>-----Nav Bar--------</h4>
+        <button onClick={() => {} }>
+          <Link to="/">RE-SOLVE</Link>
+        </button>
         <div>
-        <UserContext.Provider value = {{user, setUser, verifyLogin, 
+          {displayUser()}
+        {/* <UserContext.Provider value = {{user, setUser, verifyLogin, 
             username, setUsername, password, setPassword, logout, 
             gamerTag, answered, setAnswered, whichAns, setWhichAns, 
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
-        </UserContext.Provider>
-        <button>
-          <Link to="/">Home</Link>
-        </button>
+        </UserContext.Provider> */}
         <button>
           <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
         </button> 
+        {/* {!user ? ( <div>
+                    <button onClick={() => {} }>
+                       <Link to="/profile">Log In/Sign Up</Link>
+                    </button>
+                  </div>) 
+                  : 
+                  // context.user.username
+                  (<div>
+                    {username}
+                    <button onClick = {logout}>
+                      Logout     
+                    </button>
+                  </div>)
+        } */}
+
         </div>
+        {/* <button onClick={() => {} }>
+          <Link to="/profile">Log In/Sign Up</Link>
+        </button> */}
+        <h4>-----Nav Bar--------</h4>
       </nav>
       
-      <button>
-        <Link to="/create">Create Quiz</Link>
-      </button>
-      <button>
-        <Link to="/host">Host</Link>
-      </button> 
-      <button>
-        <Link to="/join">Join</Link>
-      </button>
       <Switch>
       {<Route path="/manageaccount">
         <createContext.Provider value = {{setUserQuizzes, userQuizzes, editQuiz, quiz, setQuiz, title, 
@@ -299,27 +351,42 @@ export default function App(props) {
           {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
         </createContext.Provider>
         </Route>}
+
+        <Route exact path="/">
+          <LandingPage/>
+        </Route>
+
+        <Route path="/profile">
+          <UserContext.Provider value = {{user, setUser, verifyLogin, 
+            username, setUsername, password, setPassword, logout, 
+            gamerTag, answered, setAnswered, whichAns, setWhichAns, 
+            sendAns, setPlayers, register, currentgame, setCurrentgame}}>
+            <Profile/>
+          </UserContext.Provider>
+        </Route>
+
+
         <Route path="/create">
           <createContext.Provider value = {{createQuiz, user}}>
             <Create/>
           </createContext.Provider>
         </Route>
+
         <Route path="/host">
-        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
-        cancelGame, currentgame, gamerTag, setGamerTag, startGame
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, currentgame, gamerTag, setGamerTag, startGame, displayCode
         }}>
           {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList
             quizzes={quizlist}/>)}
           </createContext.Provider>
         </Route>
+
         <Route path="/join">
-        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost,
-        cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame, cancelCodeInput, displayCode
         }}>
           {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>)}
-          
         </createContext.Provider> 
         </Route>  
+
       </Switch>
     </Router>
         {/*
@@ -351,10 +418,10 @@ export default function App(props) {
         </button> */}
             
         <p>
-          home page testing
+          {/* home page testing */}
         </p>
    
-        <h3>Lobby</h3>
+        {/* <h3>Lobby</h3> */}
         {/* <ValueContext.Provider value={{value}}> */}
         {/* </ValueContext.Provider> */}
         
