@@ -39,6 +39,7 @@ export default function GamesList(props) {
   //back button functionality
   let history = useHistory();
   function handleClick() {
+    context.setGameCode(null);
     history.push("/");
   }
 
