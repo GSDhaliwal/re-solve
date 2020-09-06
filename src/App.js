@@ -225,6 +225,7 @@ export default function App(props) {
     console.log("cancellled????");
     socket.emit('cancelGame', gameid);
     setJoinView(false);
+    setCurrentgame(null);
     socket.on('confirmMessage', (message) => {
       console.log(message);
     })
@@ -242,6 +243,7 @@ export default function App(props) {
 
   //goes back to join after you have entered code
   const cancelCodeInput = () => {
+    setGameCode(null);
     setJoinView(false);
   };
   
