@@ -1,6 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from "../Gameroom/UserContext"
 import Signup from "./Signup";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 
 
@@ -13,6 +20,12 @@ export default function Login (props){
   }
   const updatePassword = (event) =>{
     context.setPassword(event.target.value);
+  }
+
+  //back button functionality
+  let history = useHistory();
+  function handleClick() {
+    history.push("/");
   }
 
 
@@ -28,21 +41,26 @@ export default function Login (props){
       <input 
         type="text" name="password" placeholder="password" onChange={updatePassword}
       />
-      <button type="button" onClick={()=>{context.verifyLogin(context.username, context.password)}}>
+      <button type="button" onClick={()=>{
+        context.verifyLogin(context.username, context.password)
+        handleClick()}}>
         Login
       </button>
       </form>
       <br/>
-      <Signup/> 
+      <Signup/>
       </div>)
       : 
       // context.user.username
        (<div>
-      {context.user.username}
-      <button onClick = {context.logout}>   
-        Logout     
-      </button>
+      <h4>Hello, {context.user.username}! You are signed in!</h4>
       </div>)
+      //  (<div>
+      // {context.user.username}
+      // <button onClick = {context.logout}>   
+      //   Logout     
+      // </button>
+      // </div>)
       }
         
       

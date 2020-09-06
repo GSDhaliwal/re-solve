@@ -18,7 +18,6 @@ export default function Signup(props){
       <input type="text" placeholder="New username"onChange={newUser}/>
       <input type="text" placeholder="New password"onChange={newPassword}/>
       <button type = "button" onClick={()=>{context.register(newName, newPass)
-
       }}>
         Signup
       </button>
