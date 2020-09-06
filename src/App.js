@@ -57,6 +57,8 @@ export default function App(props) {
   //====gur===//
   // const context = useContext(createdContext);
   
+  
+  
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
@@ -86,24 +88,32 @@ export default function App(props) {
   
   const bar = (quizid) => {
     socket.emit('quizToEdit', quizid);
-    socket.once('editThisQuiz', (questions => {
-      const questionsArray = questions.map((question, index) => {
-        const container = {};
-        container.id = index;
-        container.question = question.question;
-        container.image = question.image;
-        container.points_per_question = question.points_per_question;
-        container.time_per_question = question.time_per_question;
-        container.answers = question.answers;
-        container.created_quiz_id = question.created_quiz_id;
-        return container;
-      })
-      setQuiz(questionsArray);
+    socket.once('editThisQuiz', (QAndAs => {
+      let correctArray = [];
+      let verify = [];
+      for (let i = 0; i < QAndAs.length; i++) {
+        if (!(verify.includes(QAndAs[i].question) )) {
+          verify.push(QAndAs[i].question)
+          correctArray.push({
+            id: correctArray.length + 1,
+            question: QAndAs[i].question,
+            image: QAndAs[i].image,
+            points_per_question: QAndAs[i].points_per_question,
+            time_per_question: QAndAs[i].time_per_question,
+            answers: [{answer: QAndAs[i].answer, correct_answer: QAndAs[i].correct_answer}]
+          }) 
+        } else {
+          let index = verify.indexOf(QAndAs[i].question)
+          correctArray[index].answers.push({answer: QAndAs[i].answer, correct_answer: QAndAs[i].correct_answer})
+        }
+      }
+      setQuiz(correctArray);
       setClicked(true);
     }))
     socket.once('editThisQuizTitle', (res => {
       setTitle(res);
     }))
+    
   }
 
   const clickfunc = () => {
@@ -248,10 +258,7 @@ export default function App(props) {
     socket.emit("startgame", currentgame);
     console.log("starting game:", currentgame);
   }
-  useEffect(() =>{
-    console.log("logging quiz: ", quiz);
-    // console.log("logging category: ", category);
-  },[quiz]);
+  
 
 
   // ----- Host Page for Games List -----//
@@ -302,12 +309,12 @@ export default function App(props) {
         <Link to="/join">Join</Link>
       </button>
       <Switch>
-      <Route path="/manageaccount">
+      {<Route path="/manageaccount">
         <createContext.Provider value = {{userQuizzes, editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar, username}}>
           {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
         </createContext.Provider>
-      </Route>
+        </Route>}
         <Route path="/create">
           <createdContext.Provider value = {{createQuiz, username}}>
             <Create/>
@@ -332,7 +339,7 @@ export default function App(props) {
       </Switch>
     </Router>
         {/*
-          <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
+          <createContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
           { clicked ? <Edit />
           : <button onClick ={()=>{
@@ -341,7 +348,7 @@ export default function App(props) {
             EDIT
             </button>
           }  
-          </createdContext.Provider>
+          </createContext.Provider>
         */}
         
           <UserContext.Provider value = {{user, setUser, verifyLogin, 

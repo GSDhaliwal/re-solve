@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Question from './Question';
-import createdContext from '../createContext';
+import createContext from '../createContext';
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Edit(props){
   
-  const context = useContext(createdContext);
+  const context = useContext(createContext);
   useEffect(() => {
     console.log("context inside ", context.title[0]);
   }, [])
@@ -75,6 +75,7 @@ export default function Edit(props){
 
   
     let display = questions.map((question, index) => {
+        //console.log('MAPPED', question)
         return <Question 
           key={question.id}
           id={question.id}
@@ -128,6 +129,7 @@ export default function Edit(props){
       <button type="button" onClick={addQuestion}>Add Question</button>
       <br/>
       <button
+      type="button"
         onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), questions[0].created_quiz_id, context.username)}}>
           Save/Post Quiz       
       </button>
