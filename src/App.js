@@ -8,7 +8,9 @@ import PlayerLobby from "./components/player_lobby/PlayerLobby";
 import Create from "./components/Create/Create";
 import Edit from "./components/Edit/Edit";
 import JoinLobby from './components/JoinLobby';
-import Join from './components/join_games_list/Join'
+import Join from './components/join_games_list/Join';
+import ManageAccount from './components/ManageAccount/ManageAccount';
+import ErrorLogIn from './components/Error/ErrorLogIn';
 import createdContext from "./components/Create/createdContext";
 import UserContext from "./components/Gameroom/UserContext";
 import createContext from "./components/createContext";
@@ -48,8 +50,12 @@ export default function App(props) {
   //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
+
+  const [loadManageAccount, setLoadManageAccount] = useState(false);
+
   const [displayCode, setDisplayCode] = useState('');
   
+
  
 
   
@@ -58,40 +64,47 @@ export default function App(props) {
   //====gur===//
   // const context = useContext(createdContext);
   
+  
+  
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
+  const [userQuizzes, setUserQuizzes] = useState();
   
-  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty)=>{
-    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty});
+  const createQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, username)=>{
+    socket.emit('createdQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, username});
   }
 
-  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId)=>{
-    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId});
+  const loadProfilePage = (user) => {
+    socket.emit('requestUserCreatedQuizzes', user);
+    socket.on('receivedUserCreatedQuizzes', (data=>{
+      console.log("did we get it back?", data );
+      setUserQuizzes(data);
+      setLoadManageAccount(true);
+    }));
+  };
+
+
+
+
+  const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username)=>{
+    socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username});
   }
   
+
   
-  const bar = () => {
-    socket.emit('quizToEdit', '12');
-    socket.once('editThisQuiz', (questions => {
-      console.log("questions to be edited:",questions);
-      const questionsArray = questions.map((question, index) => {
-        const container = {};
-        container.id = index;
-        container.question = question.question;
-        container.image = question.image;
-        container.points_per_question = question.points_per_question;
-        container.time_per_question = question.time_per_question;
-        container.answers = question.answers;
-        container.created_quiz_id = question.created_quiz_id;
-        return container;
-      })
-      setQuiz(questionsArray);
+
+  const bar = (quizid) => {
+    socket.emit('quizToEdit', quizid);
+    socket.once('editThisQuiz', (QAndAs => {
+      console.log("HERE", QAndAs)
+      setQuiz(QAndAs);
       setClicked(true);
     }))
     socket.once('editThisQuizTitle', (res => {
       setTitle(res);
     }))
+    
   }
 
   const clickfunc = () => {
@@ -251,10 +264,7 @@ export default function App(props) {
     socket.emit("startgame", currentgame);
     console.log("starting game:", currentgame);
   }
-  useEffect(() =>{
-    console.log("logging quiz: ", quiz);
-    // console.log("logging category: ", category);
-  },[quiz]);
+  
 
 
   // ----- Host Page for Games List -----//
@@ -309,6 +319,9 @@ export default function App(props) {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider> */}
+        <button>
+          <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
+        </button> 
         {/* {!user ? ( <div>
                     <button onClick={() => {} }>
                        <Link to="/profile">Log In/Sign Up</Link>
@@ -323,6 +336,7 @@ export default function App(props) {
                     </button>
                   </div>)
         } */}
+
         </div>
         {/* <button onClick={() => {} }>
           <Link to="/profile">Log In/Sign Up</Link>
@@ -331,6 +345,13 @@ export default function App(props) {
       </nav>
       
       <Switch>
+      {<Route path="/manageaccount">
+        <createContext.Provider value = {{setUserQuizzes, userQuizzes, editQuiz, quiz, setQuiz, title, 
+          setTitle, clickfunc, bar, username}}>
+          {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
+        </createContext.Provider>
+        </Route>}
+
         <Route exact path="/">
           <LandingPage/>
         </Route>
@@ -344,10 +365,11 @@ export default function App(props) {
           </UserContext.Provider>
         </Route>
 
+
         <Route path="/create">
-          <createdContext.Provider value = {{createQuiz}}>
+          <createContext.Provider value = {{createQuiz, user}}>
             <Create/>
-          </createdContext.Provider>
+          </createContext.Provider>
         </Route>
 
         <Route path="/host">
@@ -367,8 +389,8 @@ export default function App(props) {
 
       </Switch>
     </Router>
-        {
-          <createdContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
+        {/*
+          <createContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
           setTitle, clickfunc, bar}}>
           { clicked ? <Edit />
           : <button onClick ={()=>{
@@ -377,7 +399,8 @@ export default function App(props) {
             EDIT
             </button>
           }  
-          </createdContext.Provider>}
+          </createContext.Provider>
+        */}
         
           <UserContext.Provider value = {{user, setUser, verifyLogin, 
             username, setUsername, password, setPassword, logout, 

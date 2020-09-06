@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Question from './Question';
-import createdContext from '../Create/createdContext';
+import createContext from '../createContext';
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Edit(props){
   
-  const context = useContext(createdContext);
+  const context = useContext(createContext);
   useEffect(() => {
     console.log("context inside ", context.title[0]);
   }, [])
@@ -13,7 +13,7 @@ export default function Edit(props){
   const [stateCategory, setStateCategory] = useState({value: context.title[0].category_name});
   const [difficulty, setDifficulty] = useState({value: context.title[0].difficulty});
   const [gameTitle, setGameTitle] = useState({value: context.title[0].quiz_name});
-  const [questions, setQuestions] = useState(context.quiz);
+  const [questions, setQuestions] = useState(context.quiz.QA);
   const [count, setCount] = useState(questions.length);
   
   useEffect(() => {
@@ -46,11 +46,14 @@ export default function Edit(props){
   const deleteQuestion = function(index) {
     console.log("time to delete a question, how about index = ", index);
     let temp=[];
+    let cunt = 0;
     questions.map((question)=>{
-      if(question.id !== index){
+      if((cunt) !== index){
         temp.push(question);
       }
+      cunt++;
     })
+    
     setQuestions(temp);
   };
 
@@ -75,6 +78,7 @@ export default function Edit(props){
 
   
     let display = questions.map((question, index) => {
+        //console.log('MAPPED', question)
         return <Question 
           key={question.id}
           id={question.id}
@@ -128,8 +132,8 @@ export default function Edit(props){
       <button type="button" onClick={addQuestion}>Add Question</button>
       <br/>
       <button
-        type="button"  
-        onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), questions[0].created_quiz_id)}}>
+      type="button"
+        onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.quiz.id, context.username)}}>
           Save/Post Quiz       
       </button>
    </form>
