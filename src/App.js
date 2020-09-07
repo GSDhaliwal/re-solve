@@ -343,7 +343,7 @@ export default function App(props) {
       <Switch>
       {<Route path="/manageaccount">
         <createContext.Provider value = {{setUserQuizzes, userQuizzes, editQuiz, quiz, setQuiz, title, 
-          setTitle, clickfunc, bar, username, user, loadProfilePage, setClicked}}>
+          setTitle, clickfunc, bar, username, user, loadProfilePage}}>
           {(user && clicked) ? <Edit /> : ((user && loadManageAccount) ? <ManageAccount/> : <ErrorLogIn/>)}
         </createContext.Provider>
         </Route>}
