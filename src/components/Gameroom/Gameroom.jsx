@@ -52,6 +52,7 @@ export default function Gameroom(props){
               key={props.questions[Math.floor(count/3)].id}
               question={props.questions[ Math.floor(count/3)]}
               answers={props.questions[ Math.floor(count/3)].answers}
+              image={props.questions[Math.floor(count/3)].image}
               user={context.user}
               score={props.questions[Math.floor(count/3)].points_per_question}
               />);

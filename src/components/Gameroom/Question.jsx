@@ -22,6 +22,7 @@ export default function Question(props){
     <section>
       <h2>
         {props.question.question}
+        {(props.question.image.length > 0) ? <img src={props.question.image}/> : ""}
       </h2>
       {answers}
     </section>

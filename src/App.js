@@ -114,8 +114,13 @@ export default function App(props) {
   socket.on('waitStart', (start)=>{
     console.log("start:",start);
     console.log("current gameid", currentgame);
-    if(start === currentgame){
-        setStart(1);
+    if(lobbyFlag && start === currentgame){
+      setStart(1);
+    }else if(start === currentgame){
+      console.log("my name: ", gamerTag);
+      console.log("start: ", start);
+      console.log("my game: ", currentgame);
+      console.log("The host started without you");
     }
   })
 
@@ -227,6 +232,7 @@ export default function App(props) {
     // setLoadGame(true);
     setGamerTag(displayName);
     fetchAndSetQuestions(gameid);
+    console.log(gamerTag);
   }
 
   //cancel selected game & delete game code from db
