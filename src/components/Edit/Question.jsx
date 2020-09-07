@@ -42,18 +42,6 @@ export default function Question(props) {
     props.onChange(newSelf)
   }
 
-  const updatePartialQuestionImage = function(partName, event) {
-    const newSelf = {
-      ...question,
-      [partName]: event.target.files[0]
-    }
-    props.onChange(newSelf)
-  }
-
-
-
-
-
   
   return (
     <div className="questions">
@@ -62,8 +50,8 @@ export default function Question(props) {
           <input type="text" name="Question" id={id} value={question.question} onChange={event => updatePartialQuestion('question', event)}/>
         <br/>
         <br/>
-        Image:
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.image} onChange={event => updatePartialQuestionImage('img_url', event)} />
+        Image URL:
+        <input type="text" id="picture" name="picture" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
         <br/>
         <br/>
         Points Awarded:
