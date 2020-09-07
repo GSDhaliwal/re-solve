@@ -38,7 +38,7 @@ export default function Questions(props) {
         <br/>
         <br/>
         Image:
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
+        <input type="text" id="picture" name="picture" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
         <br/>
         <br/>
         Points Awarded:
