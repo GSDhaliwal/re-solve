@@ -95,6 +95,8 @@ export default function Gameroom(props){
   <br/>
   {(count >= Object.keys(props.questions).length*3) ? <button onClick={()=>{
     setView(null);
+    context.setJoinView(false);
+    context.setLobbyFlag(false);
     backbutton();
   }}>
     Back to Home
