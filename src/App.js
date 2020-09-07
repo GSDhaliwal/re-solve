@@ -331,9 +331,9 @@ export default function App(props) {
 
   const displayUser = () => {
     return (!user ? ( <div>
-      <button onClick={() => {} }>
+      <Button color="inherit" onClick={() => {} }>
          <Link to="/profile">Log In/Sign Up</Link>
-      </button>
+      </Button>
     </div>) 
     : 
     // context.user.username
@@ -369,12 +369,12 @@ export default function App(props) {
     } else {
       return (<AppBar position="static">
           <Toolbar className="App-nav">
-            <Button variant="h6" className={classes.title} onClick={() => {}}>
+            <Button className={classes.title}>
               <Link to="/">RE-SOLVE</Link>
             </Button>
             <Toolbar className="App-nav">
               <Button color="inherit">{managingAccount()}</Button>
-              <Button color="inherit">{displayUser()}</Button>
+              {displayUser()}
             </Toolbar>
           </Toolbar>
         </AppBar>)
@@ -387,17 +387,15 @@ export default function App(props) {
   // }
 
   return (
-    <div className="App">
 
-      <head>
-        <meta
+    
+    <div className="App">
+    
+      <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-      </head>
-    
+        />
       <Router>
-
         {navBar()}
         {/* <AppBar position="static">
           <Toolbar className="App-nav">
@@ -449,7 +447,7 @@ export default function App(props) {
         {/* </nav> */}
 
         <header className="App-header">
-        <body>
+        {/* <body> */}
           <Switch>
             {<Route path="/manageaccount">
               <createContext.Provider value = {{setUserQuizzes, userQuizzes, editQuiz, quiz, setQuiz, title, 
@@ -508,7 +506,7 @@ export default function App(props) {
             </Route>  
 
           </Switch>
-        </body>
+        {/* </body> */}
         </header>
       </Router>
 
@@ -548,5 +546,8 @@ export default function App(props) {
           {/* <ValueContext.Provider value={{value}}> */}
           {/* </ValueContext.Provider> */}
     </div>
+
+
   )
 }
+
