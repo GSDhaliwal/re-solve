@@ -293,6 +293,14 @@ export default function App(props) {
     )
   }
 
+  const managingAccount = () => {
+    if (user) {
+      return (<button>
+        <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
+      </button>)
+    }
+  }
+
     
   // if (!initilizedQuiz) {
   //   return null;
@@ -315,9 +323,7 @@ export default function App(props) {
             sendAns, setPlayers, register, currentgame, setCurrentgame}}>
           <Login/>
         </UserContext.Provider> */}
-        <button>
-          <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
-        </button> 
+        {managingAccount()}
         {/* {!user ? ( <div>
                     <button onClick={() => {} }>
                        <Link to="/profile">Log In/Sign Up</Link>
