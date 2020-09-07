@@ -102,7 +102,7 @@ export default function App(props) {
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
   const [userQuizzes, setUserQuizzes] = useState();
-
+  const [refresh, setRefresh] = useState(false);
 
   //Material-UI
   const classes = useStyles();
@@ -157,7 +157,9 @@ export default function App(props) {
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
-
+  socket.on('refreshHost', (flag)=>{
+    setRefresh(flag);
+  })
   socket.on('waitStart', (start)=>{
     console.log("start:",start);
     console.log("current gameid", currentgame);
@@ -320,7 +322,7 @@ export default function App(props) {
   useEffect(()=>{
     socket.emit('hostGames', '1');
     console.log("log after socket emit - hostGames");
-  },[userQuizzes]);
+  },[userQuizzes, refresh]);
     
     
   
