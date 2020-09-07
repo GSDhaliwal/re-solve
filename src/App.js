@@ -90,7 +90,6 @@ export default function App(props) {
   const [currentgame, setCurrentgame] = useState();
   const [joinView, setJoinView] = useState(false);
   const [lobbyFlag, setLobbyFlag] = useState(false);
-  //make sure to SET FALSE TO JOIN PAGE
   const [isHost, setIsHost] = useState(false);
   const [loadGame, setLoadGame] = useState(false);
 
