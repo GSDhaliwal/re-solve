@@ -114,6 +114,12 @@ export default function Edit(props){
         onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.quiz.id, context.username)}}>
           Save/Post Quiz       
       </button>
+      <button type = "button" onClick={()=>{
+        context.setClicked(false);
+        context.loadProfilePage(context.user);
+      }}>
+        Back
+      </button>
    </form>
    </div>
   )
