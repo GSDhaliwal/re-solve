@@ -77,6 +77,12 @@ export default function Gameroom(props){
   return(
     <section>
   {view}
+  <br/>
+  <button onClick={()=>{
+
+  }}>
+    Back to Home
+  </button>
   {(count%3 === 1) && timer}
     </section>
   )

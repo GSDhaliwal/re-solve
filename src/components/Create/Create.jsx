@@ -37,9 +37,7 @@ export default function Create(props){
   }]);
   
   
-  useEffect(() => {
-    console.log(questions)
-  })
+
 
   const addQuestion = function(id) {
     setCount(count+1);
