@@ -380,14 +380,26 @@ export default function App(props) {
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, 
         currentgame, gamerTag, setGamerTag, startGame, displayCode, quizlist
         }}>
-          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList/>)}
+          <UserContext.Provider value = {{user, setUser, verifyLogin, 
+            username, setUsername, password, setPassword, logout, 
+            gamerTag, answered, setAnswered, whichAns, setWhichAns, 
+            sendAns, setPlayers, register, currentgame, setCurrentgame, 
+            isHost, setIsHost,enterRoom}}>
+              {(start)? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : (initilizedQuiz ? <GamesList/> : "")))}
+          </UserContext.Provider>
           </createContext.Provider>
         </Route>
 
         <Route path="/join">
         <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, currentgame, gamerTag, setGamerTag, joinButton, gameCode, setGameCode, startGame, cancelCodeInput, displayCode
         }}>
-          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>)}
+          <UserContext.Provider value = {{user, setUser, verifyLogin, 
+            username, setUsername, password, setPassword, logout, 
+            gamerTag, answered, setAnswered, whichAns, setWhichAns, 
+            sendAns, setPlayers, register, currentgame, setCurrentgame, 
+            isHost, setIsHost,enterRoom}}>
+          {(start) ? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>))}
+          </UserContext.Provider>
         </createContext.Provider> 
         </Route>  
 
@@ -411,7 +423,7 @@ export default function App(props) {
             gamerTag, answered, setAnswered, whichAns, setWhichAns, 
             sendAns, setPlayers, register, currentgame, setCurrentgame, 
             isHost, setIsHost,enterRoom}}>
-          {start===1 && gameDis}
+          {/* {start===1 && gameDis} */}
           </UserContext.Provider>
         {/* <button
           onClick={()=>{
