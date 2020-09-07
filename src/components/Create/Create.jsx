@@ -109,6 +109,14 @@ export default function Create(props){
   function handleClick() {
     history.push("/");
   }
+
+  const doesUserExist = () => {
+    if (context.user) { 
+      return context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.user.username)
+    } else {
+      return context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value))
+    }
+  }
  
 
   return (
@@ -152,7 +160,8 @@ export default function Create(props){
       <br/>
       <button 
       type="button"
-        onClick={()=>{context.createQuiz(gameTitle, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.user.username)}}>
+        onClick={()=>{doesUserExist()
+         handleClick()}}>
           Save/Post Quiz       
       </button>
    </form>
