@@ -3,6 +3,13 @@ import RankingList from "./RankingList";
 import Questions from "./Question"
 import UserContext from "./UserContext"
 import Reveal from "./Reveal";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 
 export default function Gameroom(props){
@@ -15,7 +22,10 @@ export default function Gameroom(props){
   useEffect(()=>{
     console.log("inside gameroom questions:", props.questions);
   }, []);
-  
+  const history = useHistory();
+  function backbutton() {
+    history.push("/");
+  }
   
   useEffect(()=>{
     console.log(context.user);
@@ -76,13 +86,19 @@ export default function Gameroom(props){
 
   return(
     <section>
+    <h4>
+      Gameroom
+    </h4>
+  {"Playing as " + context.gamerTag}
   {view}
   <br/>
-  <button onClick={()=>{
-
+  {(count >= Object.keys(props.questions).length*3) ? <button onClick={()=>{
+    setView(null);
+    backbutton();
   }}>
     Back to Home
-  </button>
+  </button>: ""}
+  
   {(count%3 === 1) && timer}
     </section>
   )
