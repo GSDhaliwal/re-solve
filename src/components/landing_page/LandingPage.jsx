@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 export default function LandingPage() {
-
+  const context = useContext(createContext);
   return (
     <section>
       <div>
@@ -16,7 +16,8 @@ export default function LandingPage() {
           <button>
             <Link to="/create">Create Quiz</Link>
           </button>
-          <button>
+          <button onClick={()=>{
+          }}>
             <Link to="/host">Host</Link>
           </button> 
           <button>

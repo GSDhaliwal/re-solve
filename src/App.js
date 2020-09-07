@@ -55,17 +55,6 @@ export default function App(props) {
 
   const [displayCode, setDisplayCode] = useState('');
   
-
- 
-
-  
-  
-  
-  //====gur===//
-  // const context = useContext(createdContext);
-  
-  
-  
   const [quiz, setQuiz] = useState();
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
@@ -89,6 +78,8 @@ export default function App(props) {
 
   const editQuiz = (gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username)=>{
     socket.emit('editedQuiz', {gameTitle, category, questions, numOfQuestions, difficulty, oldQuizId, username});
+    setClicked(false);
+    loadProfilePage(user)
   }
   
 
@@ -127,7 +118,12 @@ export default function App(props) {
         setStart(1);
     }
   })
-  
+
+  socket.once('gameslist', (data=>{
+    console.log("inside socket games list");
+    setQuizlist(data);
+    setInitializedQuiz(true);
+  }));
 
   socket.on('playersInLobby', (p)=>{
     if(p.game === currentgame && gamerTag){
@@ -268,15 +264,15 @@ export default function App(props) {
 
 
   // ----- Host Page for Games List -----//
-  useEffect (() => {
+  useEffect(()=>{
     socket.emit('hostGames', '1');
     console.log("log after socket emit - hostGames");
-    socket.on('gameslist', (data=>{
-      console.log("inside socket games list");
-      setQuizlist(data);
-      setInitializedQuiz(true);
-    }));
-  },[]);
+  },[userQuizzes]);
+    
+    
+  
+    
+
   // ---------------//
 
 
@@ -298,9 +294,9 @@ export default function App(props) {
   }
 
     
-  if (!initilizedQuiz) {
-    return null;
-  }
+  // if (!initilizedQuiz) {
+  //   return null;
+  // }
 
   return (
     <div className="App">
@@ -353,7 +349,9 @@ export default function App(props) {
         </Route>}
 
         <Route exact path="/">
+          <createContext.Provider>
           <LandingPage/>
+          </createContext.Provider>
         </Route>
 
         <Route path="/profile">
@@ -373,10 +371,10 @@ export default function App(props) {
         </Route>
 
         <Route path="/host">
-        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, currentgame, gamerTag, setGamerTag, startGame, displayCode
+        <createContext.Provider value={{createGame, enterRoom, isHost, setIsHost, cancelGame, 
+        currentgame, gamerTag, setGamerTag, startGame, displayCode, quizlist
         }}>
-          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList
-            quizzes={quizlist}/>)}
+          {(lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <GamesList/>)}
           </createContext.Provider>
         </Route>
 

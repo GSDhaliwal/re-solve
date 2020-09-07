@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Question from './Question';
 import createContext from '../createContext';
-
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Edit(props){
-  
   const context = useContext(createContext);
   useEffect(() => {
     console.log("context inside ", context.title[0]);
@@ -15,7 +13,6 @@ export default function Edit(props){
   const [gameTitle, setGameTitle] = useState({value: context.title[0].quiz_name});
   const [questions, setQuestions] = useState(context.quiz.QA);
   const [count, setCount] = useState(questions.length);
-  
   useEffect(() => {
     console.log("1", questions);
     console.log("2", gameTitle);
@@ -23,7 +20,6 @@ export default function Edit(props){
     console.log("4", stateCategory);
     console.log("5", count)
   })
-
   const addQuestion = function() {
     setCount(count+1);
     setQuestions([...questions, {
@@ -41,8 +37,6 @@ export default function Edit(props){
       ],
     }])  
   };
-
- 
   const deleteQuestion = function(index) {
     console.log("time to delete a question, how about index = ", index);
     let temp=[];
@@ -53,30 +47,22 @@ export default function Edit(props){
       }
       cunt++;
     })
-    
     setQuestions(temp);
   };
-
-
   const updateQuestion = function(index, newQuestion) {
    let clonedQuestions = [...questions];
     clonedQuestions[index] = newQuestion;
     setQuestions(clonedQuestions);
   };
-  
   const handleChangeCategory = (event) => {
     setStateCategory({value: event.target.value});
   }
-
   const handleChangeDifficulty = (event) => {
     setDifficulty({value: event.target.value});
   }
-
   const updateGameTitle = (event)=>{
-    setGameTitle(event.target.value);
+    setGameTitle({value: event.target.value});
   }
-
-  
     let display = questions.map((question, index) => {
         //console.log('MAPPED', question)
         return <Question 
@@ -92,14 +78,6 @@ export default function Edit(props){
           }}
         />
     })
-  
-  
-  
-
-
-
- 
-  
   return (
     <div>
     <form>
@@ -139,6 +117,4 @@ export default function Edit(props){
    </form>
    </div>
   )
-
 }
-
