@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     margin: theme.spacing(1, 1.5),
+    textDecoration: 'none'
   },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
@@ -350,9 +351,9 @@ export default function App(props) {
 
   const managingAccount = () => {
     if (user) {
-      return (<button>
+      return (<Button>
         <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
-      </button>)
+      </Button>)
     }
   }
 
@@ -371,11 +372,12 @@ export default function App(props) {
     } else {
       return (<AppBar position="static">
           <Toolbar className="App-nav">
-            <Button className={classes.title}>
+            {/* <Button className={classes.title} onClick={() => {}}>
               <Link to="/">RE-SOLVE</Link>
-            </Button>
+            </Button> */}
+              <Link to="/" className={classes.title, classes.link} className="link" >RE-SOLVE</Link>
             <Toolbar className="App-nav">
-              <Button color="inherit">{managingAccount()}</Button>
+              {managingAccount()}
               {displayUser()}
             </Toolbar>
           </Toolbar>
@@ -488,7 +490,7 @@ export default function App(props) {
                 username, setUsername, password, setPassword, logout, 
                 gamerTag, answered, setAnswered, whichAns, setWhichAns, 
                 sendAns, setPlayers, register, currentgame, setCurrentgame, 
-                isHost, setIsHost,enterRoom}}>
+                isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag}}>
                   {(start) ? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : (initilizedQuiz ? <GamesList/> : "")))}
               </UserContext.Provider>
               </createContext.Provider>
@@ -501,7 +503,7 @@ export default function App(props) {
                   username, setUsername, password, setPassword, logout, 
                   gamerTag, answered, setAnswered, whichAns, setWhichAns, 
                   sendAns, setPlayers, register, currentgame, setCurrentgame, 
-                  isHost, setIsHost,enterRoom}}>
+                  isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag}}>
                 {(start) ? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>))}
                 </UserContext.Provider>
               </createContext.Provider> 
