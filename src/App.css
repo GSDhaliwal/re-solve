@@ -23,7 +23,7 @@
 
 .App-header {
   background-color: #1F2833;
-  background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png"); */
   min-height: 100vh;
   padding: 5em, 0;
   display: flex;
