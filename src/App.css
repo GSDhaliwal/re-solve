@@ -14,14 +14,21 @@
 }
 
 .App-nav {
-  background-color: #1F2833;
-  border: 2px solid bottom #45A29E;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-left: 20px;
-  margin-right: 20px;
+  border: 2px solid bottom #45A29E;
+  height: 100px;
+}
+
+.App-nav-buttons {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.nav-style {
+  background-color: #1F2833;
 }
 
 .App-header {
@@ -29,11 +36,11 @@
   /* background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png"); */
   min-height: 100vh;
   padding: 5em, 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(14px + 2vmin);
+  /* display: flex;
+  /* flex-direction: column; */
+  /* align-items: center;
+  justify-content: center; */
+  /* font-size: calc(14px + 2vmin); */
   color: white;
 }
 

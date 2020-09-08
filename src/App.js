@@ -384,26 +384,26 @@ export default function App(props) {
 
   const navBar = () => {
     if (joinView && lobbyFlag) {
-      return (<nav>
-                <div class="App-nav">
+      return (<nav className="nav-style">
+                <div className="App-nav App-nav-buttons">
                   <Typography variant="h6" className={classes.title} onClick={() => {}}>
                     RE-SOLVE
                   </Typography>
-                  <div className="App-nav">
+                  <div className="App-nav App-nav-buttons">
                     {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
                   </div>
                 </div>
               </nav>)
     } else {
-      return (<nav>
-                <div class="App-nav">
+      return (<nav className="nav-style">
+                <div className="App-nav App-nav-buttons">
                   {/* <Button className={classes.title} onClick={() => {}}>
                     <Link to="/">RE-SOLVE</Link>
                   </Button> */}
                     <Link to="/">
-                      <Button className={classes.title, classes.link} className={classes.link} >RE-SOLVE</Button>
+                      <button>RE-SOLVE</button>
                     </Link>
-                  <div className="App-nav">
+                  <div className="App-nav App-nav-buttons">
                     {managingAccount()}
                     {displayUser()}
                   </div>
