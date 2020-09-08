@@ -20,12 +20,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-<<<<<<< HEAD
   margin-left: 20px;
   margin-right: 20px;
-=======
-  height: 100px;
->>>>>>> e359eb1112476fe9ab583451e1dfb387b1598804
 }
 
 .App-header {
