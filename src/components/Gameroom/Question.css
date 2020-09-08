@@ -1,0 +1,17 @@
+.Question{
+  height:100%;
+  width: 100%;
+  display:flexbox;
+  justify-content: center;
+  flex-direction: column;
+}
+.image{
+  height:300px;
+  width:400px;
+}
+.Answers{
+  display: flexbox;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: stretch;
+}
