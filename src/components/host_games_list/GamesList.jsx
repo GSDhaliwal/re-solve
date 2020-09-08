@@ -1,6 +1,7 @@
 import React, { useEffect, useContext} from 'react';
 import Game from './Game';
 import createContext from '../createContext';
+import './gameslist.css';
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,7 +51,9 @@ export default function GamesList(props) {
         <button type='button' onClick={handleClick}>
           Back
         </button>
-        <h4>{quizData}</h4>
+        <div className="card">
+          {quizData}
+        </div>
       </div>
     // </section>
   );
