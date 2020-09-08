@@ -125,7 +125,7 @@ export default function App(props) {
   const [title, setTitle] = useState();
   const [clicked, setClicked] = useState(false);
   const [userQuizzes, setUserQuizzes] = useState();
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
   //Material-UI
   const classes = useStyles();
@@ -180,7 +180,9 @@ export default function App(props) {
     setPlayers(ranking);
     console.log("ranking?:",ranking);
   }));
-  socket.on('refreshHost', (flag)=>{
+  socket.once('refreshHost', (flag)=>{
+    console.log("newquizid:", flag);
+    setInitializedQuiz(false);
     setRefresh(flag);
   })
   socket.on('waitStart', (start)=>{
