@@ -381,7 +381,7 @@ export default function App(props) {
 
   const navBar = () => {
     if (joinView && lobbyFlag) {
-      return (<AppBar className={classes.navPosition, classes.navColor}>
+      return (<nav className={classes.navPosition, classes.navColor}>
                 <Toolbar className="App-nav">
                   <Typography variant="h6" className={classes.title} onClick={() => {}}>
                     RE-SOLVE
@@ -390,9 +390,9 @@ export default function App(props) {
                     {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
                   </Toolbar>
                 </Toolbar>
-              </AppBar>)
+              </nav>)
     } else {
-      return (<AppBar className={classes.navPosition, classes.navColor, theme.palette.primary.light}>
+      return (<nav className={classes.navPosition, classes.navColor, theme.palette.primary.light}>
                 <Toolbar className="App-nav">
                   {/* <Button className={classes.title} onClick={() => {}}>
                     <Link to="/">RE-SOLVE</Link>
@@ -403,7 +403,7 @@ export default function App(props) {
                     {displayUser()}
                   </Toolbar>
                 </Toolbar>
-              </AppBar>)
+              </nav>)
     }
   }
 
