@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import Answer from "./Answer";
 import UserContext from './UserContext';
+import "./Question.css"
 
 export default function Question(props){
   const context = useContext(UserContext);
@@ -19,12 +20,16 @@ export default function Question(props){
     />)
   })
   return (
-    <section>
-      <h2>
+    <section className="Question">
+      <h6>
         {props.question.question}
-        {(props.question.image.length > 0) ? <img src={props.question.image}/> : ""}
-      </h2>
-      {answers}
+      </h6>
+      <div>
+      {(props.question.image.length > 0) ? <img className="image"src={props.question.image}/> : ""}
+      </div>
+      <div className="Answers">
+        {answers}
+      </div>
     </section>
   )
 }

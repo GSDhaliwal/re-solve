@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
 
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+
+import "./Create.css";
+
 import createContext from '../createContext';
 
 import {
@@ -120,18 +124,29 @@ export default function Create(props){
  
 
   return (
-    <form>
+    <form className="create">
       <div>
         <button type='button' onClick={handleClick}>
           Back
         </button>
       </div>
       <label>
-        Game Title:
-        <input type="text" onChange={updateGameTitle} />
+      <label for="QuizTitle">Quiz Title</label>
+      <br/>
+        <input type="text" name="QuizTitle" placeholder="Quiz Title"onChange={updateGameTitle} />
         <br/>
         <br/>
-        Category:
+        <FormControl component="fieldset">
+          <FormLabel id="title" component="legend">Category</FormLabel>
+          <RadioGroup aria-label="category" name="categroy1" value={stateCategory.value} onChange={handleChangeCategory}>
+          { categories.map(category => {
+            return ( 
+              <FormControlLabel value={category} control={<Radio />} key={category} label={category} />
+            )
+          })}
+          </RadioGroup>
+        </FormControl>
+        {/*Category:
         <select value={stateCategory.value} onChange={handleChangeCategory}>
           { categories.map(category => {
             return ( 
@@ -140,16 +155,28 @@ export default function Create(props){
               </option>
             )
           }) }
-        </select>
-        Difficulty:
+        </select>*/}
+
+          <FormControl component="fieldset">
+          <FormLabel id="title" component="legend">Difficulty</FormLabel>
+          <RadioGroup aria-label="difficulty" name="difficulty1" value={difficulty.value} onChange={handleChangeDifficulty}>
+            <FormControlLabel value="1" control={<Radio />} label="1" />
+            <FormControlLabel value="2" control={<Radio />} label="2" />
+            <FormControlLabel value="3" control={<Radio />} label="3" />
+            <FormControlLabel value="4" control={<Radio />} label="4" />
+            <FormControlLabel value="5" control={<Radio />} label="5" />
+          </RadioGroup>
+        </FormControl>
+        {/*Difficulty:
         <select value={difficulty.value} onChange={handleChangeDifficulty}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
-        </select>
+        </select>*/}
       </label>
+      <br/>
       {display}
       <br/>
       <button type="button" onClick={()=>{

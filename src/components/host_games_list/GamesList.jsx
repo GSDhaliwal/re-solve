@@ -146,7 +146,7 @@ export default function GamesList(props) {
 
   return (
     // <section>
-      <div>
+      <div className="gamesList">
         <h4>host page</h4>
         <button type='button' onClick={handleClick}>
           Back
@@ -162,7 +162,7 @@ export default function GamesList(props) {
         <option value={6}>Most Questions</option>
         </select>
         <div className="card">
-        <h4>{display(page)}</h4>
+        {display(page)}
         </div>
       </div>
     // </section>
