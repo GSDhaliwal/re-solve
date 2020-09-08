@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       padding: 0,
       listStyle: 'none',
-      color: 'white'
+      // color: 'white'
     },
   },
   appBar: {
@@ -51,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
   toolbarTitle: {
     flexGrow: 1,
   },
-  link: {
-    margin: theme.spacing(1, 1.5),
-    textDecoration: 'none'
-  },
+  // link: {
+  //   margin: theme.spacing(1, 1.5),
+  //   textDecoration: 'none'
+  // },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
   },
@@ -74,22 +74,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //color palette
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#757ce8',
-      main: '#FFFFF',
-      dark: '#002884',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
-  },
-});
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: {
+//       light: '#757ce8',
+//       main: '#FFFFF',
+//       dark: '#002884',
+//       contrastText: '#fff',
+//     },
+//     secondary: {
+//       light: '#ff7961',
+//       main: '#f44336',
+//       dark: '#ba000d',
+//       contrastText: '#000',
+//     },
+//   },
+// });
 
 
 export default function App(props) {
@@ -373,37 +373,40 @@ export default function App(props) {
 
   const managingAccount = () => {
     if (user) {
-      return (<Button>
-        <Link to="/manageaccount" onClick={(() => loadProfilePage(user))}>Manage Account</Link>
-      </Button>)
+      return (
+      <Link to="/manageaccount">
+        <Button onClick={(() => loadProfilePage(user))}>Manage Account</Button>
+      </Link>)
     }
   }
 
   const navBar = () => {
     if (joinView && lobbyFlag) {
-      return (<AppBar className={classes.navPosition, classes.navColor}>
-                <Toolbar className="App-nav">
+      return (<nav>
+                <div class="App-nav">
                   <Typography variant="h6" className={classes.title} onClick={() => {}}>
                     RE-SOLVE
                   </Typography>
-                  <Toolbar className="App-nav">
+                  <div className="App-nav">
                     {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
-                  </Toolbar>
-                </Toolbar>
-              </AppBar>)
+                  </div>
+                </div>
+              </nav>)
     } else {
-      return (<AppBar className={classes.navPosition, classes.navColor, theme.palette.primary.light}>
-                <Toolbar className="App-nav">
+      return (<nav>
+                <div class="App-nav">
                   {/* <Button className={classes.title} onClick={() => {}}>
                     <Link to="/">RE-SOLVE</Link>
                   </Button> */}
-                    <Link to="/" className={classes.title, classes.link} className="link" >RE-SOLVE</Link>
-                  <Toolbar className="App-nav">
+                    <Link to="/">
+                      <Button className={classes.title, classes.link} className={classes.link} >RE-SOLVE</Button>
+                    </Link>
+                  <div className="App-nav">
                     {managingAccount()}
                     {displayUser()}
-                  </Toolbar>
-                </Toolbar>
-              </AppBar>)
+                  </div>
+                </div>
+              </nav>)
     }
   }
 
