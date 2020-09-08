@@ -1,0 +1,13 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 800px;
+  height: 500px;
+}
+
+.sizing-button {
+  width: 200px;
+  height: 230px;
+}

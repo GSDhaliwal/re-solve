@@ -162,7 +162,7 @@ export default function GamesList(props) {
         <option value={6}>Most Questions</option>
         </select>
         <div className="card">
-        <h4>{display(page)}</h4>
+        {display(page)}
         </div>
       </div>
     // </section>
