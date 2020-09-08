@@ -512,7 +512,7 @@ export default function App(props) {
                 username, setUsername, password, setPassword, logout, 
                 gamerTag, answered, setAnswered, whichAns, setWhichAns, 
                 sendAns, setPlayers, register, currentgame, setCurrentgame, 
-                isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag}}>
+                isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag, setStart}}>
                   {(start) ? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : (initilizedQuiz ? <GamesList/> : "")))}
               </UserContext.Provider>
               </createContext.Provider>
@@ -525,7 +525,7 @@ export default function App(props) {
                   username, setUsername, password, setPassword, logout, 
                   gamerTag, answered, setAnswered, whichAns, setWhichAns, 
                   sendAns, setPlayers, register, currentgame, setCurrentgame, 
-                  isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag}}>
+                  isHost, setIsHost, enterRoom, setJoinView, setLobbyFlag, setStart}}>
                 {(start) ? gameDis : ((lobbyFlag && joinView) ? (<PlayerLobby players={lplayers}/>) :( (joinView && !lobbyFlag) ? <JoinLobby/> : <Join/>))}
                 </UserContext.Provider>
               </createContext.Provider> 

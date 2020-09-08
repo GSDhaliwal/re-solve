@@ -7,10 +7,6 @@ import {
   Link
 } from "react-router-dom";
 
-
-//Material UI
-import Button from '@material-ui/core/Button';
-
 export default function LandingPage() {
   const context = useContext(createContext);
   return (
@@ -20,10 +16,12 @@ export default function LandingPage() {
           <button>
             <Link to="/create">Create Quiz</Link>
           </button>
-          <button onClick={()=>{
-          }}>
-            <Link to="/host">Host</Link>
-          </button> 
+            <Link to="/host">
+              <button>
+                Host
+              </button> 
+            </Link>
+          
           <button>
             <Link to="/join">Join</Link>
           </button>
