@@ -31,20 +31,21 @@ export default function LandingPage() {
 
       <div class="buttons">
             <Link to="/create">
-              <Button variant="contained" class="sizing-button">
+              <Button variant="contained" class="sizing-button first">
                 Create Quiz
               </Button>
             </Link>
             <Link to="/host">
-              <Button variant="contained" class="sizing-button">
+              <Button variant="contained" class="sizing-button first">
                 Host
               </Button>
             </Link>
             <Link to="/join">
-              <Button variant="contained" class="sizing-button">
+              <Button variant="contained" class="sizing-button first">
                 Join
               </Button>
             </Link>
       </div>
+
   )
 }

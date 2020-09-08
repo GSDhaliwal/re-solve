@@ -14,11 +14,13 @@
 }
 
 .App-nav {
-  background-color: #45A29E;
+  background-color: #1F2833;
+  border: 2px solid bottom #45A29E;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  height: 100px;
 }
 
 .App-header {
@@ -38,6 +40,10 @@
   color: #61dafb;
 }
 
+
+/* .MuiAppBar-colorPrimary .link, .MuiAppBar-colorPrimary .link:visited {
+  color: inherit;
+} */
 
 
 @keyframes App-logo-spin {

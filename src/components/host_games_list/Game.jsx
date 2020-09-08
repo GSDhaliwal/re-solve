@@ -42,8 +42,8 @@ export default function Game(props) {
 
     return  <Card className={classes.root} variant="outlined">
               <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>{props.name}</Typography>
-                <Typography variant="h5" component="h2">Category: {props.category}</Typography>
+                <Typography variant="h5" component="h2">{props.name}</Typography>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>Category: {props.category}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Number of Questions: {props.num_of_questions}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Number of Times Hosted: {props.num_of_times_hosted}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Total Players Played: {props.total_players_played}</Typography>
