@@ -98,6 +98,7 @@ export default function Gameroom(props){
     context.setJoinView(false);
     context.setLobbyFlag(false);
     backbutton();
+    context.setStart(0);
   }}>
     Back to Home
   </button>: ""}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
-
+import "./Create.css";
 import createContext from '../createContext';
 
 import {
@@ -120,7 +120,7 @@ export default function Create(props){
  
 
   return (
-    <form>
+    <form className="create">
       <div>
         <button type='button' onClick={handleClick}>
           Back
