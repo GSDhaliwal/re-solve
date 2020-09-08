@@ -146,7 +146,7 @@ export default function GamesList(props) {
 
   return (
     // <section>
-      <div>
+      <div className="gamesList">
         <h4>host page</h4>
         <button type='button' onClick={handleClick}>
           Back

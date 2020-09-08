@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 
+
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -27,6 +28,7 @@ export default function LandingPage() {
 
 
   return (
+
       <div class="buttons">
             <Link to="/create">
               <Button variant="contained" class="sizing-button">
