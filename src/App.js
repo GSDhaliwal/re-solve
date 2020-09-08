@@ -31,6 +31,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       padding: 0,
       listStyle: 'none',
+      color: 'white'
     },
   },
   appBar: {
@@ -66,7 +68,28 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(6),
     },
   },
+    navPosition: {
+      position: 'fixed'
+    }
 }));
+
+//color palette
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
 
 
 export default function App(props) {
@@ -359,7 +382,7 @@ export default function App(props) {
 
   const navBar = () => {
     if (joinView && lobbyFlag) {
-      return (<AppBar position="static">
+      return (<AppBar className={classes.navPosition, classes.navColor}>
                 <Toolbar className="App-nav">
                   <Typography variant="h6" className={classes.title} onClick={() => {}}>
                     RE-SOLVE
@@ -370,7 +393,7 @@ export default function App(props) {
                 </Toolbar>
               </AppBar>)
     } else {
-      return (<AppBar position="static">
+      return (<AppBar className={classes.navPosition, classes.navColor, theme.palette.primary.light}>
                 <Toolbar className="App-nav">
                   {/* <Button className={classes.title} onClick={() => {}}>
                     <Link to="/">RE-SOLVE</Link>
