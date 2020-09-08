@@ -385,7 +385,7 @@ export default function App(props) {
   const navBar = () => {
     if (joinView && lobbyFlag) {
       return (<nav>
-                <div class="App-nav">
+                <div className="App-nav">
                   <Typography variant="h6" className={classes.title} onClick={() => {}}>
                     RE-SOLVE
                   </Typography>
@@ -396,7 +396,7 @@ export default function App(props) {
               </nav>)
     } else {
       return (<nav>
-                <div class="App-nav">
+                <div className="App-nav">
                   {/* <Button className={classes.title} onClick={() => {}}>
                     <Link to="/">RE-SOLVE</Link>
                   </Button> */}

@@ -28,7 +28,7 @@
   /* background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png"); */
   min-height: 100vh;
   padding: 5em, 0;
-  display: flex;
+  display: flex; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
