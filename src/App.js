@@ -360,28 +360,28 @@ export default function App(props) {
   const navBar = () => {
     if (joinView && lobbyFlag) {
       return (<AppBar position="static">
-          <Toolbar className="App-nav">
-            <Typography variant="h6" className={classes.title} onClick={() => {}}>
-              RE-SOLVE
-            </Typography>
-            <Toolbar className="App-nav">
-              {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
-            </Toolbar>
-          </Toolbar>
-        </AppBar>)
+                <Toolbar className="App-nav">
+                  <Typography variant="h6" className={classes.title} onClick={() => {}}>
+                    RE-SOLVE
+                  </Typography>
+                  <Toolbar className="App-nav">
+                    {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
+                  </Toolbar>
+                </Toolbar>
+              </AppBar>)
     } else {
       return (<AppBar position="static">
-          <Toolbar className="App-nav">
-            {/* <Button className={classes.title} onClick={() => {}}>
-              <Link to="/">RE-SOLVE</Link>
-            </Button> */}
-              <Link to="/" className={classes.title, classes.link} className="link" >RE-SOLVE</Link>
-            <Toolbar className="App-nav">
-              {managingAccount()}
-              {displayUser()}
-            </Toolbar>
-          </Toolbar>
-        </AppBar>)
+                <Toolbar className="App-nav">
+                  {/* <Button className={classes.title} onClick={() => {}}>
+                    <Link to="/">RE-SOLVE</Link>
+                  </Button> */}
+                    <Link to="/" className={classes.title, classes.link} className="link" >RE-SOLVE</Link>
+                  <Toolbar className="App-nav">
+                    {managingAccount()}
+                    {displayUser()}
+                  </Toolbar>
+                </Toolbar>
+              </AppBar>)
     }
   }
 
