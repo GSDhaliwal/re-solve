@@ -10,6 +10,7 @@ import {
   Link,
   useHistory
 } from "react-router-dom";
+import "./Gameroom.css";
 
 
 export default function Gameroom(props){
@@ -86,11 +87,11 @@ export default function Gameroom(props){
 
 
   return(
-    <section>
-    <h4>
-      Gameroom
-    </h4>
-  {"Playing as " + context.gamerTag}
+    <section className="Gameroom">
+    <span className="gamertag">
+      {"Playing as " + context.gamerTag}
+    </span>
+  
   {view}
   <br/>
   {(count >= Object.keys(props.questions).length*3) ? <button onClick={()=>{
