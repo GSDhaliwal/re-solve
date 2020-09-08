@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, useRef} from 'react';
 import Game from './Game';
 import createContext from '../createContext';
+import './gameslist.css';
 import {
   BrowserRouter as Router,
   Switch,
@@ -150,6 +151,7 @@ export default function GamesList(props) {
         <button type='button' onClick={handleClick}>
           Back
         </button>
+
          Sort by:
         <select  ref={selectRef} value={order} onChange={handleSort}>
         <option value={1}>Category</option>
@@ -159,7 +161,9 @@ export default function GamesList(props) {
         <option value={5}>Least Questions</option>
         <option value={6}>Most Questions</option>
         </select>
+        <div className="card">
         <h4>{display(page)}</h4>
+        </div>
       </div>
     // </section>
   );

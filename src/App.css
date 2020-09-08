@@ -36,6 +36,10 @@
   color: #61dafb;
 }
 
+.MuiAppBar-colorPrimary .link, .MuiAppBar-colorPrimary .link:visited {
+  color: inherit;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
