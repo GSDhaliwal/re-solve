@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import TextField from '@material-ui/core/TextField';
 import Answers from './Answers';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 export default function Questions(props) {
   const { id, index, question } = props;
@@ -32,32 +34,42 @@ export default function Questions(props) {
   
   return (
     <div className="questions">
-      <h3>Q{index + 1}</h3>
-        Question:
-          <input type="text" name="Question" id={id} value={question.question} onChange={event => updatePartialQuestion('question', event)}/>
+      <label for="Questions">Q{index + 1}</label>
+      <br/>
+      <br/>
+          <label for="Question">Question</label>
+          <br/>
+          <input type="text" placeholder="Question" name="Question" id={id} value={question.question} onChange={event => updatePartialQuestion('question', event)}/>
         <br/>
         <br/>
-        Image URL:
-        <input type="text" id="picture" name="picture" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
+        <label for="picture">Image URL</label>
+        <br/>
+        <input type="text" placeholder="Image URL"id="picture" name="picture" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
         <br/>
         <br/>
-        Points Awarded:
-          <select value={question.points_per_question} onChange={event => updatePartialQuestion('points_per_question', event)}>
+        <FormControl component="fieldset">
+          <FormLabel id="title" component="legend">Points Awarded</FormLabel>
+          <RadioGroup aria-label="difficulty" name="difficulty1" value={question.points_per_question} onChange={event => updatePartialQuestion('points_per_question', event)}>
+            <FormControlLabel value="125" control={<Radio />} label="150" />
+            <FormControlLabel value="250" control={<Radio />} label="250" />
+            <FormControlLabel value="500" control={<Radio />} label="500" />
+          </RadioGroup>
+        </FormControl>
+          {/*<select value={question.points_per_question} onChange={event => updatePartialQuestion('points_per_question', event)}>
             <option value="125">125</option>
             <option value="250">250</option>
             <option value="500">500</option>
-          </select>
+  </select>*/}
         <br/>
         <br/>
-        Seconds to solve:
+        <label for="seconds">Seconds to solve</label>
+        <br/>
           <input type="text" name="seconds" value={question.time_per_question} onChange={event => updatePartialQuestion('time_per_question', event)}/>
         <br/>
         <br/>
-        Answers:
+        <label for="Answers">Answers</label>
           {display}
-        <br/>
         <button type="button" onClick={ props.onDelete }>Delete Question</button>
-        <br/>
       </div>
   
   )

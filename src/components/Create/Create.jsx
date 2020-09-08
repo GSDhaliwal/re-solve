@@ -131,12 +131,13 @@ export default function Create(props){
         </button>
       </div>
       <label>
-        Game Title:
-        <input type="text" onChange={updateGameTitle} />
+      <label for="QuizTitle">Quiz Title</label>
+      <br/>
+        <input type="text" name="QuizTitle" placeholder="Quiz Title"onChange={updateGameTitle} />
         <br/>
         <br/>
         <FormControl component="fieldset">
-          <FormLabel component="legend">Category</FormLabel>
+          <FormLabel id="title" component="legend">Category</FormLabel>
           <RadioGroup aria-label="category" name="categroy1" value={stateCategory.value} onChange={handleChangeCategory}>
           { categories.map(category => {
             return ( 
@@ -157,7 +158,7 @@ export default function Create(props){
         </select>*/}
 
           <FormControl component="fieldset">
-          <FormLabel component="legend">Difficulty</FormLabel>
+          <FormLabel id="title" component="legend">Difficulty</FormLabel>
           <RadioGroup aria-label="difficulty" name="difficulty1" value={difficulty.value} onChange={handleChangeDifficulty}>
             <FormControlLabel value="1" control={<Radio />} label="1" />
             <FormControlLabel value="2" control={<Radio />} label="2" />
@@ -175,6 +176,7 @@ export default function Create(props){
           <option value="5">5</option>
         </select>*/}
       </label>
+      <br/>
       {display}
       <br/>
       <button type="button" onClick={()=>{

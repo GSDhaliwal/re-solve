@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -38,9 +38,7 @@
   color: #61dafb;
 }
 
-.MuiAppBar-colorPrimary .link, .MuiAppBar-colorPrimary .link:visited {
-  color: inherit;
-}
+
 
 @keyframes App-logo-spin {
   from {
