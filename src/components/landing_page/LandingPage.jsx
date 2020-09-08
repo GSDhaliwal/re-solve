@@ -7,6 +7,10 @@ import {
   Link
 } from "react-router-dom";
 
+
+//Material UI
+import Button from '@material-ui/core/Button';
+
 export default function LandingPage() {
   const context = useContext(createContext);
   return (
