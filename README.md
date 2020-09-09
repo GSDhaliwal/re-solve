@@ -5,4 +5,4 @@ A user may create quizzes from scratch with our provided template in the form of
 The project is deployed [Here](https://re-solve.netlify.app/).
 The backend repository is [Here](https://github.com/HenryMao/re-solve-api).
 
-The frontend is built with React. The backend is built with Express and postgres. Without the use of cookies, user login does not persist through refreshes of the browser.
+The frontend is built with React. The backend is built with Express and postgres. The real time interaction between players is enabled by socket.io. Without the use of cookies, user login does not persist through refreshes of the browser.

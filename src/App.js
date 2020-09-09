@@ -286,9 +286,6 @@ export default function App(props) {
 
   const displayUser = () => {
     return (!user ? ( <div>
-      {/* <Button color="inherit" onClick={() => {} }>
-         <Link to="/profile" style={{ textDecoration: 'none' }}>Log In/Sign Up</Link>
-      </Button> */}
 
       <Link to="/profile" style={{ textDecoration: 'none' }} className="link-color">
                       <Typography variant="h7" className="typo-style-login typo-font-login">Login/Sign Up</Typography>

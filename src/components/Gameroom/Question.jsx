@@ -24,7 +24,7 @@ export default function Question(props){
         {props.question.question}
       </h6>
       <div>
-      {(props.question.image.length > 0) ? <img className="qimage"src={props.question.image}/> : ""}
+      {(props.question.image) ? <img className="qimage"src={props.question.image}/> : ""}
       </div>
       <div className="Answers">
         {answers}
