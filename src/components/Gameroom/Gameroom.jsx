@@ -20,23 +20,19 @@ export default function Gameroom(props){
   const [timer, setTimer] = useState(0);
   const context = useContext(UserContext);
   
-  useEffect(()=>{
-    console.log("inside gameroom questions:", props.questions);
-  }, []);
+
   const history = useHistory();
   function backbutton() {
     history.push("/");
   }
   
   useEffect(()=>{
-    console.log(context.user);
     },[context.user]);
     useEffect(()=>{
       let delay = 0;
       if(count < Object.keys(props.questions).length*3){
         if(count%3 === 2){
-          delay = 1500;
-          //delay = props.questions[ Math.floor(count/3)].time_per_question*1000;
+          delay = 5000;
           setTimeout(() => {
             setView(<RankingList
               key={props.questions[Math.floor(count/3)].id}
@@ -47,7 +43,7 @@ export default function Gameroom(props){
           }, delay);
         }
         if(count%3 === 0){
-          delay = 1500;
+          delay = 5000;
           setTimeout(() => {
             setView(<Questions
               key={props.questions[Math.floor(count/3)].id}

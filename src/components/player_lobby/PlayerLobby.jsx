@@ -1,20 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import PlayerLobbyList from './PlayerLobbyList';
 import createContext from '../createContext';
-// import {ValueContext} from "../../App.js";
 
 export default function Lobby(props) {
 
-  // const {value} = React.useContext(ValueContext);
-
-  // const [players, setPlayers] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   console.log("playersRound1:", players);
-  //   setPlayers(props.player);
-  //   console.log("playersRound2:", players);
-  //   // createPlayerList();
-  // }, [players, props.player]);
 
     const context = useContext(createContext);
     const playersData = props.players.map((player, index) => {
@@ -39,7 +28,7 @@ export default function Lobby(props) {
       </div>
       {context.isHost ? <button onClick={()=>{
         context.startGame();
-      }}>Start???</button> : "Waiting for host to start game..."}
+      }}>Start</button> : "Waiting for host to start game..."}
     </section>
   )
 }

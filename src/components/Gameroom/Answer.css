@@ -1,3 +1,8 @@
 .Answer{
   margin: 5%;
+  border-radius: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  min-height: 10%;
+  min-width: 15%;
 }

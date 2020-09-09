@@ -19,12 +19,8 @@ export default function JoinLobby(props){
   //back button functionality
   let history = useHistory();
   function handleClick() {
-    // history.push(`/${prevState}`);
-    console.log("button clicked !!!!!!");
     context.cancelCodeInput();
-    // history.push('/join');
   }
-
 
   const buttonConditional = () => {
     if(context.isHost){ 
