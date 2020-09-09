@@ -286,13 +286,14 @@ export default function App(props) {
 
   const displayUser = () => {
     return (!user ? ( <div>
-      <Button color="inherit" onClick={() => {} }>
-         <Link to="/profile" className="loginLink" style={{ textDecoration: 'none' }}>Log In/Sign Up</Link>
-      </Button>
+
+      <Link to="/profile" style={{ textDecoration: 'none' }} className="link-color">
+                      <Typography variant="h7" className="typo-style-login typo-font-login">Login/Sign Up</Typography>
+                    </Link>
     </div>) 
     : 
     (<div>
-      {user.username}
+      <Typography variant="h7" className="typo-font-gameplay gamertag-nav">{user.username}</Typography>
       <button onClick = {logout}>
         Logout     
       </button>
@@ -303,9 +304,12 @@ export default function App(props) {
   const managingAccount = () => {
     if (user) {
       return (
-      <Link to="/manageaccount" style={{ textDecoration: 'none' }}>
-        <Button onClick={(() => loadProfilePage(user))}>Manage Account</Button>
-      </Link>)
+      // <Link to="/manageaccount" style={{ textDecoration: 'none' }}>
+      //   <Button onClick={(() => loadProfilePage(user))}>Manage Account</Button>
+      // </Link>
+      <Link to="/mangeaccount" style={{ textDecoration: 'none' }} className="link-color">
+      <Typography variant="h7" className="typo-style-login typo-font-login">My Quizzes</Typography>
+    </Link>)
     }
   }
 
@@ -315,9 +319,7 @@ export default function App(props) {
       return (<nav className="nav-style">
                 <div className="App-nav">
 
-                <Typography variant="h6">
-                    RE-SOLVE
-                </Typography>
+                <Typography variant="h5" className="typo-style typo-font-gameplay">RE-SOLVE</Typography>
                   <div className="App-nav App-login-buttons">
                     {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
                   </div>

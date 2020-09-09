@@ -27,6 +27,7 @@
 .App-login-buttons {
   margin-left: 20%;
   margin-right: 5%;
+  width: 20%;
 }
 
 .nav-style {
@@ -74,9 +75,20 @@
   letter-spacing: 0.15em;
   
   display: inline-block;
-  padding: 15px 20px;
+  padding: 10px 10px;
   position: relative;
 }
+.typo-font-gameplay {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  
+  display: inline-block;
+  padding: 10px 10px;
+  position: relative;
+}
+
 .typo-font:after {    
   background: none repeat scroll 0 0 transparent;
   /* bottom: 0; */
@@ -90,6 +102,50 @@
   width: 0;
 }
 .typo-font:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+/* login button */
+.typo-style-login {
+  font-size: 150px;
+  font: bold 14px/1.4 'Open Sans', arial, sans-serif;
+}
+
+.typo-font-login {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  
+  display: inline-block;
+  padding: 5px 5px;
+  position: relative;
+}
+.typo-font--login-gameplay {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  
+  display: inline-block;
+  padding: 5px 5px;
+  position: relative;
+}
+
+.typo-font-login:after {    
+  background: none repeat scroll 0 0 transparent;
+  /* bottom: 0; */
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.typo-font-login:hover:after { 
   width: 100%; 
   left: 0; 
 }
