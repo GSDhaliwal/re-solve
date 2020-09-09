@@ -5,5 +5,4 @@ command = "CI= npm run build"
 
 
 [build.environment]
-CI=false
 REACT_APP_API_BASE_URL = "https://re-solve.herokuapp.com/"
