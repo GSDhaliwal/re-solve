@@ -31,10 +31,6 @@ export default function LandingPage() {
   return (
 
       <div className="buttons">
-
-            {/* <button type="button" className="backButton" onClick={() => {console.log("hi")}}>
-            </button> */}
-
             <Link to="/create" className="links">
               <Button variant="contained" class="sizing-button first">
                 Create

@@ -19,7 +19,6 @@ export default function Question(props) {
   const { id, index, question } = props;
   const existingAnswers = mergeDefaultAnswers(question.answers)
   const [answers, setAnswers] = useState(existingAnswers);
-  //console.log('fffffffffffffff', question.answers)
   
   question.answers = answers;
   let display = answers.map((answer, index) => {

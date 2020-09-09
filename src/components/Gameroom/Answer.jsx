@@ -7,7 +7,6 @@ export default function Answer(props){
   let btnRef = useRef();
 
   return (<button className="Answer"ref={btnRef} onClick={((event)=>{
-    console.log("clicked", props.correct);
     context.setAnswered(true);
     context.setWhichAns(props.index);
     if(btnRef.current){
@@ -17,7 +16,6 @@ export default function Answer(props){
       context.sendAns(context.gamerTag, props.score);
     }
   })}>
-      {/* {". "} */}
       {props.content}
     </button>)
 }

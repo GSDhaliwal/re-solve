@@ -5,7 +5,7 @@ export default function ErrorLogIn(props) {
   
   return (
     <section>
-      Please Log In.
+      Please login
     </section>
   )
 }

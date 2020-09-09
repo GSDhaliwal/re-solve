@@ -55,11 +55,6 @@ export default function Questions(props) {
             <FormControlLabel value="500" control={<Radio />} label="500" />
           </RadioGroup>
         </FormControl>
-          {/*<select value={question.points_per_question} onChange={event => updatePartialQuestion('points_per_question', event)}>
-            <option value="125">125</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-  </select>*/}
         <br/>
         <br/>
         <label for="seconds">Seconds to solve</label>

@@ -17,6 +17,7 @@ div.gamesList {
   margin-top: 120px;
 }
 
+
 .button-card {
   width: 350px;
   height: 350px;
@@ -38,4 +39,19 @@ div.gamesList {
 .host-title {
   display: flex;
   text-align: center;
+
+.sorting{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-size: medium;
+}
+.sortSelect{
+  margin-left: 5px;
+  width:10%;
+  border-radius: 10px;
+}
+.backButton{
+  position: fixed;
+  left: 5%;
 }
