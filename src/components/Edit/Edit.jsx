@@ -3,6 +3,7 @@ import Question from './Question';
 import createContext from '../createContext';
 import "../Create/Create.css";
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import "../back_button.css";
 
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 
@@ -121,14 +122,15 @@ export default function Edit(props){
       <div className="questionalignment">
         {display}
       </div>
-      <button type="button" onClick={addQuestion}>Add Question</button>
+      <button className="button" type="button" onClick={addQuestion}>Add Question</button>
       <br/>
       <button
+      className="button"
       type="button"
         onClick={()=>{context.editQuiz(gameTitle.value, stateCategory.value, questions, questions.length, parseInt(difficulty.value), context.quiz.id, context.username)}}>
           Save/Post Quiz       
       </button>
-      <button type = "button" onClick={()=>{
+      <button type="button" className="backButton" onClick={()=>{
         context.setClicked(false);
         context.loadProfilePage(context.user);
       }}>
