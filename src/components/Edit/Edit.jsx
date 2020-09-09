@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Question from './Question';
 import createContext from '../createContext';
+import "../Create/Create.css";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+
 const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
+
 export default function Edit(props){
   const context = useContext(createContext);
   useEffect(() => {
@@ -9,14 +13,14 @@ export default function Edit(props){
   }, [])
   const [state, setState] = useState(categories);
   const [stateCategory, setStateCategory] = useState({value: context.title[0].category_name});
-  const [difficulty, setDifficulty] = useState({value: context.title[0].difficulty});
+  const [difficulty, setDifficulty] = useState({value: (context.title[0].difficulty).toString()});
   const [gameTitle, setGameTitle] = useState({value: context.title[0].quiz_name});
   const [questions, setQuestions] = useState(context.quiz.QA);
   const [count, setCount] = useState(questions.length);
   useEffect(() => {
     console.log("1", questions);
     console.log("2", gameTitle);
-    console.log("3", difficulty);
+    console.log("3", typeof difficulty.value);
     console.log("4", stateCategory);
     console.log("5", count)
   })
@@ -65,50 +69,58 @@ export default function Edit(props){
   const updateGameTitle = (event)=>{
     setGameTitle({value: event.target.value});
   };
+    let display = questions.map((question, index) => {
+        return <Question 
+          key={question.id}
+          id={question.id}
+          question={question}
+          index={index}
+          onDelete={() => {
+            deleteQuestion(index)
+          }}
+          onChange={newQuestion => {
+            updateQuestion(index, newQuestion)
+          }}
+        />
+    })
 
-  let display = questions.map((question, index) => {
-    return <Question 
-      key={question.id}
-      id={question.id}
-      question={question}
-      index={index}
-      onDelete={() => {
-        deleteQuestion(index)
-      }}
-      onChange={newQuestion => {
-        updateQuestion(index, newQuestion)
-      }}
-    />
-  })
+  
+
   return (
     <div>
     <form>
-      <label>
-        Game Title:
-        <input type="text" value={gameTitle.value} onChange={updateGameTitle} />
-        <br/>
-        <br/>
-        Category:
-        <select value={stateCategory.value} onChange={handleChangeCategory}>
-          { state.map(category => {
-            return ( 
-              <option value={category} key={category}>
-              {category}
-              </option>
-            )
-          }) }
-        </select>
-        Difficulty:
-        <select value={difficulty.value} onChange={handleChangeDifficulty}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </label>
+    <div className="initialQuizInfo">
+        <div className="QuizTitle">
+          <label id="title">Quiz Title</label>
+          <textarea className="titleTextArea" name="QuizTitle" placeholder="Quiz Title" value={gameTitle.value} onChange={updateGameTitle} />
+          
+        </div>
+        <div class="categoryAndDifficulty">
+          <FormControl component="fieldset">
+            <FormLabel id="title" component="legend">Category</FormLabel>
+            <RadioGroup aria-label="category" name="categroy1" value={stateCategory.value} onChange={handleChangeCategory}>
+            { categories.map(category => {
+              return ( 
+                <FormControlLabel value={category} control={<Radio />} key={category} label={category} />
+              )
+            })}
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset">
+            <FormLabel id="title" component="legend">Difficulty</FormLabel>
+            <RadioGroup aria-label="difficulty" name="difficulty1" value={difficulty.value} onChange={handleChangeDifficulty}>
+              <FormControlLabel value="1" control={<Radio />} label="1" />
+              <FormControlLabel value="2" control={<Radio />} label="2" />
+              <FormControlLabel value="3" control={<Radio />} label="3" />
+              <FormControlLabel value="4" control={<Radio />} label="4" />
+              <FormControlLabel value="5" control={<Radio />} label="5" />
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
+      <div className="questionalignment">
         {display}
-      <br/>
+      </div>
       <button type="button" onClick={addQuestion}>Add Question</button>
       <br/>
       <button
@@ -126,3 +138,4 @@ export default function Edit(props){
    </div>
   )
 }
+

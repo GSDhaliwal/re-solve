@@ -125,48 +125,49 @@ export default function Create(props){
  
 
   return (
+    <div className="createForm">
     <form className="create">
       <div>
         <button type='button' onClick={handleClick}>
           Back
         </button>
       </div>
-      <label>
-      <label for="QuizTitle">Quiz Title</label>
-      <br/>
-        <input type="text" name="QuizTitle" placeholder="Quiz Title"onChange={updateGameTitle} />
-        <br/>
-        <br/>
-        <FormControl component="fieldset">
-          <FormLabel id="title" component="legend">Category</FormLabel>
-          <RadioGroup aria-label="category" name="categroy1" value={stateCategory.value} onChange={handleChangeCategory}>
-          { categories.map(category => {
-            return ( 
-              <FormControlLabel value={category} control={<Radio />} key={category} label={category} />
-            )
-          })}
-          </RadioGroup>
-        </FormControl>
-
+      <div className="initialQuizInfo">
+        <div className="QuizTitle">
+          <label id="title">Quiz Title</label>
+          <textarea className="titleTextArea" name="QuizTitle" placeholder="Quiz Title"onChange={updateGameTitle} />
+          
+        </div>
+        <div class="categoryAndDifficulty">
           <FormControl component="fieldset">
-          <FormLabel id="title" component="legend">Difficulty</FormLabel>
-          <RadioGroup aria-label="difficulty" name="difficulty1" value={difficulty.value} onChange={handleChangeDifficulty}>
-            <FormControlLabel value="1" control={<Radio />} label="1" />
-            <FormControlLabel value="2" control={<Radio />} label="2" />
-            <FormControlLabel value="3" control={<Radio />} label="3" />
-            <FormControlLabel value="4" control={<Radio />} label="4" />
-            <FormControlLabel value="5" control={<Radio />} label="5" />
-          </RadioGroup>
-        </FormControl>
-      </label>
-      <br/>
-      {display}
-      <br/>
+            <FormLabel id="title" component="legend">Category</FormLabel>
+            <RadioGroup aria-label="category" name="categroy1" value={stateCategory.value} onChange={handleChangeCategory}>
+            { categories.map(category => {
+              return ( 
+                <FormControlLabel value={category} control={<Radio />} key={category} label={category} />
+              )
+            })}
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset">
+            <FormLabel id="title" component="legend">Difficulty</FormLabel>
+            <RadioGroup aria-label="difficulty" name="difficulty1" value={difficulty.value} onChange={handleChangeDifficulty}>
+              <FormControlLabel value="1" control={<Radio />} label="1" />
+              <FormControlLabel value="2" control={<Radio />} label="2" />
+              <FormControlLabel value="3" control={<Radio />} label="3" />
+              <FormControlLabel value="4" control={<Radio />} label="4" />
+              <FormControlLabel value="5" control={<Radio />} label="5" />
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
+      <div className="questionalignment">
+        {display}
+      </div>
+
       <button type="button" onClick={()=>{
         addQuestion(count)
         }}>Add Question</button>
-      <br/>
-      <br/>
       <button 
       type="button"
         onClick={()=>{doesUserExist()
@@ -174,6 +175,7 @@ export default function Create(props){
           Save/Post Quiz       
       </button>
    </form>
+   </div>
   )
 }
 
