@@ -1,6 +1,7 @@
 import React, { useEffect, useContext} from 'react';
 import createContext from '../createContext';
 import "../back_button.css";
+import "./Join.css"
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,7 +11,7 @@ import {
 } from "react-router-dom";
 
 
-export default function GamesList(props) {
+export default function Join(props) {
   const context = useContext(createContext);
   useEffect(()=>{
     context.setIsHost(false);

@@ -287,7 +287,7 @@ export default function App(props) {
   const displayUser = () => {
     return (!user ? ( <div>
       <Button color="inherit" onClick={() => {} }>
-         <Link to="/profile" style={{ textDecoration: 'none' }}>Log In/Sign Up</Link>
+         <Link to="/profile" className="loginLink" style={{ textDecoration: 'none' }}>Log In/Sign Up</Link>
       </Button>
     </div>) 
     : 
