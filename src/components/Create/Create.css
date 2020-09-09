@@ -2,7 +2,7 @@
 
 form.create {
   margin-top: 60px;
-
+  
 }
 
 
@@ -64,9 +64,7 @@ form.create {
 }
 
 .initialQuizInfo {
-  border: 2px solid white;
   padding: 20px;
-  border-radius: 10px;
   margin-bottom: 10px;
   margin-right: 2.2%;
   margin-left: 2.2%;
