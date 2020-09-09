@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import createContext from '../createContext';
+import "../back_button.css"
 import "./Landingpage.css";
 import {
   BrowserRouter as Router,
@@ -31,8 +32,10 @@ export default function LandingPage() {
 
       <div className="buttons">
 
-            <Link to="/create" className="links">
+            {/* <button type="button" className="backButton" onClick={() => {console.log("hi")}}>
+            </button> */}
 
+            <Link to="/create" className="links">
               <Button variant="contained" class="sizing-button first">
                 Create
               </Button>
@@ -42,14 +45,14 @@ export default function LandingPage() {
               <Button variant="contained" class="sizing-button first">
 
                 Host
-              </button>
+              </Button>
             </Link>
 
             <Link to="/join" className="links">
               <Button variant="contained" class="sizing-button first">
 
                 Join
-              </button>
+              </Button>
             </Link>
       </div>
 

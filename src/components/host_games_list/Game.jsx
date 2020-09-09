@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import createContext from "../createContext";
+import "./gameslist.css";
 
 //Material-UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,10 +12,12 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    width: '300px',
-    height: '275px',
-    border: '10px',
-    margin: '10px',
+    width: 'inheret',
+    length: 'inheret',
+    margin: 'inheret'
+    // height: '300px',
+    // border: '10px',
+    // margin: '10px',
   },
   bullet: {
     display: 'inline-block',
@@ -40,21 +43,28 @@ export default function Game(props) {
   const classes = useStyles();
   // const bull = <span className={classes.bullet}>•</span>;
 
-    return  <Card className={classes.root} variant="outlined">
-              <CardContent>
+  return  (
+              <Button variant="contained" type="button" className="button-card"
+                  onClick={()=>{context.createGame(props.id)
+                  console.log(props.id);}}>
+              <Card className={classes.root} variant="outlined">
+
+              <CardContent className="content-card">
+              {/* <CardActions className={classes.button}> */}
                 <Typography variant="h5" component="h2">{props.name}</Typography>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>Category: {props.category}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Number of Questions: {props.num_of_questions}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Number of Times Hosted: {props.num_of_times_hosted}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Total Players Played: {props.total_players_played}</Typography>
                 <Typography className={classes.pos} color="textSecondary">Difficulty: {props.difficulty}</Typography>
-                <CardActions className={classes.button}>
-                  <Button size="small" type="button"  
+                
+                  {/* <Button size="small" type="button"  
                   onClick={()=>{context.createGame(props.id)
-                  console.log(props.id);}}>Host Game</Button>
-                </CardActions>
+                  console.log(props.id);}}>Host Game</Button> */}
               </CardContent>
-            </Card>
+              </Card>
+              </Button>)
+                {/* </CardActions> */}
 
     // return  <div>
     //           <button

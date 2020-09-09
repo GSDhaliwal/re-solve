@@ -18,17 +18,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border: 2px solid bottom #45A29E;
+  /* border: 2px solid bottom #45A29E; */
   height: 100px;
 }
 
-.App-nav-buttons {
+.App-login-buttons {
   margin-left: 20%;
-  margin-right: 20%;
+  margin-right: 5%;
 }
 
 .nav-style {
-  background-color: #1F2833;
+  background-color: #45A29E;
+  position: fixed;
+  width: 100%;
+  z-index:999;
 }
 
 .App-header {
@@ -41,9 +44,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(14px + 2vmin);
+  font-size: calc(16px + 2vmin);
 
   color: white;
+
+  /* overflow: auto; */
+  /* position: relative; */
 }
 
 .App-link {
