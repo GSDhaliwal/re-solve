@@ -310,7 +310,7 @@ export default function App(props) {
   }
 
   const navBar = () => {
-    if (joinView && lobbyFlag) {
+    if (joinView || lobbyFlag) {
 
       return (<nav className="nav-style">
                 <div className="App-nav">
