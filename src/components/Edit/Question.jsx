@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Answer from './Answer';
-import "../Create/Create.css";
+import "../CreateAndEditCSS/Questions.css";
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 const mergeDefaultAnswers = function (answers) {

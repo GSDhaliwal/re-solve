@@ -37,9 +37,8 @@ div.gamesList {
 }
 
 .host-title {
-  display: flex;
   text-align: center;
-
+}
 .sorting{
   display: flex;
   justify-content: center;
