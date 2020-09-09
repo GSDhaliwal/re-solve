@@ -89,7 +89,7 @@ export default function Edit(props){
 
   return (
     <div>
-    <form>
+    <form className="create">
     <div className="initialQuizInfo">
         <div className="QuizTitle">
           <label id="title">Quiz Title</label>
@@ -134,7 +134,6 @@ export default function Edit(props){
         context.setClicked(false);
         context.loadProfilePage(context.user);
       }}>
-        Back
       </button>
    </form>
    </div>
