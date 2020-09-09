@@ -1,1 +1,4 @@
-CI=false npm run build
+base = "/"
+publish = "build/"
+command = "CI=false npm run build"
+REACT_APP_API_BASE_URL = "https://re-solve.herokuapp.com/"
