@@ -1,0 +1,16 @@
+.CA{
+  font-size: 20px;
+  color: #def2f1;
+  border-style: solid;
+  border-radius: 8px;
+  border-color: #45A29E;
+  text-align: center;
+  padding:2%;
+  margin:2%;
+}
+
+.CAT{
+  font-size: 30px;
+  text-align: center;
+  margin:2%;
+}

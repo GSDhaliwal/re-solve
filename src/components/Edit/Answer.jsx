@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "../CreateAndEditCSS/Answers.css";
 export default function Answer(props){
   const { id, question } = props;
 
@@ -34,7 +34,7 @@ export default function Answer(props){
     <div className="answers">
       <br/>
       <input className="answerInput" type="text" name="Answers" id={id} value={question.answers[id].answer} onChange={event => updatePartialAnswer(id, event)} />
-      <input type="checkbox" name="Answers" id={"checkbox"+id} checked={question.answers[id].correct_answer} onChange={event => updatePartialAnswerBoolean(id, event)} />
+      <input className="cbes" type="checkbox" name="Answers" id={"checkbox"+id} checked={question.answers[id].correct_answer} onChange={event => updatePartialAnswerBoolean(id, event)} />
       <br/>
     </div>
   )

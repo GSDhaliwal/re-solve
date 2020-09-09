@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Reveal.css"
 
 export default function Reveal (props){
   let correct;
@@ -8,8 +9,11 @@ export default function Reveal (props){
     }
   }
   return (<div>
-    <p>
-      Correct answer is: {correct}
+    <h6 className="CAT">
+      Correct answer
+    </h6>
+    <p className="CA">
+      {correct}
     </p>
   </div>)
 }

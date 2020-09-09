@@ -1,10 +1,24 @@
-
-
-form.create {
-  margin-top: 20%;
-  margin-bottom: 20%;
-  
+@media(max-width: 600px){
+  form.create {
+    margin-top: 60px;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
+
+
+
+@media(min-width: 600px){
+  form.create {
+    margin-top: 60px;
+    width:600px;
+  }
+
+}
+
 
 
 .titleTextArea {
@@ -23,11 +37,10 @@ form.create {
   resize: none;
 }
 
-.questionTextArea {
+
+/* .questionTextArea {
   padding-left: 1%;
   padding-right: 1%;
-  
-
   height: 100px;
   width: 97.5%;
   position: relative;
@@ -47,6 +60,7 @@ form.create {
   padding-top: 20px;
 
 }
+
 
 .QuizTitle {
   display: flex;
@@ -204,3 +218,4 @@ input[type='checkbox'] {
     text-align: center;
     text-transform: uppercase;
 }
+ */
