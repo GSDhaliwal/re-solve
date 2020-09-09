@@ -1,5 +1,6 @@
 import React, { useEffect, useContext} from 'react';
 import createContext from '../createContext';
+import "../back_button.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,8 +31,7 @@ export default function GamesList(props) {
     <section>
       <div>
         <h4>Join page</h4>
-        <button type='button' onClick={handleClick}>
-          Back
+        <button type='button' className="backButton" onClick={handleClick}>
         </button>
         <form>
           <input type="text" placeholder="Enter game code to join..." onChange={updateGC}/>

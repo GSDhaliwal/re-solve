@@ -140,8 +140,7 @@ export default function GamesList(props) {
   return (
     // <section>
       <div className="gamesList">
-        <button className="backButton"type='button' onClick={handleClick}>
-          Back
+        <button className="backButton" type='button' onClick={handleClick}>
         </button>
       
         <h4 className="host-title">host page</h4>

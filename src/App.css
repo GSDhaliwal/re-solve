@@ -19,7 +19,8 @@
   align-items: center;
   justify-content: space-between;
   /* border: 2px solid bottom #45A29E; */
-  height: 100px;
+  height: 60px;
+  margin-left: 2%;
 }
 
 .App-login-buttons {
@@ -56,6 +57,42 @@
   color: #61dafb;
 }
 
+.link-color {
+  color: #1F2833;
+}
+
+.typo-style {
+  font-size: 200px;
+  font: bold 14px/1.4 'Open Sans', arial, sans-serif;
+}
+
+.typo-font {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+}
+.typo-font:after {    
+  background: none repeat scroll 0 0 transparent;
+  /* bottom: 0; */
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.typo-font:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
 
 /* .MuiAppBar-colorPrimary .link, .MuiAppBar-colorPrimary .link:visited {
   color: inherit;
@@ -70,3 +107,4 @@
     transform: rotate(360deg);
   }
 }
+

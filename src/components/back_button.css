@@ -1,7 +1,7 @@
 .backButton,
 .backButton:before {
-  position: absolute;
-  left: 50%;
+  position: fixed;
+  /* left: 50%; */
 }
 
 .backButton {
