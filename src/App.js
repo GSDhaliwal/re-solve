@@ -307,7 +307,7 @@ export default function App(props) {
       // <Link to="/manageaccount" style={{ textDecoration: 'none' }}>
       //   <Button onClick={(() => loadProfilePage(user))}>Manage Account</Button>
       // </Link>
-      <Link to="/mangeaccount" style={{ textDecoration: 'none' }} className="link-color">
+      <Link to="/manageaccount" onClick={(() => loadProfilePage(user))} style={{ textDecoration: 'none' }} className="link-color">
       <Typography variant="h7" className="typo-style-login typo-font-login">My Quizzes</Typography>
     </Link>)
     }
@@ -342,10 +342,6 @@ export default function App(props) {
 
   return (
     <div className="App">
-      <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
-        />
       <Router>
         {navBar()}
 
