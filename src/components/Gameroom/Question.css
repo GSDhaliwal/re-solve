@@ -1,17 +1,23 @@
 .Question{
-  height:100%;
-  width: 100%;
-  display:flexbox;
+  text-align: center;
+  height:90%;
+  width: 90%;
+  display:flex;
   justify-content: center;
   flex-direction: column;
+  margin-right: 5%;
+  margin-left:5%;
 }
 .image{
-  height:300px;
-  width:400px;
+  height:40%;
+  width:70%;
 }
 .Answers{
   display: flexbox;
   justify-content: space-between;
   flex-direction: row;
   align-items: stretch;
+}
+.qTitle{
+  text-align: center;
 }

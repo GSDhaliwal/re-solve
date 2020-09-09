@@ -30,9 +30,7 @@ export default function LandingPage() {
   return (
 
       <div className="buttons">
-
             <Link to="/create" className="links">
-
               <Button variant="contained" class="sizing-button first">
                 Create
               </Button>
@@ -42,14 +40,14 @@ export default function LandingPage() {
               <Button variant="contained" class="sizing-button first">
 
                 Host
-              </button>
+              </Button>
             </Link>
 
             <Link to="/join" className="links">
               <Button variant="contained" class="sizing-button first">
 
                 Join
-              </button>
+              </Button>
             </Link>
       </div>
 

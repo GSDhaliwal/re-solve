@@ -64,12 +64,13 @@ export default function Create(props){
 
  
   const deleteQuestion = function(index) {
-    console.log("time to delete a question, how about index = ", index);
     let temp=[];
+    let current = 0;
     questions.map((question)=>{
-      if(question.id !== index){
+      if((current) !== index){
         temp.push(question);
       }
+      current++;
     })
     setQuestions(temp);
   };
@@ -146,16 +147,6 @@ export default function Create(props){
           })}
           </RadioGroup>
         </FormControl>
-        {/*Category:
-        <select value={stateCategory.value} onChange={handleChangeCategory}>
-          { categories.map(category => {
-            return ( 
-              <option value={category} key={category}>
-              {category}
-              </option>
-            )
-          }) }
-        </select>*/}
 
           <FormControl component="fieldset">
           <FormLabel id="title" component="legend">Difficulty</FormLabel>
@@ -167,21 +158,12 @@ export default function Create(props){
             <FormControlLabel value="5" control={<Radio />} label="5" />
           </RadioGroup>
         </FormControl>
-        {/*Difficulty:
-        <select value={difficulty.value} onChange={handleChangeDifficulty}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>*/}
       </label>
       <br/>
       {display}
       <br/>
       <button type="button" onClick={()=>{
         addQuestion(count)
-        console.log("count on buttonclick",count);
         }}>Add Question</button>
       <br/>
       <br/>

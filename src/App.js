@@ -22,7 +22,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-// const game_id = 1;
 
 
 //material-ui
@@ -51,10 +50,6 @@ const useStyles = makeStyles((theme) => ({
   toolbarTitle: {
     flexGrow: 1,
   },
-  // link: {
-  //   margin: theme.spacing(1, 1.5),
-  //   textDecoration: 'none'
-  // },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
   },
@@ -73,23 +68,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-//color palette
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: {
-//       light: '#757ce8',
-//       main: '#FFFFF',
-//       dark: '#002884',
-//       contrastText: '#fff',
-//     },
-//     secondary: {
-//       light: '#ff7961',
-//       main: '#f44336',
-//       dark: '#ba000d',
-//       contrastText: '#000',
-//     },
-//   },
-// });
 
 
 export default function App(props) {
@@ -137,7 +115,6 @@ export default function App(props) {
   const loadProfilePage = (user) => {
     socket.emit('requestUserCreatedQuizzes', user);
     socket.on('receivedUserCreatedQuizzes', (data=>{
-      console.log("did we get it back?", data );
       setUserQuizzes(data);
       setLoadManageAccount(true);
     }));
@@ -153,12 +130,9 @@ export default function App(props) {
   }
   
 
-  
-
   const bar = (quizid) => {
     socket.emit('quizToEdit', quizid);
     socket.once('editThisQuiz', (QAndAs => {
-      console.log("HERE", QAndAs)
       setQuiz(QAndAs);
       setClicked(true);
     }))
@@ -173,40 +147,29 @@ export default function App(props) {
   }
   
   
-  //===/gur//
-  
 
   socket.once('playersCurrentRanking', (ranking=>{
     setPlayers(ranking);
-    console.log("ranking?:",ranking);
   }));
   socket.once('refreshHost', (flag)=>{
-    console.log("newquizid:", flag);
     setInitializedQuiz(false);
     setRefresh(flag);
   })
   socket.on('waitStart', (start)=>{
-    console.log("start:",start);
-    console.log("current gameid", currentgame);
     if(lobbyFlag && start === currentgame){
       setStart(1);
     }else if(start === currentgame){
-      console.log("my name: ", gamerTag);
-      console.log("start: ", start);
-      console.log("my game: ", currentgame);
-      console.log("The host started without you");
+
     }
   })
 
   socket.once('gameslist', (data=>{
-    console.log("inside socket games list");
     setQuizlist(data);
     setInitializedQuiz(true);
   }));
 
   socket.on('playersInLobby', (p)=>{
     if(p.game === currentgame && gamerTag){
-      console.log(gamerTag);
       setLobbyFlag((x)=>{
         setLplayers(p.players);
         return true;
@@ -214,24 +177,7 @@ export default function App(props) {
     }
   });
   
-  //------- Felipe -------------->//
-  //   useEffect (() => {
-  //   // socket.emit('hostGames', '1');
-  //   // console.log("log after socket emit - hostGames");
-  //   socket.emit('listplayers', gameCode);
-  //   socket.on('playerslist', (data =>{
-  //   setLplayers(data);
-  //   console.log("players data --> ", lplayers);
-  //   setInitialized(true);
-  // }));
-  //   console.log("listplayers loggoned on");
-  // },[]);
-  //------- Felipe -------------->//
-  
-  
-  useEffect(()=>{
-    console.log("update ranking?", players);
-    
+  useEffect(()=>{    
     setGameDis(<Gameroom
       key={currentgame}
       players={players}
@@ -248,8 +194,6 @@ export default function App(props) {
     socket.once("loggedUser", (logged)=>{
       if(logged){
         setUser(logged);
-        console.log("user state: ", user);
-        // console.log(logged);
       }else{
         alert("Wrong username and password!");
       }
@@ -265,17 +209,14 @@ export default function App(props) {
     socket.once("reggedUser", (logged)=>{
       if(logged){
         setUser(logged);
-        console.log("logged", logged);
       } else{
         alert("The username already taken");
       }
     })
   }
   const fetchAndSetQuestions = (id)=>{
-    console.log("where am i");
     socket.emit('gameID', id);
     socket.on('GameroomQ', (qa)=>{
-      console.log("questions and answers:", qa);
       setQuestions(qa);
     });
   }
@@ -295,7 +236,6 @@ export default function App(props) {
     setDisplayCode(gamecode);
     socket.emit('hostableGame', {quiz_id, gamecode, is_active});
     socket.on('hostedGame', (current_game)=>{
-      console.log("current game info:", current_game);
       setCurrentgame(current_game);
       setJoinView(true);
     })
@@ -303,20 +243,16 @@ export default function App(props) {
   const enterRoom = (displayName, gameid)=>{
     socket.emit('playerJoin', {gamertag: displayName, game_id: gameid,
     is_host: isHost});
-    // setLoadGame(true);
     setGamerTag(displayName);
     fetchAndSetQuestions(gameid);
-    console.log(gamerTag);
   }
 
   //cancel selected game & delete game code from db
   const cancelGame = (gameid)=>{
-    console.log("cancellled????");
     socket.emit('cancelGame', gameid);
     setJoinView(false);
     setCurrentgame(null);
     socket.on('confirmMessage', (message) => {
-      console.log(message);
     })
   }
 
@@ -325,7 +261,6 @@ export default function App(props) {
     socket.emit("joinGame", gameC);
     socket.on('joinedGame',(gamid)=>{
       setCurrentgame(gamid);
-      console.log("joined id:", gamid);
       setJoinView(true);
     })
   }
@@ -338,7 +273,6 @@ export default function App(props) {
   
   const startGame = ()=>{
     socket.emit("startgame", currentgame);
-    console.log("starting game:", currentgame);
   }
   
 
@@ -346,14 +280,8 @@ export default function App(props) {
   // ----- Host Page for Games List -----//
   useEffect(()=>{
     socket.emit('hostGames', '1');
-    console.log("log after socket emit - hostGames");
   },[userQuizzes, refresh]);
     
-    
-  
-    
-
-  // ---------------//
 
 
   const displayUser = () => {
@@ -363,7 +291,6 @@ export default function App(props) {
       </Button>
     </div>) 
     : 
-    // context.user.username
     (<div>
       {user.username}
       <button onClick = {logout}>
@@ -399,9 +326,6 @@ export default function App(props) {
     } else {
       return (<nav>
                 <div className="App-nav">
-                  {/* <Button className={classes.title} onClick={() => {}}>
-                    <Link to="/">RE-SOLVE</Link>
-                  </Button> */}
                     <Link to="/">
                       <button>RE-SOLVE</button>
                     </Link>
@@ -414,70 +338,14 @@ export default function App(props) {
     }
   }
 
-    
-  // if (!initilizedQuiz) {
-  //   return null;
-  // }
-
   return (
-
-    
     <div className="App">
-    
       <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       <Router>
         {navBar()}
-        {/* <AppBar position="static">
-          <Toolbar className="App-nav">
-            <Button variant="h6" className={classes.title} onClick={() => {}}>
-              <Link to="/">RE-SOLVE</Link>
-            </Button>
-            <Toolbar className="App-nav">
-              <Button color="inherit">{managingAccount()}</Button>
-              <Button color="inherit">{displayUser()}</Button>
-            </Toolbar>
-          </Toolbar>
-        </AppBar> */}
-
-        {/* <nav className="App-nav">
-            <button onClick={() => {} }>
-              <Link to="/">RE-SOLVE</Link>
-            </button>
-            <div>
-              {displayUser()} */}
-
-            {/* <UserContext.Provider value = {{user, setUser, verifyLogin, 
-                username, setUsername, password, setPassword, logout, 
-                gamerTag, answered, setAnswered, whichAns, setWhichAns, 
-                sendAns, setPlayers, register, currentgame, setCurrentgame}}>
-                <Login/>
-              </UserContext.Provider> */}
-
-            {/* {managingAccount()} */}
-
-            {/* {!user ? ( <div>
-                        <button onClick={() => {} }>
-                        <Link to="/profile">Log In/Sign Up</Link>
-                        </button>
-                        </div>) 
-                        : 
-                        // context.user.username
-                        (<div>
-                          {username}
-                          <button onClick = {logout}>
-                          Logout     
-                          </button>
-                          </div>)
-                        } */}
-
-            {/* </div> */}
-            {/* <button onClick={() => {} }>
-              <Link to="/profile">Log In/Sign Up</Link>
-            </button> */}
-        {/* </nav> */}
 
         <header className="App-header">
         {/* <body> */}
@@ -539,45 +407,8 @@ export default function App(props) {
             </Route>  
 
           </Switch>
-        {/* </body> */}
         </header>
       </Router>
-
-          {/*
-            <createContext.Provider value = {{editQuiz, quiz, setQuiz, title, 
-            setTitle, clickfunc, bar}}>
-            { clicked ? <Edit />
-            : <button onClick ={()=>{
-              bar();
-            }}>
-              EDIT
-              </button>
-            }  
-            </createContext.Provider>
-          */}
-          
-            <UserContext.Provider value = {{user, setUser, verifyLogin, 
-              username, setUsername, password, setPassword, logout, 
-              gamerTag, answered, setAnswered, whichAns, setWhichAns, 
-              sendAns, setPlayers, register, currentgame, setCurrentgame, 
-              isHost, setIsHost,enterRoom}}>
-            {/* {start===1 && gameDis} */}
-            </UserContext.Provider>
-          {/* <button
-            onClick={()=>{
-              
-            }}
-          >
-            Start Game
-          </button> */}
-              
-          <p>
-            {/* home page testing */}
-          </p>
-    
-          {/* <h3>Lobby</h3> */}
-          {/* <ValueContext.Provider value={{value}}> */}
-          {/* </ValueContext.Provider> */}
     </div>
 
 

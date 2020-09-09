@@ -14,3 +14,18 @@
 div.gamesList {
   margin-top: 120px;
 }
+.sorting{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-size: medium;
+}
+.sortSelect{
+  margin-left: 5px;
+  width:10%;
+  border-radius: 10px;
+}
+.backButton{
+  position: fixed;
+  left: 5%;
+}

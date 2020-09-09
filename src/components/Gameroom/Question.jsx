@@ -7,7 +7,6 @@ export default function Question(props){
   const context = useContext(UserContext);
   useEffect(()=>{
     context.setAnswered(false);
-    console.log("answers:", props.answers);
   },[]);
 
   let answers = props.answers.map((answer, index)=>{
@@ -21,7 +20,7 @@ export default function Question(props){
   })
   return (
     <section className="Question">
-      <h6>
+      <h6 className="qTitle">
         {props.question.question}
       </h6>
       <div>

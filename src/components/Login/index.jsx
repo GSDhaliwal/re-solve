@@ -51,16 +51,9 @@ export default function Login (props){
       <Signup/>
       </div>)
       : 
-      // context.user.username
        (<div>
       <h4>Hello, {context.user.username}! You are signed in!</h4>
       </div>)
-      //  (<div>
-      // {context.user.username}
-      // <button onClick = {context.logout}>   
-      //   Logout     
-      // </button>
-      // </div>)
       }
         
       
