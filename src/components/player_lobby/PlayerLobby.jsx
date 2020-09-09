@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import PlayerLobbyList from './PlayerLobbyList';
 import createContext from '../createContext';
-// import {ValueContext} from "../../App.js";
 
 export default function Lobby(props) {
 
