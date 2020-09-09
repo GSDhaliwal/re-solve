@@ -1,19 +1,15 @@
+
+
 form.create {
-  margin-top: 120px;
+  margin-top: 60px;
+
 }
 
-#title {
 
-  color: white;
-}
-
-.container-cards {
-  margin: 0, 20%
-}
-
-input[type=text] {
+.titleTextArea {
   padding: 0;
-  height: 30px;
+  height: 35px;
+  width: 100%;
   position: relative;
   left: 0;
   outline: none;
@@ -22,4 +18,149 @@ input[type=text] {
   background-color: white;
   font-size: 16px;
   border-radius: 5px;
+  word-wrap: break-word;
+  resize: none;
+}
+
+.questionTextArea {
+  padding-left: 1%;
+  padding-right: 1%;
+  
+
+  height: 100px;
+  width: 97.5%;
+  position: relative;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-color: rgba(0, 0, 0, .15);
+  background-color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  word-wrap: break-word;
+  resize: none;
+}
+
+.categoryAndDifficulty {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+
+}
+
+.QuizTitle {
+  display: flex;
+  flex-direction: column;
+}
+
+.questionTitle {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+#title {
+  color: white;
+  padding-bottom: 20px;
+}
+
+.initialQuizInfo {
+  border: 2px solid white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-right: 2.2%;
+  margin-left: 2.2%;
+}
+
+.questions {
+  border: 2px solid white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+
+.ImageAndSeconds {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+}
+
+.ImagePointsAndSeconds {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.image {
+  
+  width: 90%;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.points {
+  padding-top: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.URL {
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-size: 17px;
+}
+
+.seconds {
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-size: 17px;
+}
+
+.secondsNumber {
+  
+  
+    width: 25%;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+  
+}
+
+.questionalignment {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.answerInput {
+  width: 80%;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.answers {
+  margin-top: 10px;
+}
+
+input[type='checkbox'] {
+  padding-top: 5px;
+  width:20px;
+  height:25px;
+  background:white;
+  border-radius:10px;
+  border:2px solid #555;
 }

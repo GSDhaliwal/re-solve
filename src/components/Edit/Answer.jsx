@@ -33,7 +33,7 @@ export default function Answer(props){
 
     <div className="answers">
       <br/>
-      <input type="text" name="Answers" id={id} value={question.answers[id].answer} onChange={event => updatePartialAnswer(id, event)} />
+      <input className="answerInput" type="text" name="Answers" id={id} value={question.answers[id].answer} onChange={event => updatePartialAnswer(id, event)} />
       <input type="checkbox" name="Answers" id={"checkbox"+id} checked={question.answers[id].correct_answer} onChange={event => updatePartialAnswerBoolean(id, event)} />
       <br/>
     </div>
