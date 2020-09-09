@@ -19,10 +19,7 @@ export default function GamesList(props) {
   let selectRef = useRef();
   useEffect(()=>{
     context.setIsHost(true);
-    console.log("inside gamelist quizlist:", context.quizlist);
-
   },[]);
-  console.log("quizzes --> ", props.quizzes);
 
 
   //back button functionality
@@ -116,15 +113,11 @@ export default function GamesList(props) {
     })
   }
     setPage(sorted);
-    console.log("ref??", selectRef.current);
-    console.log("quiz???", page);
   }
   const handleSort= (event) => {
     selectRef.current = Number(event.target.value);
     setOrder(Number(event.target.value));
     reSort(context.quizlist, selectRef.current);
-    console.log("in on change", page);
-    console.log("type?", typeof order);
   }
   const display = (page)=>{
     return page.map((quiz, index) => {
@@ -147,13 +140,14 @@ export default function GamesList(props) {
   return (
     // <section>
       <div className="gamesList">
-        <h4>host page</h4>
-        <button type='button' onClick={handleClick}>
+        <button className="backButton"type='button' onClick={handleClick}>
           Back
         </button>
-
-         Sort by:
-        <select  ref={selectRef} value={order} onChange={handleSort}>
+      
+        <h4 className="host-title">host page</h4>
+        <span className="sorting">
+         sort by:
+        <select  className="sortSelect"ref={selectRef} value={order} onChange={handleSort}>
         <option value={1}>Category</option>
         <option value={2}>Difficulty</option>
         <option value={3}>Total Players Played</option>
@@ -161,6 +155,7 @@ export default function GamesList(props) {
         <option value={5}>Least Questions</option>
         <option value={6}>Most Questions</option>
         </select>
+        </span>
         <div className="card">
         {display(page)}
         </div>

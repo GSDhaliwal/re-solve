@@ -64,12 +64,13 @@ export default function Create(props){
 
  
   const deleteQuestion = function(index) {
-    console.log("time to delete a question, how about index = ", index);
     let temp=[];
+    let current = 0;
     questions.map((question)=>{
-      if(question.id !== index){
+      if((current) !== index){
         temp.push(question);
       }
+      current++;
     })
     setQuestions(temp);
   };
@@ -163,9 +164,9 @@ export default function Create(props){
       <div className="questionalignment">
         {display}
       </div>
+
       <button type="button" onClick={()=>{
         addQuestion(count)
-        console.log("count on buttonclick",count);
         }}>Add Question</button>
       <button 
       type="button"

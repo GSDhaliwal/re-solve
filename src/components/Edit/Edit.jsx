@@ -42,33 +42,34 @@ export default function Edit(props){
     }])  
   };
   const deleteQuestion = function(index) {
-    console.log("time to delete a question, how about index = ", index);
     let temp=[];
-    let cunt = 0;
+    let current = 0;
     questions.map((question)=>{
-      if((cunt) !== index){
+      if((current) !== index){
         temp.push(question);
       }
-      cunt++;
+      current++;
     })
     setQuestions(temp);
   };
+
   const updateQuestion = function(index, newQuestion) {
    let clonedQuestions = [...questions];
     clonedQuestions[index] = newQuestion;
     setQuestions(clonedQuestions);
   };
+
   const handleChangeCategory = (event) => {
     setStateCategory({value: event.target.value});
-  }
+  };
+
   const handleChangeDifficulty = (event) => {
     setDifficulty({value: event.target.value});
-  }
+  };
   const updateGameTitle = (event)=>{
     setGameTitle({value: event.target.value});
-  }
+  };
     let display = questions.map((question, index) => {
-        //console.log('MAPPED', question)
         return <Question 
           key={question.id}
           id={question.id}
@@ -84,6 +85,7 @@ export default function Edit(props){
     })
 
   
+
   return (
     <div>
     <form>

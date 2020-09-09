@@ -6,11 +6,52 @@
   align-items: center;
   margin-right: 10%;
   margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 10%;
 }
 
 .container-cards {
-  margin: 0, 20%
+  margin: 0, 0%
 }
 div.gamesList {
   margin-top: 120px;
+}
+
+
+.button-card {
+  width: 350px;
+  height: 350px;
+  padding: 10%;
+  margin: 10%;
+  /* margin: 10px; */
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* margin-top: 10%;
+    margin-right: 10%; */
+}
+
+.content-card {
+  padding: 10%;
+}
+
+.host-title {
+  display: flex;
+  text-align: center;
+
+.sorting{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-size: medium;
+}
+.sortSelect{
+  margin-left: 5px;
+  width:10%;
+  border-radius: 10px;
+}
+.backButton{
+  position: fixed;
+  left: 5%;
 }

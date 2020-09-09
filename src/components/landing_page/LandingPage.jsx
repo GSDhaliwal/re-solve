@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import createContext from '../createContext';
+import "../back_button.css"
 import "./Landingpage.css";
 import {
   BrowserRouter as Router,
@@ -29,19 +30,23 @@ export default function LandingPage() {
 
   return (
 
-      <div class="buttons">
-            <Link to="/create">
+      <div className="buttons">
+            <Link to="/create" className="links">
               <Button variant="contained" class="sizing-button first">
-                Create Quiz
+                Create
               </Button>
             </Link>
-            <Link to="/host">
+
+            <Link to="/host" className="links">
               <Button variant="contained" class="sizing-button first">
+
                 Host
               </Button>
             </Link>
-            <Link to="/join">
+
+            <Link to="/join" className="links">
               <Button variant="contained" class="sizing-button first">
+
                 Join
               </Button>
             </Link>
