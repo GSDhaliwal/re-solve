@@ -287,7 +287,7 @@ export default function App(props) {
   const displayUser = () => {
     return (!user ? ( <div>
       <Button color="inherit" onClick={() => {} }>
-         <Link to="/profile">Log In/Sign Up</Link>
+         <Link to="/profile" style={{ textDecoration: 'none' }}>Log In/Sign Up</Link>
       </Button>
     </div>) 
     : 
@@ -303,7 +303,7 @@ export default function App(props) {
   const managingAccount = () => {
     if (user) {
       return (
-      <Link to="/manageaccount">
+      <Link to="/manageaccount" style={{ textDecoration: 'none' }}>
         <Button onClick={(() => loadProfilePage(user))}>Manage Account</Button>
       </Link>)
     }
@@ -315,9 +315,9 @@ export default function App(props) {
       return (<nav className="nav-style">
                 <div className="App-nav">
 
-                  <Typography variant="h6" className={classes.title} onClick={() => {}}>
+                <Typography variant="h6">
                     RE-SOLVE
-                  </Typography>
+                </Typography>
                   <div className="App-nav App-login-buttons">
                     {!user ? ('') : (<Typography variant="h6">{user.username}</Typography>)}
                   </div>
@@ -326,8 +326,8 @@ export default function App(props) {
     } else {
       return (<nav className="nav-style">
                 <div className="App-nav">
-                    <Link to="/">
-                      <button >RE-SOLVE</button>
+                    <Link to="/" style={{ textDecoration: 'none' }} className="link-color">
+                      <Typography variant="h5" className="typo-style typo-font">RE-SOLVE</Typography>
                     </Link>
                   <div className="App-nav App-login-buttons">
                     {managingAccount()}

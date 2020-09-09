@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Questions from './Questions';
+import "../back_button.css";
 
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
@@ -128,9 +129,7 @@ export default function Create(props){
     <div className="createForm">
     <form className="create">
       <div>
-        <button type='button' onClick={handleClick}>
-          Back
-        </button>
+        <button type='button' className="backButton" onClick={handleClick}></button>
       </div>
       <div className="initialQuizInfo">
         <div className="QuizTitle">
@@ -165,11 +164,12 @@ export default function Create(props){
         {display}
       </div>
 
-      <button type="button" onClick={()=>{
+      <button type="button" className="button" onClick={()=>{
         addQuestion(count)
         }}>Add Question</button>
       <button 
       type="button"
+      className="button"
         onClick={()=>{doesUserExist()
          handleClick()}}>
           Save/Post Quiz       
