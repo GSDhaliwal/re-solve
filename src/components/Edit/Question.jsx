@@ -80,7 +80,7 @@ export default function Question(props) {
   </div>
   <label for="Answers">Answers</label>
     {display}
-  <button type="button" onClick={ props.onDelete }>Delete Question</button>
+  <button className="button-delete" type="button" onClick={ props.onDelete }>Delete Question</button>
 </div>
   
   )

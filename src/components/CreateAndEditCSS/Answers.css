@@ -3,6 +3,8 @@
   height: 30px;
   font-size: 16px;
   border-radius: 5px;
+  border-color: transparent;
+  background: #DEF2F1;
 }
 
 .answers {
@@ -16,7 +18,7 @@ input[type='checkbox'] {
   padding-top: 5px;
   width:20px;
   height:25px;
-  background:white;
+  background:#DEF2F1;
   border-radius:10px;
   border:2px solid #555;
 }
