@@ -1,8 +1,26 @@
-.Answer{
-  margin: 5%;
+/* .Answer{
   border-radius: 10px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  min-height: 10%;
-  min-width: 15%;
+  padding-top: .5%;
+  padding-bottom: .5%;
+  height: 80%;
+  min-width: 10%;
+} */
+
+.Answer {
+  background-color: transparent;
+    border: 2px solid #45A29E;
+    border-radius: 8px;
+    color: #def2f1;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 2%;
+    text-align: center;
+    text-transform: uppercase;
+    min-height: 50px;
+    min-width: 100px;
+    width: 100%;
+    height: 100%;
+    padding:1%;
 }

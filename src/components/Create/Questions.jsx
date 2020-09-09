@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Answers from './Answers';
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
-import "./Create.css";
+
+import "../CreateAndEditCSS/Questions.css";
 export default function Questions(props) {
   const { id, index, question } = props;
 
@@ -42,15 +43,15 @@ export default function Questions(props) {
   return (
     <div className="questions">
         
-        <label for="Question">Question</label>
+        <label>Question</label>
         <br/>
         <br/>
         <textarea className="questionTextArea" type="text" placeholder="Type Here..." name="Question" id={id} value={question.question} onChange={event => updatePartialQuestion('question', event)}/>
       <div className="ImagePointsAndSeconds">
         <div className="ImageAndSeconds">
-          <label className="URL" for="picture">Image</label>
+          <label className="URL" >Image</label>
           <input className="image" type="text" placeholder="URL"id="picture" name="picture" value={question.image} onChange={event => updatePartialQuestion('image', event)} />
-          <label className="seconds" for="seconds">Seconds to solve</label>
+          <label className="seconds" >Seconds to solve</label>
           <input className="secondsNumber" type="text" name="seconds" value={question.time_per_question} onChange={event => updatePartialQuestion('time_per_question', event)}/>
         </div>
         <div className="points">
@@ -65,7 +66,7 @@ export default function Questions(props) {
         </div>
 
       </div>
-      <label for="Answers">Answers</label>
+      <label>Answers</label>
         {display}
       <button type="button" onClick={ props.onDelete }>Delete Question</button>
     </div>

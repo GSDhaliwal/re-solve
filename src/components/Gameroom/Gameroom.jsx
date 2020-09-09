@@ -32,7 +32,7 @@ export default function Gameroom(props){
       let delay = 0;
       if(count < Object.keys(props.questions).length*3){
         if(count%3 === 2){
-          delay = 5000;
+          delay = 15000;
           setTimeout(() => {
             setView(<RankingList
               key={props.questions[Math.floor(count/3)].id}
@@ -43,7 +43,7 @@ export default function Gameroom(props){
           }, delay);
         }
         if(count%3 === 0){
-          delay = 5000;
+          delay = 3000;
           setTimeout(() => {
             setView(<Questions
               key={props.questions[Math.floor(count/3)].id}
@@ -84,12 +84,17 @@ export default function Gameroom(props){
 
   return(
     <section className="Gameroom">
+      {(count%3 === 1) ? 
+      <span className="timer">
+      {timer}
+      </span> : ""}
+    
     <span className="gamertag">
-      {"Playing as " + context.gamerTag}
+      {context.gamerTag}
     </span>
   
   {view}
-  <br/>
+
   {(count >= Object.keys(props.questions).length*3) ? <button onClick={()=>{
     setView(null);
     context.setJoinView(false);
@@ -99,8 +104,6 @@ export default function Gameroom(props){
   }}>
     Back to Home
   </button>: ""}
-  
-  {(count%3 === 1) && timer}
     </section>
   )
 }
