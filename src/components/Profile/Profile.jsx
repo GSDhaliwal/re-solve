@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import createContext from '../createContext';
 import Login from "../Login"
+import "./Profile.css";
 import {
   BrowserRouter as Router,
   useHistory
@@ -18,8 +19,9 @@ export default function Profile (props){
 
   return (
     <section>
-      <h4 className="profilePageText">Profile Page</h4>
-      <button type="button" className="backButton" onClick={()=>{
+      <h4 className="joinPageText">Log In / Sign Up</h4>
+      <button type = "button" onClick={()=>{
+
         handleClick()
       }}></button>
       <Login/>

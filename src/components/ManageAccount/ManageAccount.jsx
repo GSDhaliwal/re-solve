@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import createContext from '../createContext';
-import UserQuizzes from './UserQuizzes'
+import UserQuizzes from './UserQuizzes';
+import "./myquizzes.css";
+import "../back_button.css";
 import {
   BrowserRouter as Router,
   useHistory
@@ -34,11 +36,14 @@ export default function ManageAccount(props) {
     })
 
   return (
-    <section>
-      <button className="backButton" type="button" onClick={()=>{
+    <div className="gamesList">
+      <h4 className="joinPageText">My Quizzes</h4>
+      <button type="button" className="backButton" onClick={()=>{
         handleClick()
-      }}>Back</button>
-      {userQuizzes}
-    </section>
+      }}></button>
+      <div className="card">
+        {userQuizzes}
+      </div>
+    </div>
   )
 }
