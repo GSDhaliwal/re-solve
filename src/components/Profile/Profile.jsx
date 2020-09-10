@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router,
   useHistory
 } from "react-router-dom";
+import "../back_button.css";
 
 
 export default function Profile (props){
@@ -20,8 +21,9 @@ export default function Profile (props){
     <section>
       <h4 className="joinPageText">Log In / Sign Up</h4>
       <button type = "button" onClick={()=>{
+
         handleClick()
-      }}>Back</button>
+      }}></button>
       <Login/>
     </section>
   )

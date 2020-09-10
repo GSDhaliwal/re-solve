@@ -7,6 +7,7 @@ import {
   BrowserRouter as Router,
   useHistory
 } from "react-router-dom";
+import "../back_button.css";
 
 
 export default function ManageAccount(props) {
