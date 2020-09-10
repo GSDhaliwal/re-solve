@@ -7,7 +7,7 @@ import {
   Link,
   useHistory
 } from "react-router-dom";
-
+import "./loginSignup.css";
 
 export default function Signup(props){
   const[newName, setNewName] = useState();
@@ -28,11 +28,12 @@ export default function Signup(props){
   }
 
 
-  return <div>
+  return <div className="signupAndLogin">
     <form>
-      <input type="text" placeholder="New username"onChange={newUser}/>
-      <input type="text" placeholder="New password"onChange={newPassword}/>
-      <button type = "button" onClick={()=>{
+      <input className="signupAndLoginInput" type="text" placeholder="New username"onChange={newUser}/>
+      <input className="signupAndLoginInput" type="text" placeholder="New password"onChange={newPassword}/>
+      <br/>
+      <button className="button" type="button" onClick={()=>{
         context.register(newName, newPass)
         handleClick()
       }}>

@@ -5,7 +5,7 @@ export default function ErrorLogIn(props) {
   
   return (
     <section>
-      Please login
+      <h4 className="profilePageText">Please login</h4>
     </section>
   )
 }
