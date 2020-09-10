@@ -285,7 +285,7 @@ export default function App(props) {
 
 
   const displayUser = () => {
-    return (!user ? ( <div>
+    return (!user ? ( <div className="App-login">
 
       <Link to="/profile" style={{ textDecoration: 'none' }} className="link-color">
                       <Typography variant="h7" className="typo-style-login typo-font-login">Login/Sign Up</Typography>
@@ -294,7 +294,7 @@ export default function App(props) {
     : 
     (<div>
       <Typography variant="h7" className="typo-font-gameplay gamertag-nav">{user.username}</Typography>
-      <button onClick = {logout}>
+      <button className="sizing-button-nav" onClick = {logout}>
         Logout     
       </button>
     </div>)
@@ -331,7 +331,7 @@ export default function App(props) {
                     <Link to="/" style={{ textDecoration: 'none' }} className="link-color">
                       <Typography variant="h5" className="typo-style typo-font">RE-SOLVE</Typography>
                     </Link>
-                  <div className="App-nav App-login-buttons">
+                  <div className="App-nav-login">
                     {managingAccount()}
                     {displayUser()}
                   </div>

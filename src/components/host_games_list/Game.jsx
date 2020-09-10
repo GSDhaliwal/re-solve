@@ -12,16 +12,18 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    width: 'inheret',
-    length: 'inheret',
-    margin: 'inheret'
-    // height: '300px',
-    // border: '10px',
-    // margin: '10px',
+    // width: 'inheret',
+    // length: 'inheret',
+    // margin: 'inheret'
+    height: '300px',
+    border: '10px',
+    margin: '10px',
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   bullet: {
     display: 'inline-block',
-    margin: '0 2px',
+    // margin: '2px 2px',
     transform: 'scale(0.8)',
   },
   title: {

@@ -143,7 +143,7 @@ export default function GamesList(props) {
         <button className="backButton" type='button' onClick={handleClick}>
         </button>
       
-        <h4 className="host-title">host page</h4>
+        <h4 className="host-title">Hosting</h4>
         <span className="sorting">
          sort by:
         <select  className="sortSelect"ref={selectRef} value={order} onChange={handleSort}>
