@@ -22,11 +22,11 @@ export default function Lobby(props) {
         <h4>Join code: {context.displayCode}</h4>
       </div>
       <div>
-        <ul>{playersData}</ul>
+        <ul className="LplayerList">{playersData}</ul>
       </div>
       {context.isHost ? <button className="lobbymessage" onClick={()=>{
         context.startGame();
-      }}>Start</button> : <div className="lobbymessage">"Waiting for host to start game..."</div>}
+      }}>Start</button> : <div className="lobbymessage">Waiting for host to start game...</div>}
     </section>
   )
 }
