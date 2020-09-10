@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   useHistory
 } from "react-router-dom";
+import "../back_button.css";
 
 
 export default function ManageAccount(props) {
@@ -34,8 +35,7 @@ export default function ManageAccount(props) {
 
   return (
     <section>
-      <h1>Hey</h1>
-      <button type = "button" onClick={()=>{
+      <button className="backButton" type="button" onClick={()=>{
         handleClick()
       }}>Back</button>
       {userQuizzes}

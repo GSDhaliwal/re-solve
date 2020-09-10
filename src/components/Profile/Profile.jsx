@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   useHistory
 } from "react-router-dom";
+import "../back_button.css";
 
 
 export default function Profile (props){
@@ -17,10 +18,10 @@ export default function Profile (props){
 
   return (
     <section>
-      <h4>Profile Page</h4>
-      <button type = "button" onClick={()=>{
+      <h4 className="profilePageText">Profile Page</h4>
+      <button type="button" className="backButton" onClick={()=>{
         handleClick()
-      }}>Back</button>
+      }}></button>
       <Login/>
     </section>
   )
