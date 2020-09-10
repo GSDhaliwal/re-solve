@@ -1,5 +1,8 @@
 .gamecodeDis{
   margin-top: 80px;
+  position: fixed;
+  top:0px;
+  left:25px;
 }
 
 .lobbymessage{
@@ -21,3 +24,7 @@ button.lobbymessage{
   height: 35px;
   padding:.5%;
 }
+/* 
+.eachPlayer{
+  color:#45A29E;
+} */

@@ -20,7 +20,7 @@ export default function Profile (props){
   return (
     <section>
       <h4 className="joinPageText">Log In / Sign Up</h4>
-      <button type = "button" onClick={()=>{
+      <button className="backButton" type = "button" onClick={()=>{
 
         handleClick()
       }}></button>

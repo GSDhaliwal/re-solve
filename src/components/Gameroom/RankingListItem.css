@@ -1,8 +1,4 @@
 .rankingItem{
   text-align: left;
   color: #45A29E;
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
 }

@@ -1,5 +1,7 @@
 import React,{useContext, useEffect, useState} from "react";
 import createContext from "./createContext";
+import "./Joinlobby.css"
+import "./back_button.css"
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,13 +26,11 @@ export default function JoinLobby(props){
 
   const buttonConditional = () => {
     if(context.isHost){ 
-      return <button type = "button" onClick={()=>{
+      return <button className ="backButton" type = "button" onClick={()=>{
         context.cancelGame(context.currentgame)}}>
-        Cancel
       </button>
     } else {
-      return <button type='button' onClick={() => {handleClick()}}>
-          Back
+      return <button className ="backButton" type='button' onClick={() => {handleClick()}}>
       </button>
     }
   }
@@ -39,8 +39,9 @@ export default function JoinLobby(props){
   return (
   <div>
     <form>
-      <input type="text" placeholder="Enter your display name here..." onChange={updateTag}/>
-      <button type = "button" onClick={()=>{
+      <input type="text" className="gnameInput"placeholder="Enter your display name here..." onChange={updateTag}/>
+      <br/>
+      <button className = "EnterButton"type = "button" onClick={()=>{
         context.enterRoom(val, context.currentgame);
       }}>
         Enter

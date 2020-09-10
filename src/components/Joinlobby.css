@@ -1,0 +1,22 @@
+.gnameInput{
+  width: 225px;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+  background: #DEF2F1;
+  border-color: transparent;
+}
+
+.EnterButton{
+  background-color: transparent;
+  border: 2px solid #45A29E;
+  border-radius: 0.2em;
+  color: #45A29E;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
