@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import createContext from '../createContext';
 import Login from "../Login"
+import "./Profile.css";
 import {
   BrowserRouter as Router,
   useHistory
 } from "react-router-dom";
+import "../back_button.css";
 
 
 export default function Profile (props){
@@ -17,10 +19,11 @@ export default function Profile (props){
 
   return (
     <section>
-      <h4>Profile Page</h4>
+      <h4 className="joinPageText">Log In / Sign Up</h4>
       <button type = "button" onClick={()=>{
+
         handleClick()
-      }}>Back</button>
+      }}></button>
       <Login/>
     </section>
   )

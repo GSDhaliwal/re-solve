@@ -133,7 +133,7 @@ export default function Create(props){
       </div>
       <div className="initialQuizInfo">
         <div className="QuizTitle">
-          <label id="title">Quiz Title</label>
+        <h4 className="quizTitleText">Quiz Title</h4>
           <textarea className="titleTextArea" name="QuizTitle" placeholder="Quiz Title"onChange={updateGameTitle} />
           
         </div>

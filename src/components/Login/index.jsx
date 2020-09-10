@@ -36,12 +36,13 @@ export default function Login (props){
     <div>
     <form>
       <input 
-        type="text" name="username" placeholder="username" onChange={updateUsername}
+        type="text" className="signupAndLoginInput" name="username" placeholder="username" onChange={updateUsername}
       />
       <input 
-        type="password"name="password" placeholder="password" onChange={updatePassword}
+        type="password" className="signupAndLoginInput" name="password" placeholder="password" onChange={updatePassword}
       />
-      <button type="button" onClick={()=>{
+      <br/>
+      <button className="button" type="button" onClick={()=>{
         context.verifyLogin(context.username, context.password)
         handleClick()}}>
         Login
