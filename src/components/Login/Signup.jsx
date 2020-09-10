@@ -30,8 +30,9 @@ export default function Signup(props){
 
   return <div className="signupAndLogin">
     <form>
+
       <input className="signupAndLoginInput" type="text" placeholder="New username"onChange={newUser}/>
-      <input className="signupAndLoginInput" type="text" placeholder="New password"onChange={newPassword}/>
+      <input className="signupAndLoginInput" type="password" placeholder="New password"onChange={newPassword}/>
       <br/>
       <button className="button" type="button" onClick={()=>{
         context.register(newName, newPass)

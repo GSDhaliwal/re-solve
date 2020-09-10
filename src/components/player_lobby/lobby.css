@@ -1,0 +1,23 @@
+.gamecodeDis{
+  margin-top: 80px;
+}
+
+.lobbymessage{
+  margin-top: 10px;
+}
+button.lobbymessage{
+  background-color: transparent;
+  border: 2px solid #45A29E;
+  border-radius: 8px;
+  color: #def2f1;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  margin-top: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 80px;
+  height: 35px;
+  padding:.5%;
+}

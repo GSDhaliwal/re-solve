@@ -10,7 +10,6 @@ const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Edit(props){
   const context = useContext(createContext);
   useEffect(() => {
-    console.log("context inside ", context.title[0]);
   }, [])
   const [state, setState] = useState(categories);
   const [stateCategory, setStateCategory] = useState({value: context.title[0].category_name});
@@ -18,13 +17,7 @@ export default function Edit(props){
   const [gameTitle, setGameTitle] = useState({value: context.title[0].quiz_name});
   const [questions, setQuestions] = useState(context.quiz.QA);
   const [count, setCount] = useState(questions.length);
-  useEffect(() => {
-    console.log("1", questions);
-    console.log("2", gameTitle);
-    console.log("3", typeof difficulty.value);
-    console.log("4", stateCategory);
-    console.log("5", count)
-  })
+
   const addQuestion = function() {
     setCount(count+1);
     setQuestions([...questions, {

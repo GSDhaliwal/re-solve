@@ -39,7 +39,7 @@ export default function Login (props){
         type="text" className="signupAndLoginInput" name="username" placeholder="username" onChange={updateUsername}
       />
       <input 
-        type="text" className="signupAndLoginInput" name="password" placeholder="password" onChange={updatePassword}
+        type="password" className="signupAndLoginInput" name="password" placeholder="password" onChange={updatePassword}
       />
       <br/>
       <button className="button" type="button" onClick={()=>{
