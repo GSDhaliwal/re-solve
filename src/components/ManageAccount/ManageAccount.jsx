@@ -34,7 +34,7 @@ export default function ManageAccount(props) {
 
   return (
     <section>
-      <h1>Hey</h1>
+      <h2>My Quizzes</h2>
       <button type = "button" onClick={()=>{
         handleClick()
       }}>Back</button>

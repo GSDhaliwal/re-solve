@@ -28,3 +28,20 @@
   top:95px;
   left:2%;
 }
+
+.endGame{
+  background-color: transparent;
+  border: 2px solid #45A29E;
+  border-radius: 8px;
+  color: #def2f1;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  margin: 2%;
+  text-align: center;
+  text-transform: uppercase;
+  width: 160px;
+  height: 35px;
+  padding:.5%;
+}

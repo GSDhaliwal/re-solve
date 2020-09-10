@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PlayerLobbyList from './PlayerLobbyList';
 import createContext from '../createContext';
+import "./lobby.css"
 
 export default function Lobby(props) {
 
@@ -14,21 +15,18 @@ export default function Lobby(props) {
               />
     })
 
-    useEffect(() => {
-      console.log("hi hi" , context.displayCode);
-    },[context.displayCode]);
 
   return (
     <section>
-      <div>
-        <h4>game code: {context.displayCode}</h4>
+      <div className="gamecodeDis">
+        <h4>Join code: {context.displayCode}</h4>
       </div>
       <div>
-        <h4>{playersData}</h4>
+        <ul>{playersData}</ul>
       </div>
-      {context.isHost ? <button onClick={()=>{
+      {context.isHost ? <button className="lobbymessage" onClick={()=>{
         context.startGame();
-      }}>Start</button> : "Waiting for host to start game..."}
+      }}>Start</button> : <div className="lobbymessage">"Waiting for host to start game..."</div>}
     </section>
   )
 }

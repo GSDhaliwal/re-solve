@@ -22,7 +22,7 @@ const categories = ['Arts', 'General', 'Math', 'Science', 'Software']
 export default function Create(props){
   
   const context = useContext(createContext);
-  const [stateCategory, setStateCategory] = useState({value: 'Math'});
+  const [stateCategory, setStateCategory] = useState({value: 'Arts'});
   const [difficulty, setDifficulty] = useState({value: '1'});
   const [gameTitle, setGameTitle] = useState();
   const [count,setCount] = useState(1);

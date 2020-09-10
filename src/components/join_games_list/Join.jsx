@@ -36,7 +36,7 @@ export default function Join(props) {
         </button>
         <form>
           <input type="text" placeholder="Enter game code to join..." onChange={updateGC}/>
-          <button type="button" onClick={()=>{
+          <button className="JoinB"type="button" onClick={()=>{
             context.joinButton(context.gameCode);
           }}>
             Join

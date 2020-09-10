@@ -39,7 +39,7 @@ export default function Login (props){
         type="text" name="username" placeholder="username" onChange={updateUsername}
       />
       <input 
-        type="text" name="password" placeholder="password" onChange={updatePassword}
+        type="password"name="password" placeholder="password" onChange={updatePassword}
       />
       <button type="button" onClick={()=>{
         context.verifyLogin(context.username, context.password)

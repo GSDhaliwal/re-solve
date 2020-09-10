@@ -95,14 +95,14 @@ export default function Gameroom(props){
   
   {view}
 
-  {(count >= Object.keys(props.questions).length*3) ? <button onClick={()=>{
+  {(count >= Object.keys(props.questions).length*3) ? <button className="endGame"onClick={()=>{
     setView(null);
     context.setJoinView(false);
     context.setLobbyFlag(false);
     backbutton();
     context.setStart(0);
   }}>
-    Back to Home
+    Return to Home
   </button>: ""}
     </section>
   )

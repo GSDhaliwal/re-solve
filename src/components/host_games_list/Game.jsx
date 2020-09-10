@@ -44,8 +44,7 @@ export default function Game(props) {
 
   return  (
               <Button variant="contained" type="button" className="button-card"
-                  onClick={()=>{context.createGame(props.id)
-                  console.log(props.id);}}>
+                  onClick={()=>{context.createGame(props.id)}}>
               <Card className={classes.root} variant="outlined">
 
               <CardContent className="content-card">
